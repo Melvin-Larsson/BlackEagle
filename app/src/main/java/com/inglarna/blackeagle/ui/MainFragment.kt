@@ -16,7 +16,6 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
-        Log.d("MainFragment", "Created other shit")
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
