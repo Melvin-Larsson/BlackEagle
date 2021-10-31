@@ -2,13 +2,18 @@ package com.inglarna.blackeagle
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.inglarna.blackeagle.databinding.ActivityFragmentBinding
 
 abstract class SingleFragmentActivity : AppCompatActivity(){
 
+    lateinit var binding: ActivityFragmentBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_fragment)
+        binding = ActivityFragmentBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         if(savedInstanceState == null){
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, createFragment())

@@ -9,7 +9,7 @@ import com.inglarna.blackeagle.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
 
-    private lateinit var binding : FragmentMainBinding
+    lateinit var binding : FragmentMainBinding
 
     companion object{
         fun newInstance() = MainFragment()
