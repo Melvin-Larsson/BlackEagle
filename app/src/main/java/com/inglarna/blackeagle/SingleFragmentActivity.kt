@@ -31,12 +31,16 @@ abstract class SingleFragmentActivity : AppCompatActivity(){
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId) {
-                R.id.miItem -> Toast.makeText(applicationContext,
-                    "you are gay", Toast.LENGTH_SHORT).show()
-                R.id.miItem2 -> Toast.makeText(applicationContext,
-                    "you are gay2", Toast.LENGTH_SHORT).show()
-                R.id.miItem3 -> Toast.makeText(applicationContext,
-                    "you are gay3", Toast.LENGTH_SHORT).show()
+                R.id.yourDecks -> Toast.makeText(applicationContext,
+                    "you are kind", Toast.LENGTH_SHORT).show()
+                R.id.convertNumbers -> Toast.makeText(applicationContext,
+                    "you are really good looking today", Toast.LENGTH_SHORT).show()
+                R.id.settings -> Toast.makeText(applicationContext,
+                    "you are smart", Toast.LENGTH_SHORT).show()
+                R.id.stats -> Toast.makeText(applicationContext,
+                    "you are brilliant", Toast.LENGTH_SHORT).show()
+                R.id.about -> Toast.makeText(applicationContext,
+                    "you are thoughtful", Toast.LENGTH_SHORT).show()
             }
             true
         }
