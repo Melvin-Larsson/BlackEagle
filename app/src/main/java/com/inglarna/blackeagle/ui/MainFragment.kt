@@ -4,25 +4,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TableLayout
 import androidx.fragment.app.Fragment
-import com.inglarna.blackeagle.databinding.FragmentMainBinding
-import com.inglarna.blackeagle.databinding.FragmentPagerBinding
+import com.google.android.material.tabs.TabLayoutMediator
+import com.inglarna.blackeagle.databinding.FragmentDeckPagerBinding
 
 class MainFragment : Fragment() {
 
-    lateinit var binding : FragmentPagerBinding
+    lateinit var binding : FragmentDeckPagerBinding
     private lateinit var deckFragmentPagerAdapter: DeckFragmentPagerAdapter
 
     companion object{
         fun newInstance() = MainFragment()
     }
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
-        binding = FragmentPagerBinding.inflate(inflater, container, false)
+        binding = FragmentDeckPagerBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        deckFragmentPagerAdapter = DeckFragmentPagerAdapter(this)
-        binding.pager.adapter = deckFragmentPagerAdapter
+        binding.deckPager.adapter = DeckFragmentPagerAdapter(this)
+        TabLayoutMediator(binding.deckTabLayout, binding.deckPager){tab, position ->
+            tab.text = "Position: " + position
+        }.attach()
     }
 }

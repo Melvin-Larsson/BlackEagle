@@ -5,18 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import com.inglarna.blackeagle.databinding.FragmentMainBinding
-import com.inglarna.blackeagle.databinding.FragmentPagerBinding
+import com.google.android.material.tabs.TabLayoutMediator
+import com.inglarna.blackeagle.databinding.FragmentDeckListBinding
 
-class DeckFragment : Fragment() {
-    private lateinit var binding : FragmentMainBinding
+class DeckListFragment : Fragment() {
+    private lateinit var binding : FragmentDeckListBinding
 
     companion object{
-        fun newInstance() = DeckFragment()
+        fun newInstance() = DeckListFragment()
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding = FragmentDeckListBinding.inflate(inflater, container, false)
         return binding.root
     }
 

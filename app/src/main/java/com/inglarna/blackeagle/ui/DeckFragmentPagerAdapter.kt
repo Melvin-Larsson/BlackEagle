@@ -6,7 +6,7 @@ class DeckFragmentPagerAdapter (fragment: Fragment): FragmentStateAdapter(fragme
     override fun getItemCount(): Int = 3
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = DeckFragment.newInstance()
+        val fragment = DeckListFragment.newInstance()
         /*fragment.arguments = Bundle().apply {
             putInt(ARG_OBJECT, position)
         }*/
