@@ -1,7 +1,6 @@
 package com.inglarna.blackeagle.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
-        Log.d("MainFragment", "Created other shit")
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
