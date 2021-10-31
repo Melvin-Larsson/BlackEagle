@@ -2,12 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/miItem"
-        android:title="Item 1"/>
+        android:id="@+id/yourDecks"
+        android:title="Dina kortlekar"/>
     <item
-        android:id="@+id/miItem2"
-        android:title="Item 2"/>
+        android:id="@+id/convertNumbers"
+        android:title="Konvertera siffror"/>
     <item
-        android:id="@+id/miItem3"
-        android:title="Item 3"/>
+        android:id="@+id/settings"
+        android:title="Inställningar"/>
+    <item
+        android:id="@+id/stats"
+        android:title="Statistik"/>
+    <item
+        android:id="@+id/about"
+        android:title="Info"/>
 </menu>
