@@ -15,6 +15,7 @@ abstract class SingleFragmentActivity : AppCompatActivity(){
                 .commitNow()
         }
     }
+
     abstract fun createFragment() : Fragment
 
 }
