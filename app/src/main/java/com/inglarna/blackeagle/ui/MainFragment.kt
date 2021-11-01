@@ -8,6 +8,7 @@ import android.widget.TableLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.inglarna.blackeagle.databinding.FragmentDeckPagerBinding
+import com.inglarna.blackeagle.databinding.FragmentEditCardBinding
 
 class MainFragment : Fragment() {
 

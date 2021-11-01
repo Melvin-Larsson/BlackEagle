@@ -17,6 +17,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/fragment_deck_list.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/fragment_deck_pager.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/layout/fragment_edit_card.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.1" />
       </map>
     </option>

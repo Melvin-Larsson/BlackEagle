@@ -2,4 +2,7 @@
     <string name="app_name">BlackEagle</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="question">Question</string>
+    <string name="answer">Answer</string>
+    <string name="hint">Hint</string>
 </resources>
