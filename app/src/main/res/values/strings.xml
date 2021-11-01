@@ -11,4 +11,5 @@
     <string name="general_settings">General</string>
     <string name="show_answer">Show answer</string>
     <string name="show_hint">Show hint</string>
+    <string name="add_card">Add card</string>
 </resources>
