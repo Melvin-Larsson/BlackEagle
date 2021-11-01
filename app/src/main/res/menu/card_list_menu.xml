@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/startStudy"
+        android:title="@string/start_study"
+        android:icon="@drawable/ic_start_study"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/favoriteStudy"
+        android:title="@string/favorite_study"
+        android:icon="@drawable/ic_favorite_study"
+        app:showAsAction="ifRoom"/>
+</menu>
