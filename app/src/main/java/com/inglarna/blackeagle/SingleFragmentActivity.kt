@@ -25,7 +25,6 @@ abstract class SingleFragmentActivity : AppCompatActivity(){
                 .replace(R.id.fragment_container, createFragment())
                 .commitNow()
         }
-
         //Navigation menu
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
@@ -52,24 +51,19 @@ abstract class SingleFragmentActivity : AppCompatActivity(){
 
     //button functions
     private fun startDecks(){
-        val intentDecks = Intent(this, MainActivity::class.java)
-        startActivity(intentDecks)
+        startActivity(Intent(this, MainActivity::class.java))
     }
     private fun startConvertNumbers(){
-        val intentConvert = Intent(this, ConvertNumbersActivity::class.java)
-        startActivity(intentConvert)
+        startActivity(Intent(this, ConvertNumbersActivity::class.java))
     }
     private fun startSettings(){
-        val intentSettings = Intent(this, SettingsActivity::class.java)
-        startActivity(intentSettings)
+        startActivity(Intent(this, SettingsActivity::class.java))
     }
     private fun startStats(){
-        //val intentStats = Intent(this, StatsActivity::class.java)
-        //startActivity(intentStats)
+        //startActivity(Intent(this, StatsActivity::class.java))
     }
     private fun startAbout(){
-        val intentAbout = Intent(this, AboutActivity::class.java)
-        startActivity(intentAbout)
+        startActivity(Intent(this, AboutActivity::class.java))
     }
     abstract fun createFragment() : Fragment
 
