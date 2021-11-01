@@ -8,13 +8,10 @@ import android.widget.TableLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.inglarna.blackeagle.databinding.FragmentDeckPagerBinding
-import com.inglarna.blackeagle.databinding.FragmentEditCardBinding
-import com.inglarna.blackeagle.databinding.FragmentQuestionBinding
 
 class MainFragment : Fragment() {
 
     lateinit var binding : FragmentDeckPagerBinding
-    private lateinit var deckFragmentPagerAdapter: DeckFragmentPagerAdapter
 
     companion object{
         fun newInstance() = MainFragment()
