@@ -30,6 +30,8 @@
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_question.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/list_item_deck.xml" value="0.27239583333333334" />
+        <entry key="app/src/main/res/layout/list_item_number.xml" value="0.27239583333333334" />
       </map>
     </option>
   </component>
