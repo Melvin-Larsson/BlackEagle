@@ -20,6 +20,8 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.371875" />
         <entry key="app/src/main/res/layout/activity_fragment.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/fragment_about.xml" value="0.27239583333333334" />
+        <entry key="app/src/main/res/layout/fragment_card_list.xml" value="0.27239583333333334" />
         <entry key="app/src/main/res/layout/fragment_convert_numbers.xml" value="0.27239583333333334" />
         <entry key="app/src/main/res/layout/fragment_deck_list.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/fragment_deck_pager.xml" value="0.19791666666666666" />
