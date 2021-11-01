@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.databinding.ActivityFragmentBinding
 import com.inglarna.blackeagle.ui.MainFragment
@@ -34,16 +33,11 @@ abstract class SingleFragmentActivity : AppCompatActivity(){
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId) {
-                R.id.yourDecks -> Toast.makeText(applicationContext,
-                    "you are kind", Toast.LENGTH_SHORT).show()
-                R.id.convertNumbers -> Toast.makeText(applicationContext,
-                    "you are really good looking today", Toast.LENGTH_SHORT).show()
-                R.id.settings -> Toast.makeText(applicationContext,
-                    "you are smart", Toast.LENGTH_SHORT).show()
-                R.id.stats -> Toast.makeText(applicationContext,
-                    "you are brilliant", Toast.LENGTH_SHORT).show()
-                R.id.about -> Toast.makeText(applicationContext,
-                    "you are thoughtful", Toast.LENGTH_SHORT).show()
+                R.id.yourDecks -> startDecks()
+                R.id.convertNumbers -> startConvertNumbers()
+                R.id.settings -> startSettings()
+                R.id.stats -> startStats()
+                R.id.about -> startAbout()
             }
             true
         }
@@ -56,6 +50,28 @@ abstract class SingleFragmentActivity : AppCompatActivity(){
         return super.onOptionsItemSelected(item)
     }
 
+    //button functions
+    private fun startDecks(){
+        val intentDecks = Intent(this, MainActivity::class.java)
+        startActivity(intentDecks)
+    }
+    private fun startConvertNumbers(){
+        val intentConvert = Intent(this, ConvertNumbersActivity::class.java)
+        startActivity(intentConvert)
+    }
+    private fun startSettings(){
+        val intentSettings = Intent(this, SettingsActivity::class.java)
+        startActivity(intentSettings)
+    }
+    private fun startStats(){
+        //val intentStats = Intent(this, StatsActivity::class.java)
+        //startActivity(intentStats)
+    }
+    private fun startAbout(){
+        val intentAbout = Intent(this, AboutActivity::class.java)
+        startActivity(intentAbout)
+    }
     abstract fun createFragment() : Fragment
+
 
 }
