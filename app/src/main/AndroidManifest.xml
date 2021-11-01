@@ -28,6 +28,9 @@
         <activity android:name=".AboutActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".CardListActivity"
+            android:exported="true">
+        </activity>
 
     </application>
 
