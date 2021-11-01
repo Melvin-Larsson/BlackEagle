@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/yourDecks"
-        android:title="Dina kortlekar"/>
+        android:title="@string/your_decks"/>
     <item
         android:id="@+id/convertNumbers"
-        android:title="Konvertera siffror"/>
+        android:title="@string/convert_numbers"/>
     <item
         android:id="@+id/settings"
-        android:title="Inställningar"/>
+        android:title="@string/settings"/>
     <item
         android:id="@+id/stats"
-        android:title="Statistik"/>
+        android:title="@string/stats"/>
     <item
         android:id="@+id/about"
-        android:title="Info"/>
+        android:title="@string/about"/>
 </menu>

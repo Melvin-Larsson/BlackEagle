@@ -22,9 +22,13 @@
         <activity android:name=".ConvertNumbersActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".EditConvertNumbersActivity"
+            android:exported="true">
+        </activity>
         <activity android:name=".AboutActivity"
             android:exported="true">
         </activity>
+
     </application>
 
 </manifest>

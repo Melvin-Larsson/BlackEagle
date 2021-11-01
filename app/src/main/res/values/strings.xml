@@ -11,4 +11,9 @@
     <string name="general_settings">General</string>
     <string name="show_answer">Show answer</string>
     <string name="show_hint">Show hint</string>
+    <string name="your_decks">Your decks</string>
+    <string name="convert_numbers">Convert numbers</string>
+    <string name="settings">Settings</string>
+    <string name="stats">Stats</string>
+    <string name="about">About</string>
 </resources>

@@ -5,17 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.inglarna.blackeagle.databinding.FragmentAboutBinding
+import com.inglarna.blackeagle.databinding.FragmentEditConvertNumbersBinding
 
-class AboutFragment: Fragment() {
-    lateinit var binding: FragmentAboutBinding
+class EditConvertNumbersFragment: Fragment() {
+    lateinit var binding: FragmentEditConvertNumbersBinding
 
     companion object{
-        fun newInstance() = AboutFragment()
+        fun newInstance() = EditConvertNumbersFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentAboutBinding.inflate(inflater, container, false)
+        binding = FragmentEditConvertNumbersBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 }
