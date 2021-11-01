@@ -17,4 +17,6 @@
     <string name="stats">Stats</string>
     <string name="about">About</string>
     <string name="add_card">Add card</string>
+    <string name="start_study">start study</string>
+    <string name="favorite_study">favorite study</string>
 </resources>
