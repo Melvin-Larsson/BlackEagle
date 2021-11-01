@@ -5,4 +5,8 @@
     <string name="question">Question</string>
     <string name="answer">Answer</string>
     <string name="hint">Hint</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="daily_repetition_goal">Daily repetition goal</string>
+    <string name="repetition_settings">Repetition</string>
+    <string name="general_settings">General</string>
 </resources>
