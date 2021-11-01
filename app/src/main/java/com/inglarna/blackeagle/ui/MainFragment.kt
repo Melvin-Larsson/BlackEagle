@@ -21,7 +21,7 @@ class MainFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentDeckPagerBinding.inflate(inflater, container, false)
-        return FragmentQuestionBinding.inflate(inflater, container, false).root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
