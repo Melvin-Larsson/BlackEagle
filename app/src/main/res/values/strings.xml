@@ -9,4 +9,6 @@
     <string name="daily_repetition_goal">Daily repetition goal</string>
     <string name="repetition_settings">Repetition</string>
     <string name="general_settings">General</string>
+    <string name="show_answer">Show answer</string>
+    <string name="show_hint">Show hint</string>
 </resources>

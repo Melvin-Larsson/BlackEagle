@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.inglarna.blackeagle.databinding.FragmentDeckPagerBinding
 import com.inglarna.blackeagle.databinding.FragmentEditCardBinding
+import com.inglarna.blackeagle.databinding.FragmentQuestionBinding
 
 class MainFragment : Fragment() {
 
@@ -20,7 +21,7 @@ class MainFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentDeckPagerBinding.inflate(inflater, container, false)
-        return binding.root
+        return FragmentQuestionBinding.inflate(inflater, container, false).root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -1,5 +1,6 @@
 package com.inglarna.blackeagle
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.databinding.ActivityFragmentBinding
+import com.inglarna.blackeagle.ui.MainFragment
 
 abstract class SingleFragmentActivity : AppCompatActivity(){
 
@@ -24,6 +26,7 @@ abstract class SingleFragmentActivity : AppCompatActivity(){
                 .replace(R.id.fragment_container, createFragment())
                 .commitNow()
         }
+
         //Navigation menu
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
