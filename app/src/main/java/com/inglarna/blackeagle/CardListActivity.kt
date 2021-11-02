@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.ui.CardListFragment
 
-class CardListActivity : SingleFragmentActivity() {
+class CardListActivity : HamburgermenuActivity() {
     override fun createFragment(): Fragment = CardListFragment()
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

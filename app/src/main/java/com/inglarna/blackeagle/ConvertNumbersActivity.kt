@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.ui.ConvertNumbersFragment
 
-class ConvertNumbersActivity: SingleFragmentActivity(), ConvertNumbersFragment.Callbacks {
+class ConvertNumbersActivity: HamburgermenuActivity(), ConvertNumbersFragment.Callbacks {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
