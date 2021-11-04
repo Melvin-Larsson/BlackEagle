@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.ui.CardListFragment
 
-class CardListActivity : HamburgermenuActivity() {
+class CardListActivity : SingleFragmentNavMenuActivity() {
     override fun createFragment(): Fragment = CardListFragment()
 
     //card list menu is used as a toolbar

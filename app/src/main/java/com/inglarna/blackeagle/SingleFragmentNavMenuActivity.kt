@@ -8,21 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.databinding.ActivityFragmentBinding
 
-abstract class HamburgermenuActivity: AppCompatActivity() {
+abstract class SingleFragmentNavMenuActivity: SingleFragmentActivity() {
     lateinit var toggle: ActionBarDrawerToggle
-    lateinit var binding: ActivityFragmentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //Create view
-        binding = ActivityFragmentBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        if(savedInstanceState == null){
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, createFragment())
-                .commitNow()
-        }
-
         //Navigation menu
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
@@ -39,9 +29,7 @@ abstract class HamburgermenuActivity: AppCompatActivity() {
             }
             true
         }
-
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle.onOptionsItemSelected(item)){
             return true
@@ -64,5 +52,4 @@ abstract class HamburgermenuActivity: AppCompatActivity() {
     private fun startAbout(){
         startActivity(Intent(this, AboutActivity::class.java))
     }
-    abstract fun createFragment() : Fragment
 }

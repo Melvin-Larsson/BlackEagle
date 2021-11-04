@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.ui.MainFragment
 
-class MainActivity : HamburgermenuActivity() {
+class MainActivity : SingleFragmentNavMenuActivity() {
     override fun createFragment(): Fragment{
         val fragment = MainFragment()
         fragment.onDeckSelected = {deck ->
