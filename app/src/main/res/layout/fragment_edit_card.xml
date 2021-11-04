@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--add card-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
+
     <!--Question-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/question" />
-
     <EditText
         android:id="@+id/edit_text_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <!--Answer-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/answer" />
-
     <EditText
         android:id="@+id/edit_text_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <!--Hint-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hint" />
-
     <EditText
         android:id="@+id/hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <!--button-->
     <Button
         android:id="@+id/button_add_card"
         android:layout_width="match_parent"

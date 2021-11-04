@@ -10,7 +10,6 @@ import com.inglarna.blackeagle.databinding.ActivityFragmentBinding
 
 abstract class SingleFragmentActivity : AppCompatActivity(){
 
-    lateinit var toggle: ActionBarDrawerToggle
     lateinit var binding: ActivityFragmentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

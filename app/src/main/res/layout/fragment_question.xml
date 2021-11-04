@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--frontside of the cards when studying-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,6 +8,7 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <!--question-->
     <TextView
         android:id="@+id/text_view_question"
         android:layout_width="wrap_content"
@@ -27,6 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_question" />
 
+    <!--answer comes up when show answer is clicked-->
     <TextView
         android:id="@+id/text_view_answer"
         android:layout_width="wrap_content"
@@ -38,6 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view"
         tools:text="This is a temporary answer, and the answer is yes" />
 
+    <!--show hind button-->
     <Button
         android:id="@+id/button_show_hint"
         android:layout_width="match_parent"
@@ -50,6 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_answer" />
 
+    <!--hint-->
     <TextView
         android:id="@+id/text_view_hint"
         android:layout_width="wrap_content"
@@ -61,6 +67,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button_show_hint"
         tools:text="This is a temporary hint, the answer might be yes" />
 
+    <!--show answer-->
     <Button
         android:id="@+id/button_show_answer"
         android:layout_width="match_parent"

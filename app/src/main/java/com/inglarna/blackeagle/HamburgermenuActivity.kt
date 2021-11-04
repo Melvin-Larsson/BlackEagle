@@ -22,13 +22,14 @@ abstract class HamburgermenuActivity: AppCompatActivity() {
                 .replace(R.id.fragment_container, createFragment())
                 .commitNow()
         }
-        //Navigation menu
 
+        //Navigation menu
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.navView.setNavigationItemSelectedListener {
+            //when clicking in the hamburgermenu
             when(it.itemId) {
                 R.id.yourDecks -> startDecks()
                 R.id.convertNumbers -> startConvertNumbers()
