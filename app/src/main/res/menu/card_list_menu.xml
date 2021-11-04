@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--toolbar for cardListActivity-->
-
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -14,5 +13,10 @@
         android:id="@+id/favoriteStudy"
         android:title="@string/favorite_study"
         android:icon="@drawable/ic_favorite_study"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/delete"
+        android:title="@string/delete"
+        android:icon="@drawable/ic_delete"
         app:showAsAction="ifRoom"/>
 </menu>

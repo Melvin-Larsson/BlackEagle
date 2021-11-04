@@ -25,4 +25,5 @@
     <string name="favourites">Favourites</string>
     <string name="deck_to_add">What is the name of the deck?</string>
     <string name="add_deck">Add</string>
+    <string name="delete">delete</string>
 </resources>
