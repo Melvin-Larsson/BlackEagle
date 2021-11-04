@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.ui.CardListFragment
 
-class CardListActivity : SingleFragmentNavMenuActivity() {
+class CardListActivity : SingleFragmentActivity() {
     override fun createFragment(): Fragment = CardListFragment()
 
     //card list menu is used as a toolbar
@@ -18,6 +18,10 @@ class CardListActivity : SingleFragmentNavMenuActivity() {
     //when clicking in the toolbar
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
+            android.R.id.home ->{
+                finish()
+                return true
+            }
             R.id.startStudy -> Toast.makeText(this, "you clicked on start study", Toast.LENGTH_SHORT).show()
             R.id.favoriteStudy -> Toast.makeText(this, "I love you", Toast.LENGTH_SHORT).show()
         }

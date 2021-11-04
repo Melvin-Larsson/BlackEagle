@@ -24,4 +24,10 @@ abstract class SingleFragmentActivity : AppCompatActivity(){
         }
     }
     abstract fun createFragment(): Fragment
+
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
 }
