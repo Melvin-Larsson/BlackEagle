@@ -23,7 +23,11 @@
             android:exported="true">
         </activity>
         <activity android:name=".EditConvertNumbersActivity"
-            android:exported="true">
+            android:exported="true"
+            android:parentActivityName="ConvertNumbersActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ConvertNumbersActivity"/>
         </activity>
         <activity android:name=".AboutActivity"
             android:exported="true">
