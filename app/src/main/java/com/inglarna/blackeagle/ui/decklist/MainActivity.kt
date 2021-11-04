@@ -1,9 +1,10 @@
-package com.inglarna.blackeagle
+package com.inglarna.blackeagle.ui.decklist
 
 import android.content.Intent
 import androidx.fragment.app.Fragment
+import com.inglarna.blackeagle.ui.SingleFragmentNavMenuActivity
 import com.inglarna.blackeagle.model.Deck
-import com.inglarna.blackeagle.ui.MainFragment
+import com.inglarna.blackeagle.ui.cardlist.CardListActivity
 
 class MainActivity : SingleFragmentNavMenuActivity() {
     override fun createFragment(): Fragment{

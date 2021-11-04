@@ -1,4 +1,4 @@
-package com.inglarna.blackeagle.ui
+package com.inglarna.blackeagle.ui.cardlist
 
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView

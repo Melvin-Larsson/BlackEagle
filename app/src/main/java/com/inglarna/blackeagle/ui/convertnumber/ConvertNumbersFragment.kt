@@ -1,12 +1,10 @@
-package com.inglarna.blackeagle.ui
+package com.inglarna.blackeagle.ui.convertnumber
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.inglarna.blackeagle.SettingsActivity
 import com.inglarna.blackeagle.databinding.FragmentConvertNumbersBinding
 
 class ConvertNumbersFragment: Fragment() {

@@ -1,7 +1,7 @@
-package com.inglarna.blackeagle
+package com.inglarna.blackeagle.ui.about
 
 import androidx.fragment.app.Fragment
-import com.inglarna.blackeagle.ui.AboutFragment
+import com.inglarna.blackeagle.ui.SingleFragmentNavMenuActivity
 
 //aboutActivity
 class AboutActivity: SingleFragmentNavMenuActivity() {

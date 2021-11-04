@@ -1,4 +1,4 @@
-package com.inglarna.blackeagle.ui
+package com.inglarna.blackeagle.ui.editnumbers
 
 import android.os.Bundle
 import android.view.LayoutInflater

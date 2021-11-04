@@ -1,9 +1,8 @@
-package com.inglarna.blackeagle
+package com.inglarna.blackeagle.ui.editnumbers
 
-import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import com.inglarna.blackeagle.ui.EditConvertNumbersFragment
+import com.inglarna.blackeagle.ui.SingleFragmentActivity
 
 class EditConvertNumbersActivity: SingleFragmentActivity() {
     override fun createFragment(): Fragment = EditConvertNumbersFragment()

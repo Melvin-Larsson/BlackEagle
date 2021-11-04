@@ -9,36 +9,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BlackEagle">
-        <activity android:name=".MainActivity"
+        <activity android:name=".ui.decklist.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity"
+        <activity android:name=".ui.settings.SettingsActivity"
             android:exported="true">
         </activity>
-        <activity android:name=".ConvertNumbersActivity"
+        <activity android:name=".ui.convertnumber.ConvertNumbersActivity"
             android:exported="true">
         </activity>
-        <activity android:name=".EditConvertNumbersActivity"
+        <activity android:name=".ui.editnumbers.EditConvertNumbersActivity"
             android:exported="true"
-            android:parentActivityName="ConvertNumbersActivity">
+            android:parentActivityName=".ui.convertnumber.ConvertNumbersActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ConvertNumbersActivity"/>
+                android:value=".ui.convertnumber.ConvertNumbersActivity"/>
         </activity>
-        <activity android:name=".AboutActivity"
+        <activity android:name=".ui.about.AboutActivity"
             android:exported="true">
         </activity>
 
-        <activity android:name=".CardListActivity"
+        <activity android:name=".ui.cardlist.CardListActivity"
             android:exported="true"
-            android:parentActivityName="MainActivity">
+            android:parentActivityName=".ui.decklist.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".ui.decklist.MainActivity"/>
         </activity>
 
     </application>

@@ -1,10 +1,11 @@
-package com.inglarna.blackeagle
+package com.inglarna.blackeagle.ui.cardlist
 
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.inglarna.blackeagle.ui.CardListFragment
+import com.inglarna.blackeagle.R
+import com.inglarna.blackeagle.ui.SingleFragmentActivity
 
 class CardListActivity : SingleFragmentActivity() {
     override fun createFragment(): Fragment = CardListFragment()

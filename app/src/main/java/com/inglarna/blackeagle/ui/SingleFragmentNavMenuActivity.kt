@@ -1,12 +1,14 @@
-package com.inglarna.blackeagle
+package com.inglarna.blackeagle.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.inglarna.blackeagle.databinding.ActivityFragmentBinding
+import com.inglarna.blackeagle.R
+import com.inglarna.blackeagle.ui.about.AboutActivity
+import com.inglarna.blackeagle.ui.convertnumber.ConvertNumbersActivity
+import com.inglarna.blackeagle.ui.decklist.MainActivity
+import com.inglarna.blackeagle.ui.settings.SettingsActivity
 
 abstract class SingleFragmentNavMenuActivity: SingleFragmentActivity() {
     lateinit var toggle: ActionBarDrawerToggle

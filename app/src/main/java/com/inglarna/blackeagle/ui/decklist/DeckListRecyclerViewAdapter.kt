@@ -1,15 +1,11 @@
-package com.inglarna.blackeagle.ui
+package com.inglarna.blackeagle.ui.decklist
 
 import android.content.Context
-import android.content.res.Resources
-import android.text.Layout
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.ListItemDeckBinding
-import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.model.Deck
 
 class DeckListRecyclerViewAdapter(val context : Context) : RecyclerView.Adapter<DeckListViewHolder>() {

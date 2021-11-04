@@ -1,4 +1,4 @@
-package com.inglarna.blackeagle.ui
+package com.inglarna.blackeagle.ui.cardlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
