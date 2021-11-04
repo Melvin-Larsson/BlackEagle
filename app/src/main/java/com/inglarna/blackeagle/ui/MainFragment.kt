@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TableLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
+import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckPagerBinding
 import com.inglarna.blackeagle.model.Deck
 
@@ -29,7 +30,12 @@ class MainFragment : Fragment() {
 
         binding.deckPager.adapter = adapter
         TabLayoutMediator(binding.deckTabLayout, binding.deckPager){tab, position ->
-            tab.text = "Position: " + position
+            tab.text = when(position){
+                0 -> getString(R.string.all)
+                1 -> getString(R.string.folders)
+                2 -> getString(R.string.favourites)
+                else -> ""
+            }
         }.attach()
     }
 }
