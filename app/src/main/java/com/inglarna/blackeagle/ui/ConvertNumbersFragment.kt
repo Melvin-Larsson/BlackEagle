@@ -16,7 +16,6 @@ class ConvertNumbersFragment: Fragment() {
 
     interface Callbacks{
         fun onEditButtonPressed() {
-
         }
     }
 

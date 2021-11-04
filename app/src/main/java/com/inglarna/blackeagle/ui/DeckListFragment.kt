@@ -8,9 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import com.inglarna.blackeagle.databinding.FragmentDeckListBinding
+import com.inglarna.blackeagle.model.Deck
 
 class DeckListFragment : Fragment() {
     private lateinit var binding : FragmentDeckListBinding
+    lateinit var onDeckSelected: ((Deck) -> Unit)
 
     companion object{
         fun newInstance() = DeckListFragment()
@@ -21,7 +23,10 @@ class DeckListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.deckRecyclerView.adapter = DeckListRecyclerViewAdapter(requireContext())
+        val adapter = DeckListRecyclerViewAdapter(requireContext())
+        adapter.onDeckClicked = onDeckSelected
+        binding.deckRecyclerView.adapter = adapter
         binding.deckRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
+
 }

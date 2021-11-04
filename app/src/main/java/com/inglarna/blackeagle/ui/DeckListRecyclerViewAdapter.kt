@@ -14,6 +14,11 @@ import com.inglarna.blackeagle.model.Deck
 
 class DeckListRecyclerViewAdapter(val context : Context) : RecyclerView.Adapter<DeckListViewHolder>() {
     private val decks = arrayOf(Deck("Kortlek 1"), Deck("Kortlek 2"), Deck("Kortlek 3"))
+    lateinit var onDeckClicked: ((Deck) -> Unit)
+
+    interface DeckListRecyclerViewListener{
+        fun onDeckClicked(deck : Deck)
+    }
 
     companion object{
         private const val TAG = "DeckListAdapter"
@@ -27,6 +32,9 @@ class DeckListRecyclerViewAdapter(val context : Context) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: DeckListViewHolder, position: Int) {
         holder.binding.textViewDeckName.text = decks[position].name
         holder.binding.textViewCardCount.text = context.resources.getString(R.string.card_count, decks[position].cards.size)
+        holder.itemView.setOnClickListener{
+            onDeckClicked(decks[position])
+        }
     }
 
     override fun getItemCount(): Int {

@@ -8,10 +8,12 @@ import android.widget.TableLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.inglarna.blackeagle.databinding.FragmentDeckPagerBinding
+import com.inglarna.blackeagle.model.Deck
 
 class MainFragment : Fragment() {
 
     lateinit var binding : FragmentDeckPagerBinding
+    lateinit var onDeckSelected: ((Deck) -> Unit)
 
     companion object{
         fun newInstance() = MainFragment()
@@ -22,7 +24,10 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.deckPager.adapter = DeckFragmentPagerAdapter(this)
+        val adapter = DeckFragmentPagerAdapter(this)
+        adapter.onDeckSelected = onDeckSelected
+
+        binding.deckPager.adapter = adapter
         TabLayoutMediator(binding.deckTabLayout, binding.deckPager){tab, position ->
             tab.text = "Position: " + position
         }.attach()
