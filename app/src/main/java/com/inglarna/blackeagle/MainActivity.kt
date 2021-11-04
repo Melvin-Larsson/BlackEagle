@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.ui.MainFragment
 
+class MainActivity : HamburgermenuActivity() {
+    override fun createFragment(): Fragment = MainFragment()
 class MainActivity: SingleFragmentActivity() {
     override fun createFragment(): Fragment{
         val fragment = MainFragment()

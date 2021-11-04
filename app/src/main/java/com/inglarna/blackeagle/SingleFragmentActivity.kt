@@ -18,50 +18,11 @@ abstract class SingleFragmentActivity : AppCompatActivity(){
         //Create view
         binding = ActivityFragmentBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, createFragment())
                 .commitNow()
         }
-        //Navigation menu
-        toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
-        binding.drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.navView.setNavigationItemSelectedListener {
-            when(it.itemId) {
-                R.id.yourDecks -> startDecks()
-                R.id.convertNumbers -> startConvertNumbers()
-                R.id.settings -> startSettings()
-                R.id.stats -> startStats()
-                R.id.about -> startAbout()
-            }
-            true
-        }
     }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)){
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-    //button functions
-    private fun startDecks(){
-        startActivity(Intent(this, MainActivity::class.java))
-    }
-    private fun startConvertNumbers(){
-        startActivity(Intent(this, ConvertNumbersActivity::class.java))
-    }
-    private fun startSettings(){
-        startActivity(Intent(this, SettingsActivity::class.java))
-    }
-    private fun startStats(){
-        //startActivity(Intent(this, StatsActivity::class.java))
-    }
-    private fun startAbout(){
-        startActivity(Intent(this, AboutActivity::class.java))
-    }
-    abstract fun createFragment() : Fragment
-
-
+    abstract fun createFragment(): Fragment
 }
