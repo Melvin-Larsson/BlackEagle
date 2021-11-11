@@ -1,14 +1,24 @@
 package com.inglarna.blackeagle.ui.cardlist
 
+import android.content.Intent
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.ui.SingleFragmentActivity
+import com.inglarna.blackeagle.ui.addcard.AddCardActivity
 
 class CardListActivity : SingleFragmentActivity() {
-    override fun createFragment(): Fragment = CardListFragment()
+    override fun createFragment(): Fragment{
+        val fragment = CardListFragment()
+        fragment.onAddCardClicked = {
+            startActivity(Intent(this, AddCardActivity::class.java))
+            Log.d("INGVAR", "onAddCardClicked")
+        }
+        return fragment
+    }
 
     //card list menu is used as a toolbar
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
