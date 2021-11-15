@@ -9,7 +9,7 @@ import com.inglarna.blackeagle.ui.about.AboutActivity
 import com.inglarna.blackeagle.ui.convertnumber.ConvertNumbersActivity
 import com.inglarna.blackeagle.ui.decklist.MainActivity
 import com.inglarna.blackeagle.ui.settings.SettingsActivity
-
+//Test
 abstract class SingleFragmentNavMenuActivity: SingleFragmentActivity() {
     lateinit var toggle: ActionBarDrawerToggle
 
