@@ -1,10 +1,8 @@
 package com.inglarna.blackeagle.db
 
-import androidx.room.Dao
-import androidx.room.Insert
+import androidx.room.*
 import androidx.room.OnConflictStrategy.IGNORE
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.OnConflictStrategy.REPLACE
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.model.DeckWithCards
 
@@ -20,4 +18,9 @@ interface DeckDao {
 
     @Insert(onConflict = IGNORE)
     fun insertDeck(deck: Deck) : Long?
+
+    @Update(onConflict = REPLACE)
+    fun updateDeck(deck: Deck)
+
+
 }
