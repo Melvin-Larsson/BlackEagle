@@ -12,7 +12,7 @@
     <item
         android:id="@+id/favoriteStudy"
         android:title="@string/favorite_study"
-        android:icon="@drawable/ic_favorite_study"
+        android:icon="@drawable/ic_favorite_study_border"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/delete"

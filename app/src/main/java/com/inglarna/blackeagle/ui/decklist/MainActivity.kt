@@ -19,9 +19,12 @@ class MainActivity : SingleFragmentNavMenuActivity() {
         }
         return fragment
     }
-
+    companion object{
+        const val DECK_ID = "deckId"
+    }
     fun startCardActivity(deck: Deck) {
         val intent = Intent(this, CardListActivity::class.java)
+        intent.putExtra(DECK_ID, deck.id)
         startActivity(intent)
     }
 }
