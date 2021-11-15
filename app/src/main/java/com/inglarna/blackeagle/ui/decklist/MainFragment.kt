@@ -12,7 +12,10 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckPagerBinding
+import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Deck
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainFragment : Fragment() {
 
@@ -52,8 +55,13 @@ class MainFragment : Fragment() {
             .setTitle(R.string.deck_to_add)
             .setView(deckEditText)
             .setPositiveButton(R.string.add_deck){dialog, _ ->
-                val deck = deckEditText.text.toString()
-                //TODO add deck
+                //Add deck to database
+                val deck = Deck()
+                deck.name = deckEditText.text.toString()
+                val deckDao = BlackEagleDatabase.getInstance(requireContext()).deckDao()
+                GlobalScope.launch{
+                    deckDao.insertDeck(deck)
+                }
                 Toast.makeText(requireContext(), "Added $deck", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
             }

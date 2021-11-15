@@ -9,7 +9,11 @@ import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.model.DeckWithCards
 
 @Dao
-interface  DeckDao {
+interface DeckDao {
+    @Transaction
+    @Query("SELECT * FROM Deck WHERE id=:id")
+    fun getDeck(id: Deck) : Deck
+
     @Transaction
     @Query("SELECT * From Deck")
     fun getDecks(): List<DeckWithCards>
