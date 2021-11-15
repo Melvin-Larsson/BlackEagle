@@ -12,7 +12,7 @@ import com.inglarna.blackeagle.model.DeckWithCards
 interface DeckDao {
     @Transaction
     @Query("SELECT * FROM Deck WHERE id=:id")
-    fun getDeck(id: Long) : Long
+    fun getDeck(id: Long) : Deck
 
     @Transaction
     @Query("SELECT * From Deck")
