@@ -1,5 +1,6 @@
 package com.inglarna.blackeagle.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.OnConflictStrategy.REPLACE
@@ -8,9 +9,16 @@ import com.inglarna.blackeagle.model.DeckWithCards
 
 @Dao
 interface DeckDao {
+    @Query ("SELECT * FROM deck")
+    fun loadAll(): LiveData<List<Deck>>
+
     @Transaction
     @Query("SELECT * FROM Deck WHERE id=:id")
     fun getDeck(id: Long) : Deck
+
+    @Transaction
+    @Query ("SELECT * FROM Deck WHERE id= :id")
+    fun loadLiveDeck(id: Long) : LiveData<Deck>
 
     @Transaction
     @Query("SELECT * From Deck")
