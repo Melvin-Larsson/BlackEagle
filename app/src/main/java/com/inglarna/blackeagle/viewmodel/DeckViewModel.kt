@@ -32,6 +32,6 @@ class DeckViewModel(application: Application) : AndroidViewModel(application) {
 
     data class DeckView(
         var id: Long? = null,
-        var favourite :  Boolean = false
+        var favorite :  Boolean = false
     )
 }

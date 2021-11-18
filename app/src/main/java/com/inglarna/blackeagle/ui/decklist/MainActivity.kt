@@ -27,6 +27,7 @@ class MainActivity : SingleFragmentNavMenuActivity() {
     }
     companion object{
         const val DECK_ID = "deckId"
+        const val DECK_FAVORITE = "deckFavorite"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +46,7 @@ class MainActivity : SingleFragmentNavMenuActivity() {
     fun startCardActivity(deck: Deck) {
         val intent = Intent(this, CardListActivity::class.java)
         intent.putExtra(DECK_ID, deck.id)
+        intent.putExtra(DECK_FAVORITE, deck.favorite)
         startActivity(intent)
     }
 }
