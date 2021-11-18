@@ -12,14 +12,14 @@ class DeckViewModel(application: Application) : AndroidViewModel(application) {
     private var decks: LiveData<List<DeckView>>? = null
 
     fun addDeck(deck: Deck){
-        deckRepo.addDeck(deck);
+        deckRepo.addDeck(deck)
     }
 
     fun getDeckViews(): LiveData<List<DeckView>>? {
         if(decks == null){
             deckToDeckView()
         }
-        return decks;
+        return decks
     }
    private  fun deckToDeckView() {
         decks = Transformations.map(deckRepo.allDecks) { repoDecks ->
