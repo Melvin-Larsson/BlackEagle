@@ -12,7 +12,7 @@ class AddCardActivity : SingleFragmentActivity() {
      var id: Long = -1
 
      companion object{
-          const val DECK_ID = "deckId"
+          private const val DECK_ID = "deckId"
           fun newIntent(context: Context, deckId: Long?) : Intent{
                val intent = Intent(context, AddCardActivity::class.java)
                intent.putExtra(DECK_ID, deckId)

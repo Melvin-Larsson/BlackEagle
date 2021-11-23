@@ -13,7 +13,7 @@ class AddCardFragment : Fragment() {
     lateinit var binding : FragmentEditCardBinding
 
     companion object{
-        const val DECK_ID = "deckID"
+        private const val DECK_ID = "deckID"
         fun newInstance(id: Long): AddCardFragment {
             val addCardFragment = AddCardFragment()
             val bundle = Bundle()
