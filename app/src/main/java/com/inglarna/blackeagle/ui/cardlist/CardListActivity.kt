@@ -35,9 +35,7 @@ class CardListActivity : SingleFragmentActivity() {
     override fun createFragment(): Fragment{
         val fragment = CardListFragment()
         fragment.onAddCardClicked = {
-            val intent = Intent(Intent(this, AddCardActivity::class.java))
-            intent.putExtra(DECK_ID, id)
-            startActivity(intent)
+            startActivity(AddCardActivity.newIntent(this, id))
         }
         return fragment
     }
