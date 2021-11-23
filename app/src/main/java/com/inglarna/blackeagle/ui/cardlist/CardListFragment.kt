@@ -26,8 +26,9 @@ class CardListFragment : Fragment() {
     companion object{
         private const val DECK_ID = "deckId"
         fun newInstance(deckId: Long) : CardListFragment{
-            val fragment = CardListFragment();
-            val bundle = Bundle();
+            val fragment = CardListFragment()
+            val bundle = Bundle()
+            
             bundle.putLong(DECK_ID, deckId)
             fragment.arguments = bundle
             return fragment
@@ -41,6 +42,7 @@ class CardListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         deckId = arguments!!.getLong(DECK_ID, -1)
+        Log.d("tjo", "" + deckId)
         binding.recyclerViewCard.adapter = CardListRecyclerViewAdapter(cardViewModel.getDeckViews(deckId), this)
         binding.recyclerViewCard.layoutManager = LinearLayoutManager(requireContext())
         binding.buttonAddCard.setOnClickListener{
