@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 class CardListActivity : SingleFragmentActivity() {
 
     var id: Long = -1
-    var favorite = false
     private val deckViewModel by viewModels<DeckViewModel>()
     private var favoriteButton: MenuItem? = null
 
@@ -39,22 +38,19 @@ class CardListActivity : SingleFragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         id = intent.getLongExtra(MainActivity.DECK_ID, -1)
-        deckViewModel.getDeckViews()?.observe(this,{decks->
-            Log.d("nånting", "" + decks.size)
-            for(deck in decks){
-                if (deck.id == id){
-                    setFavoriteIcon(deck.favorite)
-                }
-            }
-        })
     }
 
     //card list menu is used as a toolbar
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.card_list_menu, menu)
         favoriteButton = menu?.findItem(R.id.favoriteStudy)
-        favorite = intent.getBooleanExtra(MainActivity.DECK_FAVORITE, false)
-        setFavoriteIcon(favorite)
+        deckViewModel.getDeckViews()?.observe(this,{decks->
+            for(deck in decks){
+                if (deck.id == id){
+                    setFavoriteIcon(deck.favorite)
+                }
+            }
+        })
         return true
     }
 
@@ -85,9 +81,9 @@ class CardListActivity : SingleFragmentActivity() {
     }
     private fun setFavoriteIcon(favorite: Boolean){
         if (favorite){
-            favoriteButton?.setIcon(R.drawable.ic_favorite_study_border)
-        }else{
             favoriteButton?.setIcon(R.drawable.ic_favorite_study)
+        }else{
+            favoriteButton?.setIcon(R.drawable.ic_favorite_study_border)
         }
     }
 }

@@ -27,12 +27,10 @@ class MainActivity : SingleFragmentNavMenuActivity() {
     }
     companion object{
         const val DECK_ID = "deckId"
-        const val DECK_FAVORITE = "deckFavorite"
     }
     fun startCardActivity(deck: DeckViewModel.DeckView) {
         val intent = Intent(this, CardListActivity::class.java)
         intent.putExtra(DECK_ID, deck.id)
-        intent.putExtra(DECK_FAVORITE, deck.favorite)
         startActivity(intent)
     }
 }
