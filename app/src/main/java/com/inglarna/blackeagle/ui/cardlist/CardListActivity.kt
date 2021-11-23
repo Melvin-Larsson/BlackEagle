@@ -1,5 +1,6 @@
 package com.inglarna.blackeagle.ui.cardlist
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,11 @@ class CardListActivity : SingleFragmentActivity() {
 
     companion object{
         const val DECK_ID = "deckId"
+        fun newIntent(context: Context, deckId : Long?) : Intent{
+            val intent = Intent(context, CardListActivity::class.java)
+            intent.putExtra(DECK_ID, deckId)
+            return intent
+        }
     }
     override fun createFragment(): Fragment{
         val fragment = CardListFragment()
@@ -37,7 +43,7 @@ class CardListActivity : SingleFragmentActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        id = intent.getLongExtra(MainActivity.DECK_ID, -1)
+        id = intent.getLongExtra(DECK_ID, -1)
     }
 
     //card list menu is used as a toolbar
