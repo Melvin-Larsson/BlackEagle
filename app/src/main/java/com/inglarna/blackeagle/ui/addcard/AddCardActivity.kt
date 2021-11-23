@@ -23,7 +23,7 @@ class AddCardActivity : SingleFragmentActivity() {
      override fun createFragment(): Fragment = AddCardFragment.newInstance(id)
 
      override fun onCreate(savedInstanceState: Bundle?) {
-          super.onCreate(savedInstanceState)
           id = intent.getLongExtra(DECK_ID, -1)
+          super.onCreate(savedInstanceState)
      }
 }
