@@ -25,7 +25,7 @@ class MainActivity : SingleFragmentNavMenuActivity() {
         }
         return fragment
     }
-    fun startCardActivity(deck: DeckViewModel.DeckView) {
+    fun startCardActivity(deck: Deck) {
         startActivity(CardListActivity.newIntent(this, deck.id))
     }
 }

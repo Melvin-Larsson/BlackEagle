@@ -16,7 +16,7 @@ import com.inglarna.blackeagle.viewmodel.DeckViewModel
 
 class DeckListFragment : Fragment() {
     private lateinit var binding : FragmentDeckListBinding
-    lateinit var onDeckSelected: ((DeckViewModel.DeckView) -> Unit)
+    lateinit var onDeckSelected: ((Deck) -> Unit)
     private val deckViewModel by viewModels<DeckViewModel>()
     private lateinit var deckRecyclerViewAdapter: DeckListRecyclerViewAdapter
 

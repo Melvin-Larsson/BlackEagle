@@ -19,9 +19,9 @@ import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class DeckListRecyclerViewAdapter(val context : Context, private val liveData: LiveData<List<DeckViewModel.DeckView>>?, private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<DeckListViewHolder>() {
-    private var decks: List<DeckViewModel.DeckView> = ArrayList<DeckViewModel.DeckView>()
-    lateinit var onDeckClicked: ((DeckViewModel.DeckView) -> Unit)
+class DeckListRecyclerViewAdapter(val context : Context, private val liveData: LiveData<List<Deck>>?, private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<DeckListViewHolder>() {
+    private var decks: List<Deck> = ArrayList<Deck>()
+    lateinit var onDeckClicked: ((Deck) -> Unit)
 
     init {
         liveData?.observe(lifecycleOwner){

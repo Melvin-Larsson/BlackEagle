@@ -9,22 +9,22 @@ import com.inglarna.blackeagle.repository.DeckRepo
 
 class DeckViewModel(application: Application) : AndroidViewModel(application) {
     private var deckRepo: DeckRepo = DeckRepo(getApplication())
-    private var decks: LiveData<List<DeckView>>? = null
+    private var decks: LiveData<List<Deck>>? = null
 
     fun addDeck(deck: Deck){
         deckRepo.addDeck(deck)
     }
 
-    fun getDeckViews(): LiveData<List<DeckView>>? {
+    fun getDeckViews(): LiveData<List<Deck>>? {
         if(decks == null){
-            deckToDeckView()
+            decks = deckRepo.allDecks
         }
         return decks
     }
-   private fun deckToDeckView() {
+   /*private fun deckToDeckView() {
         decks = Transformations.map(deckRepo.allDecks) { repoDecks ->
             repoDecks.map { deck ->
-                deckToDeckView(deck)
+                deck
             }
         }
     }
@@ -34,5 +34,5 @@ class DeckViewModel(application: Application) : AndroidViewModel(application) {
         var id: Long? = null,
         var favorite :  Boolean = false,
         var name : String = ""
-    )
+    )*/
 }

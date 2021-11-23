@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class MainFragment : Fragment() {
 
     lateinit var binding : FragmentDeckPagerBinding
-    lateinit var onDeckSelected: ((DeckViewModel.DeckView) -> Unit)
+    lateinit var onDeckSelected: ((Deck) -> Unit)
 
     companion object{
         fun newInstance() = MainFragment()
