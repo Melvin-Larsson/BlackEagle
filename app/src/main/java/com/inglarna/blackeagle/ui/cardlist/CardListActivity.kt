@@ -5,15 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.db.BlackEagleDatabase
-import com.inglarna.blackeagle.db.BlackEagleDatabase_Impl
-import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.ui.SingleFragmentActivity
 import com.inglarna.blackeagle.ui.addcard.AddCardActivity
 import com.inglarna.blackeagle.ui.decklist.MainActivity
@@ -28,10 +24,15 @@ class CardListActivity : SingleFragmentActivity() {
     private val deckViewModel by viewModels<DeckViewModel>()
     private var favoriteButton: MenuItem? = null
 
+    companion object{
+        const val DECK_ID = "deckId"
+    }
     override fun createFragment(): Fragment{
         val fragment = CardListFragment()
         fragment.onAddCardClicked = {
-            startActivity(Intent(this, AddCardActivity::class.java))
+            val intent = Intent(Intent(this, AddCardActivity::class.java))
+            intent.putExtra(DECK_ID, id)
+            startActivity(intent)
         }
         return fragment
     }
@@ -66,7 +67,7 @@ class CardListActivity : SingleFragmentActivity() {
                 return true
             }
             R.id.startStudy -> startStudy()
-            R.id.favoriteStudy -> favorites(item)
+            R.id.favoriteStudy -> favorites()
         }
         return true
     }
@@ -74,11 +75,11 @@ class CardListActivity : SingleFragmentActivity() {
     private fun startStudy(){
         Toast.makeText(this, "start study", Toast.LENGTH_SHORT).show()
     }
-    private fun favorites(item: MenuItem){
-        var deckDao = BlackEagleDatabase.getInstance(this).deckDao()
+    private fun favorites() {
+        val deckDao = BlackEagleDatabase.getInstance(this).deckDao()
 
         GlobalScope.launch {
-            var deck = deckDao.getDeck(id)
+            val deck = deckDao.getDeck(id)
             deck.favorite = !deck.favorite
             deckDao.updateDeck(deck)
         }
