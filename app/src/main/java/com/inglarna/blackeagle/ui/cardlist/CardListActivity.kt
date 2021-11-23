@@ -33,7 +33,7 @@ class CardListActivity : SingleFragmentActivity() {
         }
     }
     override fun createFragment(): Fragment{
-        val fragment = CardListFragment()
+        val fragment = CardListFragment.newInstance(id)
         fragment.onAddCardClicked = {
             startActivity(AddCardActivity.newIntent(this, id))
         }
