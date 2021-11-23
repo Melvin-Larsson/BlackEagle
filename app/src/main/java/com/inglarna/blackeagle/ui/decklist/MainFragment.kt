@@ -14,13 +14,14 @@ import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckPagerBinding
 import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Deck
+import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainFragment : Fragment() {
 
     lateinit var binding : FragmentDeckPagerBinding
-    lateinit var onDeckSelected: ((Deck) -> Unit)
+    lateinit var onDeckSelected: ((DeckViewModel.DeckView) -> Unit)
 
     companion object{
         fun newInstance() = MainFragment()

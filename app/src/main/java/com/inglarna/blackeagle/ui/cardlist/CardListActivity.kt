@@ -36,7 +36,6 @@ class CardListActivity : SingleFragmentActivity() {
         }
         return fragment
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         id = intent.getLongExtra(MainActivity.DECK_ID, -1)

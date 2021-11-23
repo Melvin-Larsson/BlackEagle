@@ -21,17 +21,18 @@ class DeckViewModel(application: Application) : AndroidViewModel(application) {
         }
         return decks
     }
-   private  fun deckToDeckView() {
+   private fun deckToDeckView() {
         decks = Transformations.map(deckRepo.allDecks) { repoDecks ->
             repoDecks.map { deck ->
                 deckToDeckView(deck)
             }
         }
     }
-    private fun deckToDeckView(deck: Deck) = DeckView(deck.id, deck.favorite)
+    private fun deckToDeckView(deck: Deck) = DeckView(deck.id, deck.favorite, deck.name)
 
     data class DeckView(
         var id: Long? = null,
-        var favorite :  Boolean = false
+        var favorite :  Boolean = false,
+        var name : String = ""
     )
 }
