@@ -26,4 +26,8 @@
     <string name="deck_to_add">What is the name of the deck?</string>
     <string name="add_deck">Add</string>
     <string name="delete">delete</string>
+    <string name="deck_header">Decks</string>
+    <string name="add_card_header">Add Card</string>
+    <string name="edit_convert_numbers_header">edit convert numbers</string>
+    <string name="convert_numbers_header">Convert Numbers</string>
 </resources>

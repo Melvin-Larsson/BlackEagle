@@ -43,6 +43,11 @@ class CardListActivity : SingleFragmentActivity() {
         id = intent.getLongExtra(DECK_ID, -1)
         //super.onCreate is after since it will call createFragment, createFragment needs a valid id
         super.onCreate(savedInstanceState)
+
+        deckViewModel.getDeck(id).observe(this, {deck->
+            val actionbar = supportActionBar
+            actionbar!!.title = deck.name
+        })
     }
 
     //card list menu is used as a toolbar

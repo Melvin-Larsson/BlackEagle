@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.ui.SingleFragmentActivity
 import com.inglarna.blackeagle.ui.cardlist.CardListActivity
 
@@ -25,5 +26,8 @@ class AddCardActivity : SingleFragmentActivity() {
      override fun onCreate(savedInstanceState: Bundle?) {
           id = intent.getLongExtra(DECK_ID, -1)
           super.onCreate(savedInstanceState)
+
+          val actionbar = supportActionBar
+          actionbar!!.title = getString(R.string.add_card_header)
      }
 }
