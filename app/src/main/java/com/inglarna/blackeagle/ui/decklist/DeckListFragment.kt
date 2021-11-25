@@ -19,17 +19,28 @@ class DeckListFragment : Fragment() {
     lateinit var onDeckSelected: ((Deck) -> Unit)
     private val deckViewModel by viewModels<DeckViewModel>()
     private lateinit var deckRecyclerViewAdapter: DeckListRecyclerViewAdapter
+    private var pageId = -1
 
     companion object{
-        fun newInstance() = DeckListFragment()
+        private const val PAGE_ID = "pageId"
+        fun newInstance(deckPage: Int): DeckListFragment{
+            val fragment = DeckListFragment()
+            val bundle = Bundle()
+
+            bundle.putInt(PAGE_ID, deckPage)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDeckListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        deckRecyclerViewAdapter = DeckListRecyclerViewAdapter(requireActivity(), deckViewModel.getDeckViews(), requireActivity())
+        pageId = arguments!!.getInt(PAGE_ID, -1)
+        deckRecyclerViewAdapter = DeckListRecyclerViewAdapter(requireActivity(), deckViewModel.getDeckViews(), requireActivity(), pageId)
         deckRecyclerViewAdapter.onDeckClicked = onDeckSelected
         binding.deckRecyclerView.adapter = deckRecyclerViewAdapter
         binding.deckRecyclerView.layoutManager = LinearLayoutManager(requireContext())

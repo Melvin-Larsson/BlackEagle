@@ -42,7 +42,6 @@ class CardListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         deckId = arguments!!.getLong(DECK_ID, -1)
-        Log.d("tjo", "" + deckId)
         binding.recyclerViewCard.adapter = CardListRecyclerViewAdapter(cardViewModel.getDeckViews(deckId), this)
         binding.recyclerViewCard.layoutManager = LinearLayoutManager(requireContext())
         binding.buttonAddCard.setOnClickListener{

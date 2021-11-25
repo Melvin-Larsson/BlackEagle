@@ -11,7 +11,7 @@ class DeckFragmentPagerAdapter (fragment: Fragment): FragmentStateAdapter(fragme
     lateinit var onDeckSelected: ((Deck) -> Unit)
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = DeckListFragment.newInstance()
+        val fragment = DeckListFragment.newInstance(position)
         fragment.onDeckSelected = onDeckSelected
         return fragment
     }
@@ -19,5 +19,4 @@ class DeckFragmentPagerAdapter (fragment: Fragment): FragmentStateAdapter(fragme
         public const val ARG_OBJECT = "object"
     }
 }
-
 

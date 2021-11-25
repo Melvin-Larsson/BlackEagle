@@ -19,13 +19,24 @@ import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class DeckListRecyclerViewAdapter(val context : Context, private val liveData: LiveData<List<Deck>>?, private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<DeckListViewHolder>() {
-    private var decks: List<Deck> = ArrayList<Deck>()
+class DeckListRecyclerViewAdapter(val context : Context,
+                                  private val liveData: LiveData<List<Deck>>?,
+                                  private val lifecycleOwner: LifecycleOwner,
+                                  private val pageId: Int) : RecyclerView.Adapter<DeckListViewHolder>() {
+    private var decks: MutableList<Deck> = ArrayList<Deck>()
     lateinit var onDeckClicked: ((Deck) -> Unit)
 
     init {
         liveData?.observe(lifecycleOwner){
-            decks = it
+            if (pageId == 2) {
+                for (deck in it) {
+                    if (deck.favorite) {
+                        decks.add(deck)
+                    }
+                }
+            }else{
+                decks = it.toMutableList()
+            }
             notifyDataSetChanged()
         }
     }
