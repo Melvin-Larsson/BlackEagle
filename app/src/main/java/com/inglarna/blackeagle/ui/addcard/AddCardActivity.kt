@@ -3,6 +3,9 @@ package com.inglarna.blackeagle.ui.addcard
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.ui.SingleFragmentActivity
 import com.inglarna.blackeagle.ui.cardlist.CardListActivity
@@ -25,5 +28,13 @@ class AddCardActivity : SingleFragmentActivity() {
      override fun onCreate(savedInstanceState: Bundle?) {
           id = intent.getLongExtra(DECK_ID, -1)
           super.onCreate(savedInstanceState)
+          supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+     }
+
+     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+          if(item.itemId == android.R.id.home){
+               finish()
+          }
+          return true
      }
 }
