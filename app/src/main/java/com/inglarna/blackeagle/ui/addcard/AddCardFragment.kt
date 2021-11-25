@@ -35,7 +35,8 @@ class AddCardFragment : Fragment() {
         deckId = arguments!!.getLong(DECK_ID, -1)
         binding = FragmentEditCardBinding.inflate(inflater, container, false)
         binding.buttonAddCard.setOnClickListener{
-            if (binding.editTextAnswer.text.toString() != "" && binding.editTextQuestion.text.toString() != "") {
+            val regexPattern = Regex("^\\s*$")
+            if (!regexPattern.matches(binding.editTextAnswer.text.toString()) && !regexPattern.matches(binding.editTextQuestion.text.toString())) {
                 val question = binding.editTextQuestion.text.toString()
                 val answer = binding.editTextAnswer.text.toString()
                 val hint = binding.hint.text.toString()
@@ -54,6 +55,8 @@ class AddCardFragment : Fragment() {
                 Toast.makeText(requireContext(), "du lade till ett kort", Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(requireContext(), "du din fuling, fyll i fälten", Toast.LENGTH_SHORT).show()
+                binding.editTextAnswer.setText("")
+                binding.editTextQuestion.setText("")
             }
         }
         return binding.root
