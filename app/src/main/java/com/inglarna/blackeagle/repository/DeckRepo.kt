@@ -16,6 +16,9 @@ class DeckRepo(context: Context) {
         deck.id = newId
         return newId
     }
+    fun getDeck(id: Long) : LiveData<Deck>{
+        return deckDao.loadLiveDeck(id)
+    }
     val allDecks: LiveData<List<Deck>>
         get(){
             return deckDao.loadAll()

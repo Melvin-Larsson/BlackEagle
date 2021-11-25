@@ -21,6 +21,9 @@ class DeckViewModel(application: Application) : AndroidViewModel(application) {
         }
         return decks
     }
+    fun getDeck(id: Long) : LiveData<Deck>{
+        return deckRepo.getDeck(id)
+    }
    /*private fun deckToDeckView() {
         decks = Transformations.map(deckRepo.allDecks) { repoDecks ->
             repoDecks.map { deck ->

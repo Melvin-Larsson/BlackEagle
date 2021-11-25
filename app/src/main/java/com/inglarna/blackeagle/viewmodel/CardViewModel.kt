@@ -9,6 +9,7 @@ import com.inglarna.blackeagle.repository.CardRepo
 
 class CardViewModel (application: Application) : AndroidViewModel(application){
     private var cardRepo: CardRepo = CardRepo(getApplication())
+    var id : Long = -1
 
     fun addCard(card: Card){
         cardRepo.addCard(card)
