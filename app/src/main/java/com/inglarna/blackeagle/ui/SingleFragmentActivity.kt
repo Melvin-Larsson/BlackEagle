@@ -20,6 +20,8 @@ abstract class SingleFragmentActivity : AppCompatActivity(){
                 .replace(R.id.fragment_container, createFragment())
                 .commitNow()
         }
+        val actionbar = supportActionBar
+        actionbar!!.title = getString(R.string.settings)
     }
     abstract fun createFragment(): Fragment
 

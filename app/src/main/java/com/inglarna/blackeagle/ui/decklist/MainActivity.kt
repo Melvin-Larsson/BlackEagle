@@ -25,7 +25,15 @@ class MainActivity : SingleFragmentNavMenuActivity() {
         }
         return fragment
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val actionbar = supportActionBar
+        actionbar!!.title = getString(R.string.deck_header)
+    }
     fun startCardActivity(deck: Deck) {
         startActivity(CardListActivity.newIntent(this, deck.id))
     }
+
 }

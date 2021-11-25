@@ -36,7 +36,8 @@ class AddCardFragment : Fragment() {
         binding = FragmentEditCardBinding.inflate(inflater, container, false)
         binding.buttonAddCard.setOnClickListener{
             val regexPattern = Regex("^\\s*$")
-            if (!regexPattern.matches(binding.editTextAnswer.text.toString()) && !regexPattern.matches(binding.editTextQuestion.text.toString())) {
+            if (!regexPattern.matches(binding.editTextAnswer.text.toString()) &&
+                !regexPattern.matches(binding.editTextQuestion.text.toString())) {
                 val question = binding.editTextQuestion.text.toString()
                 val answer = binding.editTextAnswer.text.toString()
                 val hint = binding.hint.text.toString()
