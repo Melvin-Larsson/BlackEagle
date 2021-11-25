@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.inglarna.blackeagle.databinding.FragmentEditCardBinding
@@ -18,6 +19,7 @@ class AddCardFragment : Fragment() {
     lateinit var binding : FragmentEditCardBinding
     private val cardViewModel by viewModels<CardViewModel>()
     private var deckId: Long= -1
+
 
     companion object{
         private const val DECK_ID = "deckID"
@@ -33,17 +35,28 @@ class AddCardFragment : Fragment() {
         deckId = arguments!!.getLong(DECK_ID, -1)
         binding = FragmentEditCardBinding.inflate(inflater, container, false)
         binding.buttonAddCard.setOnClickListener{
-            var question = binding.editTextQuestion.text.toString()
-            var answer = binding.editTextAnswer.text.toString()
-            var hint = binding.hint.text.toString()
+            val regexPattern = Regex("^\\s*$")
+            if (!regexPattern.matches(binding.editTextAnswer.text.toString()) && !regexPattern.matches(binding.editTextQuestion.text.toString())) {
+                val question = binding.editTextQuestion.text.toString()
+                val answer = binding.editTextAnswer.text.toString()
+                val hint = binding.hint.text.toString()
 
-            var card = Card()
-            card.deckId = deckId
-            card.question = question
-            card.answer = answer
-            card.hint = hint
-            GlobalScope.launch {
-                cardViewModel.addCard(card)
+                val card = Card()
+                card.deckId = deckId
+                card.question = question
+                card.answer = answer
+                card.hint = hint
+                GlobalScope.launch {
+                    cardViewModel.addCard(card)
+                }
+                binding.editTextAnswer.setText("")
+                binding.editTextQuestion.setText("")
+                binding.hint.setText("")
+                Toast.makeText(requireContext(), "du lade till ett kort", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(requireContext(), "du din fuling, fyll i fälten", Toast.LENGTH_SHORT).show()
+                binding.editTextAnswer.setText("")
+                binding.editTextQuestion.setText("")
             }
         }
         return binding.root
