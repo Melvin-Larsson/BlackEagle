@@ -10,16 +10,23 @@ import com.inglarna.blackeagle.repository.DeckRepo
 class DeckViewModel(application: Application) : AndroidViewModel(application) {
     private var deckRepo: DeckRepo = DeckRepo(getApplication())
     private var decks: LiveData<List<Deck>>? = null
+    private var favoriteDecks: LiveData<List<Deck>>? = null
 
     fun addDeck(deck: Deck){
         deckRepo.addDeck(deck)
     }
 
-    fun getDeckViews(): LiveData<List<Deck>>? {
+    fun getDecks(): LiveData<List<Deck>>? {
         if(decks == null){
             decks = deckRepo.allDecks
         }
         return decks
+    }
+    fun getFavoriteDecks(): LiveData<List<Deck>>?{
+        if(favoriteDecks == null){
+            favoriteDecks = deckRepo.favoriteDecks
+        }
+        return favoriteDecks
     }
     fun getDeck(id: Long) : LiveData<Deck>{
         return deckRepo.getDeck(id)

@@ -3,7 +3,6 @@ package com.inglarna.blackeagle.ui.cardlist
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -13,7 +12,6 @@ import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.ui.SingleFragmentActivity
 import com.inglarna.blackeagle.ui.addcard.AddCardActivity
-import com.inglarna.blackeagle.ui.decklist.MainActivity
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
