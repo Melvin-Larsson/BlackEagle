@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class CardListActivity : SingleFragmentActivity() {
 
     var id: Long = -1
-    private val deckViewModel by viewModels<DeckViewModel>()
+    private val cardListModel by viewModels<DeckViewModel>()
     private var favoriteButton: MenuItem? = null
 
     companion object{
@@ -44,7 +44,7 @@ class CardListActivity : SingleFragmentActivity() {
         //super.onCreate is after since it will call createFragment, createFragment needs a valid id
         super.onCreate(savedInstanceState)
 
-        deckViewModel.getDeck(id).observe(this, {deck->
+        cardListModel.getDeck(id).observe(this, {deck->
             val actionbar = supportActionBar
             actionbar!!.title = deck.name
         })
@@ -54,7 +54,7 @@ class CardListActivity : SingleFragmentActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.card_list_menu, menu)
         favoriteButton = menu?.findItem(R.id.favoriteStudy)
-        deckViewModel.getDeckViews()?.observe(this,{decks->
+        cardListModel.getDeckViews()?.observe(this,{decks->
             for(deck in decks){
                 if (deck.id == id){
                     setFavoriteIcon(deck.favorite)

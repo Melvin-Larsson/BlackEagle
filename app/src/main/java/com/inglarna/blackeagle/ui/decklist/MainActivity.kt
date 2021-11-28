@@ -3,6 +3,8 @@ package com.inglarna.blackeagle.ui.decklist
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
@@ -17,6 +19,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : SingleFragmentNavMenuActivity() {
+
+    private var deleteButton: MenuItem? = null
+    private val deckViewModel by viewModels<DeckViewModel>()
 
     override fun createFragment(): Fragment{
         val fragment = MainFragment()
@@ -34,6 +39,12 @@ class MainActivity : SingleFragmentNavMenuActivity() {
     }
     fun startCardActivity(deck: Deck) {
         startActivity(CardListActivity.newIntent(this, deck.id))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.deck_list_menu, menu)
+        deleteButton = menu?.findItem(R.id.favoriteStudy)
+        return true
     }
 
 }

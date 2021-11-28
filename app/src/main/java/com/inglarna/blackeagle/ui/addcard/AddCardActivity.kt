@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
+import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.ui.SingleFragmentActivity
 import com.inglarna.blackeagle.ui.cardlist.CardListActivity
 
@@ -29,6 +30,9 @@ class AddCardActivity : SingleFragmentActivity() {
           id = intent.getLongExtra(DECK_ID, -1)
           super.onCreate(savedInstanceState)
           supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+          val actionbar = supportActionBar
+          actionbar!!.title = getString(R.string.add_card_header)
      }
 
      override fun onOptionsItemSelected(item: MenuItem): Boolean {
