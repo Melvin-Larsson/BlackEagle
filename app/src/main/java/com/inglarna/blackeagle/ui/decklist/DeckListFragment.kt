@@ -1,15 +1,14 @@
 package com.inglarna.blackeagle.ui.decklist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.inglarna.blackeagle.databinding.FragmentDeckListBinding
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
@@ -37,10 +36,17 @@ class DeckListFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         pageId = arguments!!.getInt(PAGE_ID, -1)
-        deckRecyclerViewAdapter = DeckListRecyclerViewAdapter(requireActivity(), deckViewModel.getDeckViews(), requireActivity(), pageId)
+        //Favorites
+        val data : LiveData<List<Deck>>? = if(pageId == 2){
+            deckViewModel.getFavoriteDecks()
+        }
+        //Other
+        else{
+            deckViewModel.getDecks()
+        }
+        deckRecyclerViewAdapter = DeckListRecyclerViewAdapter(requireActivity(), data, requireActivity())
         deckRecyclerViewAdapter.onDeckClicked = onDeckSelected
         binding.deckRecyclerView.adapter = deckRecyclerViewAdapter
         binding.deckRecyclerView.layoutManager = LinearLayoutManager(requireContext())

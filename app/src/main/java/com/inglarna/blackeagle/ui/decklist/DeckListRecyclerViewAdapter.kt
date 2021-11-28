@@ -21,24 +21,15 @@ import kotlinx.coroutines.launch
 
 class DeckListRecyclerViewAdapter(val context : Context,
                                   private val liveData: LiveData<List<Deck>>?,
-                                  private val lifecycleOwner: LifecycleOwner,
-                                  private val pageId: Int) : RecyclerView.Adapter<DeckListViewHolder>() {
-    private var decks: MutableList<Deck> = ArrayList<Deck>()
+                                  private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<DeckListViewHolder>() {
+    private var decks: List<Deck> = ArrayList<Deck>()
     lateinit var onDeckClicked: ((Deck) -> Unit)
-
     init {
-        liveData?.observe(lifecycleOwner){
-            if (pageId == 2) {
-                for (deck in it) {
-                    if (deck.favorite) {
-                        decks.add(deck)
-                    }
-                }
-            }else{
-                decks = it.toMutableList()
-            }
+        liveData?.observe(lifecycleOwner, {
+            decks = it;
             notifyDataSetChanged()
-        }
+        })
+
     }
 
     interface DeckListRecyclerViewListener{
