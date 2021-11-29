@@ -19,8 +19,6 @@ import kotlinx.coroutines.launch
 class CardListActivity : SingleFragmentActivity() {
 
     var id: Long = -1
-    private val deckViewModel by viewModels<DeckViewModel>()
-    private var favoriteButton: MenuItem? = null
 
     companion object{
         private const val DECK_ID = "deckId"
@@ -41,57 +39,5 @@ class CardListActivity : SingleFragmentActivity() {
         id = intent.getLongExtra(DECK_ID, -1)
         //super.onCreate is after since it will call createFragment, createFragment needs a valid id
         super.onCreate(savedInstanceState)
-
-        deckViewModel.getDeck(id).observe(this, {deck->
-            val actionbar = supportActionBar
-            actionbar!!.title = deck.name
-        })
-    }
-
-    //card list menu is used as a toolbar
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.card_list_menu, menu)
-        favoriteButton = menu?.findItem(R.id.favoriteStudy)
-        deckViewModel.getDecks()?.observe(this,{ decks->
-            for(deck in decks){
-                if (deck.id == id){
-                    setFavoriteIcon(deck.favorite)
-                }
-            }
-        })
-        return true
-    }
-
-    //when clicking in the toolbar
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            android.R.id.home ->{
-                finish()
-                return true
-            }
-            R.id.startStudy -> startStudy()
-            R.id.favoriteStudy -> favorites()
-        }
-        return true
-    }
-
-    private fun startStudy(){
-        Toast.makeText(this, "start study", Toast.LENGTH_SHORT).show()
-    }
-    private fun favorites() {
-        val deckDao = BlackEagleDatabase.getInstance(this).deckDao()
-
-        GlobalScope.launch {
-            val deck = deckDao.getDeck(id)
-            deck.favorite = !deck.favorite
-            deckDao.updateDeck(deck)
-        }
-    }
-    private fun setFavoriteIcon(favorite: Boolean){
-        if (favorite){
-            favoriteButton?.setIcon(R.drawable.ic_favorite_study)
-        }else{
-            favoriteButton?.setIcon(R.drawable.ic_favorite_study_border)
-        }
     }
 }
