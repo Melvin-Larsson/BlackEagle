@@ -61,15 +61,13 @@ class DeckListRecyclerViewAdapter(val context : Context,
         val params = holder.binding.textViewDeckName.layoutParams as ConstraintLayout.LayoutParams
         val checkboxView = holder.binding.checkboxDeck
         if(delete){
-            holder.binding.checkboxDeck.visibility = View.VISIBLE
-            params.startToEnd = holder.binding.textViewCardCount.id
-            //deckNameView.layoutParams = params
-            //deckNameView.requestLayout()
+            checkboxView.visibility = View.VISIBLE
+            params.startToEnd = holder.binding.checkboxDeck.id
+            params.startToStart = ConstraintLayout.LayoutParams.UNSET
         }else{
-            holder.binding.checkboxDeck.visibility = View.INVISIBLE
+            checkboxView.visibility = View.INVISIBLE
             params.startToStart = holder.binding.deckLayout.id
-            //deckNameView.layoutParams = params
-            //deckNameView.requestLayout()
+            params.startToEnd = ConstraintLayout.LayoutParams.UNSET
         }
     }
 
