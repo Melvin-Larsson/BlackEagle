@@ -12,7 +12,7 @@ import com.inglarna.blackeagle.model.Deck
 
 class CardListRecyclerViewAdapter (private val liveData: LiveData<List<Card>>?, private val lifecycleOwner: LifecycleOwner): RecyclerView.Adapter<CardListViewHolder>() {
     private var cards: List<Card> = ArrayList<Card>()
-    val selectedCards: MutableList<Card> = ArrayList<Card>()
+    val selectedCards: MutableList<Card> = ArrayList<Card>() //TODO: Prevent other classes from changing the content
     var select = false
         set(value){
             field = value
