@@ -19,4 +19,10 @@
         android:title="@string/select_multiple_decks"
         android:icon="@drawable/ic_checkbox"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/delete"
+        android:title="@string/delete"
+        android:icon="@drawable/ic_delete"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
 </menu>

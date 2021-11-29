@@ -2,6 +2,7 @@ package com.inglarna.blackeagle.ui.cardlist
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.*
 import android.widget.Toast
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentCardListBinding
 import com.inglarna.blackeagle.db.BlackEagleDatabase
+import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.ui.addcard.AddCardActivity
 import com.inglarna.blackeagle.viewmodel.CardViewModel
@@ -28,6 +30,7 @@ class CardListFragment : Fragment() {
     private val deckViewModel by viewModels<DeckViewModel>()
     private lateinit var adapter : CardListRecyclerViewAdapter
     private var favoriteButton: MenuItem? = null
+    private var deleteButton: MenuItem? = null
     private var deckId: Long= -1
 
     companion object{
@@ -49,6 +52,7 @@ class CardListFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.card_list_menu, menu)
         favoriteButton = menu?.findItem(R.id.favoriteStudy)
+        deleteButton = menu?.findItem((R.id.delete))
         deckViewModel.getDecks()?.observe(this,{ decks->
             for(deck in decks){
                 if (deck.id == deckId){
@@ -67,6 +71,7 @@ class CardListFragment : Fragment() {
             R.id.startStudy -> startStudy()
             R.id.favoriteStudy -> favorites()
             R.id.select -> select()
+            R.id.delete -> delete()
         }
         return true
     }
@@ -105,6 +110,18 @@ class CardListFragment : Fragment() {
     }
     private fun select(){
         adapter.select = !adapter.select
+        deleteButton?.isVisible = adapter.select
+    }
+    private fun delete(){
+        Log.d("CLF", "lenght: " + adapter.selectedCards.size)
+        val selectedCards = adapter.selectedCards.toMutableList()
+        GlobalScope.launch {
+            for(card in selectedCards){
+                cardViewModel.deleteCard(card)
+            }
+        }
+        adapter.select = false
+        deleteButton?.isVisible = false
     }
     private fun setFavoriteIcon(favorite: Boolean){
         if (favorite){

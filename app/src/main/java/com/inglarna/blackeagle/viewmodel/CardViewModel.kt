@@ -14,7 +14,9 @@ class CardViewModel (application: Application) : AndroidViewModel(application){
     fun addCard(card: Card){
         cardRepo.addCard(card)
     }
-
+    fun deleteCard(card: Card){
+        cardRepo.deleteCard(card)
+    }
     fun getDeckViews(deckId: Long): LiveData<List<Card>> {
         return cardRepo.getFullDeck(deckId)
     }

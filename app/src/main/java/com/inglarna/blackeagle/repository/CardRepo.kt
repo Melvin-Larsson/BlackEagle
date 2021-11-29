@@ -15,6 +15,9 @@ class CardRepo (context: Context){
         card.id = newId
         return newId
     }
+    fun deleteCard(card: Card){
+        cardDao.deleteCard(card)
+    }
     fun getFullDeck(deckId: Long): LiveData<List<Card>>{
         return cardDao.loadFullDeck(deckId)
     }
