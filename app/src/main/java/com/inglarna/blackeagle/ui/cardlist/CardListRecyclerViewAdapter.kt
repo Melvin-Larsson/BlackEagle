@@ -3,12 +3,12 @@ package com.inglarna.blackeagle.ui.cardlist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.inglarna.blackeagle.databinding.ListItemCardBinding
 import com.inglarna.blackeagle.model.Card
-import com.inglarna.blackeagle.model.Deck
 
 class CardListRecyclerViewAdapter (private val liveData: LiveData<List<Card>>?, private val lifecycleOwner: LifecycleOwner): RecyclerView.Adapter<CardListViewHolder>() {
     private var cards: List<Card> = ArrayList<Card>()
@@ -40,11 +40,17 @@ class CardListRecyclerViewAdapter (private val liveData: LiveData<List<Card>>?, 
                 selectedCards.remove(cards[position])
             }
         }
+        val params = holder.binding.container.layoutParams as ConstraintLayout.LayoutParams
+        val checkboxView = holder.binding.checkBox
         if(select){
-            holder.binding.checkBox.visibility = View.VISIBLE
-            holder.binding.checkBox.isChecked = selectedCards.contains(cards[position])
+            checkboxView.visibility = View.VISIBLE
+            checkboxView.isChecked = selectedCards.contains(cards[position])
+            params.startToEnd = checkboxView.id
+            params.startToStart = ConstraintLayout.LayoutParams.UNSET
         }else{
-            holder.binding.checkBox.visibility = View.INVISIBLE
+            checkboxView.visibility = View.INVISIBLE
+            params.startToStart = checkboxView.id
+            params.startToEnd = ConstraintLayout.LayoutParams.UNSET
         }
     }
     override fun getItemCount(): Int = cards.size
