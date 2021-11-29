@@ -66,7 +66,7 @@ class CardListFragment : Fragment() {
             }
             R.id.startStudy -> startStudy()
             R.id.favoriteStudy -> favorites()
-            R.id.delete -> delete()
+            R.id.select -> select()
         }
         return true
     }
@@ -103,8 +103,8 @@ class CardListFragment : Fragment() {
             deckDao.updateDeck(deck)
         }
     }
-    private fun delete(){
-        adapter.delete = !adapter.delete
+    private fun select(){
+        adapter.select = !adapter.select
     }
     private fun setFavoriteIcon(favorite: Boolean){
         if (favorite){
