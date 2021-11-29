@@ -3,6 +3,7 @@ package com.inglarna.blackeagle.ui.decklist
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
@@ -24,12 +25,16 @@ class DeckListRecyclerViewAdapter(val context : Context,
                                   private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<DeckListViewHolder>() {
     private var decks: List<Deck> = ArrayList<Deck>()
     lateinit var onDeckClicked: ((Deck) -> Unit)
+    var delete = false
+        set(value){
+            field = value
+            notifyDataSetChanged()
+        }
     init {
         liveData?.observe(lifecycleOwner, {
             decks = it;
             notifyDataSetChanged()
         })
-
     }
 
     interface DeckListRecyclerViewListener{
@@ -51,6 +56,11 @@ class DeckListRecyclerViewAdapter(val context : Context,
        // holder.binding.textViewCardCount.text = context.resources.getString(R.string.card_count, decks[position].cards.size)
         holder.itemView.setOnClickListener{
             onDeckClicked(decks[position])
+        }
+        if(delete){
+            holder.binding.checkboxDeck.visibility = View.VISIBLE
+        }else{
+            holder.binding.checkboxDeck.visibility = View.INVISIBLE
         }
     }
 

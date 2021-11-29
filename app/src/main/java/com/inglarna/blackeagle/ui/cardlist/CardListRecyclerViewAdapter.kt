@@ -12,9 +12,9 @@ import com.inglarna.blackeagle.model.Deck
 
 class CardListRecyclerViewAdapter (private val liveData: LiveData<List<Card>>?, private val lifecycleOwner: LifecycleOwner): RecyclerView.Adapter<CardListViewHolder>() {
     private var cards: List<Card> = ArrayList<Card>()
-    public var delete = false
+    var delete = false
         set(value){
-            field = value;
+            field = value
             notifyDataSetChanged()
         }
 

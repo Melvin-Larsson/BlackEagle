@@ -3,9 +3,7 @@ package com.inglarna.blackeagle.ui.decklist
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.InputType
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,6 +12,7 @@ import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckPagerBinding
 import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Deck
+import com.inglarna.blackeagle.ui.cardlist.CardListRecyclerViewAdapter
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -26,6 +25,7 @@ class MainFragment : Fragment() {
     companion object{
         fun newInstance() = MainFragment()
     }
+
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentDeckPagerBinding.inflate(inflater, container, false)
         return binding.root
@@ -48,6 +48,7 @@ class MainFragment : Fragment() {
             showCreateDeckDialog()
         }
     }
+
     private fun showCreateDeckDialog(){
         val deckEditText = EditText(requireContext())
         deckEditText.inputType = InputType.TYPE_CLASS_TEXT

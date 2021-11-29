@@ -2,13 +2,12 @@ package com.inglarna.blackeagle.ui.decklist
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckListBinding
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
@@ -31,6 +30,11 @@ class DeckListFragment : Fragment() {
             return fragment
         }
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDeckListBinding.inflate(inflater, container, false)
         return binding.root
@@ -52,4 +56,18 @@ class DeckListFragment : Fragment() {
         binding.deckRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.deck_list_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.checkbox -> checkboxVisibility()
+
+        }
+        return true
+    }
+    private fun checkboxVisibility(){
+        deckRecyclerViewAdapter.delete = !deckRecyclerViewAdapter.delete
+    }
 }

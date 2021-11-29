@@ -30,4 +30,5 @@
     <string name="add_card_header">Add Card</string>
     <string name="edit_convert_numbers_header">edit convert numbers</string>
     <string name="convert_numbers_header">Convert Numbers</string>
+    <string name="checkbox">checkbox</string>
 </resources>

@@ -41,10 +41,5 @@ class MainActivity : SingleFragmentNavMenuActivity() {
         startActivity(CardListActivity.newIntent(this, deck.id))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.deck_list_menu, menu)
-        deleteButton = menu?.findItem(R.id.favoriteStudy)
-        return true
-    }
 
 }
