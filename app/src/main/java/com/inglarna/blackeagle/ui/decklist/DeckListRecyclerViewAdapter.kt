@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -57,10 +58,18 @@ class DeckListRecyclerViewAdapter(val context : Context,
         holder.itemView.setOnClickListener{
             onDeckClicked(decks[position])
         }
+        val params = holder.binding.textViewDeckName.layoutParams as ConstraintLayout.LayoutParams
+        val checkboxView = holder.binding.checkboxDeck
         if(delete){
             holder.binding.checkboxDeck.visibility = View.VISIBLE
+            params.startToEnd = holder.binding.textViewCardCount.id
+            //deckNameView.layoutParams = params
+            //deckNameView.requestLayout()
         }else{
             holder.binding.checkboxDeck.visibility = View.INVISIBLE
+            params.startToStart = holder.binding.deckLayout.id
+            //deckNameView.layoutParams = params
+            //deckNameView.requestLayout()
         }
     }
 
