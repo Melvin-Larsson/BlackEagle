@@ -12,7 +12,7 @@ import com.inglarna.blackeagle.model.Deck
 
 class CardListRecyclerViewAdapter (private val liveData: LiveData<List<Card>>?, private val lifecycleOwner: LifecycleOwner): RecyclerView.Adapter<CardListViewHolder>() {
     private var cards: List<Card> = ArrayList<Card>()
-    var delete = false
+    var select = false
         set(value){
             field = value
             notifyDataSetChanged()
@@ -31,7 +31,7 @@ class CardListRecyclerViewAdapter (private val liveData: LiveData<List<Card>>?, 
     override fun onBindViewHolder(holder: CardListViewHolder, position: Int) {
         holder.binding.textViewAnswer.text = cards[position].question
         holder.binding.textViewQuestion.text = cards[position].answer
-        if(delete){
+        if(select){
             holder.binding.checkBox.visibility = View.VISIBLE
         }else{
             holder.binding.checkBox.visibility = View.INVISIBLE
