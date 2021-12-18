@@ -21,4 +21,7 @@ class CardRepo (context: Context){
     fun getFullDeck(deckId: Long): LiveData<List<Card>>{
         return cardDao.loadFullDeck(deckId)
     }
+    fun getDeckSize(deckId: Long) : LiveData<Int>{
+        return cardDao.loadDeckSize(deckId)
+    }
 }

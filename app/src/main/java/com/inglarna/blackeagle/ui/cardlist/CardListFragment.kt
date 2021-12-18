@@ -51,12 +51,12 @@ class CardListFragment : Fragment() {
     //card list menu is used as a toolbar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.card_list_menu, menu)
-        favoriteButton = menu?.findItem(R.id.favoriteStudy)
-        deleteButton = menu?.findItem((R.id.delete))
+        favoriteButton = menu.findItem(R.id.favoriteStudy)
+        deleteButton = menu.findItem((R.id.delete))
         deckViewModel.getDecks()?.observe(this,{ decks->
-            for(deck in decks){
-                if (deck.id == deckId){
-                    setFavoriteIcon(deck.favorite)
+            for(deckWithCards in decks){
+                if (deckWithCards.deck.id == deckId){
+                    setFavoriteIcon(deckWithCards.deck.favorite)
                 }
             }
         })
@@ -76,7 +76,7 @@ class CardListFragment : Fragment() {
         return true
     }
 
-    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentCardListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -113,7 +113,6 @@ class CardListFragment : Fragment() {
         deleteButton?.isVisible = adapter.select
     }
     private fun delete(){
-        Log.d("CLF", "lenght: " + adapter.selectedCards.size)
         val selectedCards = adapter.selectedCards.toMutableList()
         GlobalScope.launch {
             for(card in selectedCards){

@@ -10,13 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckListBinding
 import com.inglarna.blackeagle.model.Deck
+import com.inglarna.blackeagle.model.DeckWithCards
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class DeckListFragment : Fragment() {
     private lateinit var binding : FragmentDeckListBinding
     lateinit var onDeckSelected: ((Deck) -> Unit)
     private val deckViewModel by viewModels<DeckViewModel>()
     private lateinit var deckRecyclerViewAdapter: DeckListRecyclerViewAdapter
+    private var deleteButton: MenuItem? = null
     private var pageId = -1
 
     companion object{
@@ -43,7 +47,7 @@ class DeckListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         pageId = arguments!!.getInt(PAGE_ID, -1)
         //Favorites
-        val data : LiveData<List<Deck>>? = if(pageId == 2){
+        val data : LiveData<List<DeckWithCards>>? = if(pageId == 2){
             deckViewModel.getFavoriteDecks()
         }
         //Other
@@ -58,16 +62,28 @@ class DeckListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.deck_list_menu, menu)
+        deleteButton = menu.findItem((R.id.delete))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.checkbox -> checkboxVisibility()
-
+            R.id.delete -> delete()
         }
         return true
     }
     private fun checkboxVisibility(){
-        deckRecyclerViewAdapter.delete = !deckRecyclerViewAdapter.delete
+        deckRecyclerViewAdapter.select = !deckRecyclerViewAdapter.select
+        deleteButton?.isVisible = deckRecyclerViewAdapter.select
+    }
+    private fun delete(){
+        val selectedDecks = deckRecyclerViewAdapter.selectedDecks.toMutableList()
+        GlobalScope.launch {
+            for (deck in selectedDecks){
+                deckViewModel.deleteDeck(deck)
+            }
+        }
+        deckRecyclerViewAdapter.select = false
+        deleteButton?.isVisible = false
     }
 }
