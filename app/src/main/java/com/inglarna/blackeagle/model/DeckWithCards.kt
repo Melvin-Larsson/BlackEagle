@@ -10,5 +10,4 @@ data class DeckWithCards(
         entityColumn = "deckId"
     )
     val cards: List<Card>
-) {
-}
+)

@@ -18,18 +18,12 @@ import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class MainActivity : SingleFragmentNavMenuActivity() {
+class MainActivity : SingleFragmentNavMenuActivity(), MainFragment.DeckSelectedCallback{
 
     private var deleteButton: MenuItem? = null
     private val deckViewModel by viewModels<DeckViewModel>()
 
-    override fun createFragment(): Fragment{
-        val fragment = MainFragment()
-        fragment.onDeckSelected = {deck ->
-            startCardActivity(deck)
-        }
-        return fragment
-    }
+    override fun createFragment() = MainFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +31,12 @@ class MainActivity : SingleFragmentNavMenuActivity() {
         val actionbar = supportActionBar
         actionbar!!.title = getString(R.string.deck_header)
     }
-    fun startCardActivity(deck: Deck) {
+    private fun startCardActivity(deck: Deck) {
         startActivity(CardListActivity.newIntent(this, deck.id))
+    }
+
+    override fun onDeckSelected(deck: Deck) {
+        startCardActivity(deck)
     }
 
 

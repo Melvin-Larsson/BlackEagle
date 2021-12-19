@@ -51,7 +51,9 @@ class DeckListFragment : Fragment() {
             deckViewModel.getDecks()
         }
         deckRecyclerViewAdapter = DeckListRecyclerViewAdapter(requireActivity(), data, requireActivity())
-        deckRecyclerViewAdapter.onDeckClicked = onDeckSelected
+        deckRecyclerViewAdapter.onDeckClicked = {
+            onDeckSelected(it)
+        }
         binding.deckRecyclerView.adapter = deckRecyclerViewAdapter
         binding.deckRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }

@@ -12,11 +12,13 @@ class DeckFragmentPagerAdapter (fragment: Fragment): FragmentStateAdapter(fragme
 
     override fun createFragment(position: Int): Fragment {
         val fragment = DeckListFragment.newInstance(position)
-        fragment.onDeckSelected = onDeckSelected
+        fragment.onDeckSelected = {
+            onDeckSelected(it)
+        }
         return fragment
     }
     companion object{
-        public const val ARG_OBJECT = "object"
+        const val ARG_OBJECT = "object"
     }
 }
 

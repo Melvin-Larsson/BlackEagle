@@ -1,8 +1,10 @@
 package com.inglarna.blackeagle.ui.decklist
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.Toast
@@ -20,10 +22,13 @@ import kotlinx.coroutines.launch
 class MainFragment : Fragment() {
 
     lateinit var binding : FragmentDeckPagerBinding
-    lateinit var onDeckSelected: ((Deck) -> Unit)
+    lateinit var callback: DeckSelectedCallback
 
     companion object{
         fun newInstance() = MainFragment()
+    }
+    interface DeckSelectedCallback{
+        fun onDeckSelected(deck: Deck)
     }
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -33,8 +38,11 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //Setup adapter
+        Log.d("MainFrag", "onViewCreated")
         val adapter = DeckFragmentPagerAdapter(this)
-        adapter.onDeckSelected = onDeckSelected
+        adapter.onDeckSelected = {
+            callback.onDeckSelected(it)
+        }
         binding.deckPager.adapter = adapter
         TabLayoutMediator(binding.deckTabLayout, binding.deckPager){tab, position ->
             tab.text = when(position){
@@ -46,6 +54,13 @@ class MainFragment : Fragment() {
         }.attach()
         binding.addDeckButton.setOnClickListener{
             showCreateDeckDialog()
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is DeckSelectedCallback){
+            callback = context
         }
     }
 
