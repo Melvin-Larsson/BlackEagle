@@ -10,13 +10,14 @@ import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.db.BlackEagleDatabase
+import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.ui.SingleFragmentActivity
 import com.inglarna.blackeagle.ui.addcard.AddCardActivity
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class CardListActivity : SingleFragmentActivity() {
+class CardListActivity : SingleFragmentActivity(), CardListFragment.EditCardSelectedCallBack {
 
     var id: Long = -1
 
@@ -39,5 +40,9 @@ class CardListActivity : SingleFragmentActivity() {
         id = intent.getLongExtra(DECK_ID, -1)
         //super.onCreate is after since it will call createFragment, createFragment needs a valid id
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onEditCardSelected(card: Card) {
+
     }
 }

@@ -43,6 +43,7 @@ class CardListViewHolder(val binding: ListItemCardBinding): RecyclerView.ViewHol
 
     private fun editCard() {
         Toast.makeText(itemView.context, "edit", Toast.LENGTH_LONG).show()
+
     }
 
     private fun delete(){

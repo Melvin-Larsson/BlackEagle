@@ -1,5 +1,6 @@
 package com.inglarna.blackeagle.ui.cardlist
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -18,6 +19,7 @@ import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.ui.addcard.AddCardActivity
+import com.inglarna.blackeagle.ui.decklist.MainFragment
 import com.inglarna.blackeagle.viewmodel.CardViewModel
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
@@ -26,6 +28,7 @@ import kotlinx.coroutines.launch
 class CardListFragment : Fragment() {
     lateinit var binding : FragmentCardListBinding
     lateinit var onAddCardClicked: (()-> Unit)
+    lateinit var editCardSelectedCallBack: EditCardSelectedCallBack
     private val cardViewModel by viewModels<CardViewModel>()
     private val deckViewModel by viewModels<DeckViewModel>()
     private lateinit var adapter : CardListRecyclerViewAdapter
@@ -44,6 +47,10 @@ class CardListFragment : Fragment() {
             return fragment
         }
     }
+    interface EditCardSelectedCallBack{
+        fun onEditCardSelected(card: Card)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -62,7 +69,6 @@ class CardListFragment : Fragment() {
         })
 
     }
-
     //when clicking in the toolbar
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -97,6 +103,16 @@ class CardListFragment : Fragment() {
             /*val actionbar = activity
             actionbar!!.title = deck.name*/
         })
+
+        adapter.onEditCardClicked = { card ->
+            editCardSelectedCallBack.onEditCardSelected(card)
+        }
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is EditCardSelectedCallBack){
+            editCardSelectedCallBack = context
+        }
     }
     private fun startStudy(){
         Toast.makeText(activity, "start study", Toast.LENGTH_SHORT).show()
