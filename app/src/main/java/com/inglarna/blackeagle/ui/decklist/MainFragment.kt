@@ -14,21 +14,15 @@ import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckPagerBinding
 import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Deck
-import com.inglarna.blackeagle.ui.cardlist.CardListRecyclerViewAdapter
-import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainFragment : Fragment() {
 
     lateinit var binding : FragmentDeckPagerBinding
-    lateinit var callback: DeckSelectedCallback
 
     companion object{
         fun newInstance() = MainFragment()
-    }
-    interface DeckSelectedCallback{
-        fun onDeckSelected(deck: Deck)
     }
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -40,9 +34,6 @@ class MainFragment : Fragment() {
         //Setup adapter
         Log.d("MainFrag", "onViewCreated")
         val adapter = DeckFragmentPagerAdapter(this)
-        adapter.onDeckSelected = {
-            callback.onDeckSelected(it)
-        }
         binding.deckPager.adapter = adapter
         TabLayoutMediator(binding.deckTabLayout, binding.deckPager){tab, position ->
             tab.text = when(position){
@@ -54,13 +45,6 @@ class MainFragment : Fragment() {
         }.attach()
         binding.addDeckButton.setOnClickListener{
             showCreateDeckDialog()
-        }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if(context is DeckSelectedCallback){
-            callback = context
         }
     }
 

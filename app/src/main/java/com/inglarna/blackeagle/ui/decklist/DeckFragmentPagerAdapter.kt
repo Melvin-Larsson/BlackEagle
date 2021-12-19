@@ -8,13 +8,9 @@ import com.inglarna.blackeagle.viewmodel.DeckViewModel
 
 class DeckFragmentPagerAdapter (fragment: Fragment): FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 3
-    lateinit var onDeckSelected: ((Deck) -> Unit)
 
     override fun createFragment(position: Int): Fragment {
         val fragment = DeckListFragment.newInstance(position)
-        fragment.onDeckSelected = {
-            onDeckSelected(it)
-        }
         return fragment
     }
     companion object{

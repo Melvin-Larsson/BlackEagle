@@ -1,6 +1,8 @@
 package com.inglarna.blackeagle.ui.decklist
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class DeckListFragment : Fragment() {
     private lateinit var binding : FragmentDeckListBinding
-    lateinit var onDeckSelected: ((Deck) -> Unit)
+    lateinit var deckSelectedCallback: DeckSelectedCallback
     private val deckViewModel by viewModels<DeckViewModel>()
     private lateinit var deckRecyclerViewAdapter: DeckListRecyclerViewAdapter
     private var deleteButton: MenuItem? = null
@@ -32,6 +34,10 @@ class DeckListFragment : Fragment() {
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    interface DeckSelectedCallback{
+        fun onDeckSelected(deck: Deck)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +61,7 @@ class DeckListFragment : Fragment() {
         }
         deckRecyclerViewAdapter = DeckListRecyclerViewAdapter(requireActivity(), data, requireActivity())
         deckRecyclerViewAdapter.onDeckClicked = {
-            onDeckSelected(it)
+            deckSelectedCallback.onDeckSelected(it)
         }
         binding.deckRecyclerView.adapter = deckRecyclerViewAdapter
         binding.deckRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -72,6 +78,13 @@ class DeckListFragment : Fragment() {
             R.id.delete -> delete()
         }
         return true
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is DeckSelectedCallback){
+            deckSelectedCallback = context
+        }
     }
     private fun checkboxVisibility(){
         deckRecyclerViewAdapter.select = !deckRecyclerViewAdapter.select

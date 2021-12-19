@@ -18,7 +18,7 @@ import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class MainActivity : SingleFragmentNavMenuActivity(), MainFragment.DeckSelectedCallback{
+class MainActivity : SingleFragmentNavMenuActivity(), DeckListFragment.DeckSelectedCallback{
 
     private var deleteButton: MenuItem? = null
     private val deckViewModel by viewModels<DeckViewModel>()
