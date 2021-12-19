@@ -6,6 +6,7 @@ import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.db.CardDao
 import com.inglarna.blackeagle.db.DeckDao
 import com.inglarna.blackeagle.model.Deck
+import com.inglarna.blackeagle.model.DeckWithCards
 
 class DeckRepo(context: Context) {
     private val db = BlackEagleDatabase.getInstance(context)
@@ -19,13 +20,18 @@ class DeckRepo(context: Context) {
     fun getDeck(id: Long) : LiveData<Deck>{
         return deckDao.loadLiveDeck(id)
     }
-    val favoriteDecks: LiveData<List<Deck>>
+
+    fun deleteDeck(deck: Deck) {
+        deckDao.deleteDeck(deck)
+    }
+
+    val favoriteDecks: LiveData<List<DeckWithCards>>
         get(){
-            return deckDao.getFavouriteDecks()
+            return deckDao.getFavoriteDecks()
         }
 
-    val allDecks: LiveData<List<Deck>>
+    val allDecks: LiveData<List<DeckWithCards>>
         get(){
-            return deckDao.loadAll()
+            return deckDao.getDecks()
         }
 }

@@ -3,25 +3,30 @@ package com.inglarna.blackeagle.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.model.Deck
+import com.inglarna.blackeagle.model.DeckWithCards
 import com.inglarna.blackeagle.repository.DeckRepo
 
 class DeckViewModel(application: Application) : AndroidViewModel(application) {
     private var deckRepo: DeckRepo = DeckRepo(getApplication())
-    private var decks: LiveData<List<Deck>>? = null
-    private var favoriteDecks: LiveData<List<Deck>>? = null
+    private var decks: LiveData<List<DeckWithCards>>? = null
+    private var favoriteDecks: LiveData<List<DeckWithCards>>? = null
 
     fun addDeck(deck: Deck){
         deckRepo.addDeck(deck)
     }
-
-    fun getDecks(): LiveData<List<Deck>>? {
+    fun deleteDeck(deck: Deck){
+        deckRepo.deleteDeck(deck)
+    }
+    fun getDecks(): LiveData<List<DeckWithCards>>? {
         if(decks == null){
             decks = deckRepo.allDecks
         }
         return decks
     }
-    fun getFavoriteDecks(): LiveData<List<Deck>>?{
+    fun getFavoriteDecks(): LiveData<List<DeckWithCards>>?{
         if(favoriteDecks == null){
             favoriteDecks = deckRepo.favoriteDecks
         }

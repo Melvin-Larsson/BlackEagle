@@ -15,6 +15,9 @@ interface CardDao {
     @Query("SELECT * FROM Card WHERE deckId = :deckId")
     fun loadFullDeck(deckId: Long): LiveData<List<Card>>
 
+    @Query("SELECT COUNT(deckId) FROM Card WHERE deckId = :deckId")
+    fun loadDeckSize(deckId: Long): LiveData<Int>
+
     @Insert(onConflict = IGNORE)
     fun insertCard(card: Card): Long
 

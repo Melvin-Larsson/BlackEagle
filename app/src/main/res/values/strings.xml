@@ -32,4 +32,6 @@
     <string name="convert_numbers_header">Convert Numbers</string>
     <string name="checkbox">checkbox</string>
     <string name="select_multiple_decks">Select Multiple Decks</string>
+    <string name="select_multiple_decks">Select Multipl Decks</string>
+    <string name="edit">edit</string>
 </resources>

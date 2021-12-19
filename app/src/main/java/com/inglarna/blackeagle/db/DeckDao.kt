@@ -16,22 +16,29 @@ interface DeckDao {
     @Query("SELECT * FROM Deck WHERE id=:id")
     fun getDeck(id: Long) : Deck
 
-    @Query("SELECT * FROM Deck WHERE favorite=1")
-    fun getFavouriteDecks(): LiveData<List<Deck>>
+    //@Query("SELECT * FROM Deck WHERE favorite=1")
+    //fun getFavouriteDecks(): LiveData<List<Deck>>
 
     @Transaction
     @Query ("SELECT * FROM Deck WHERE id= :id")
     fun loadLiveDeck(id: Long) : LiveData<Deck>
 
     @Transaction
-    @Query("SELECT * From Deck")
-    fun getDecks(): List<DeckWithCards>
+    @Query("SELECT * FROM Deck")
+    fun getDecks(): LiveData<List<DeckWithCards>>
+
+    @Transaction
+    @Query("SELECT * FROM Deck WHERE favorite=1")
+    fun getFavoriteDecks(): LiveData<List<DeckWithCards>>
 
     @Insert(onConflict = IGNORE)
     fun insertDeck(deck: Deck) : Long?
 
     @Update(onConflict = REPLACE)
     fun updateDeck(deck: Deck)
+
+    @Delete
+    fun deleteDeck(deck: Deck)
 
 
 }
