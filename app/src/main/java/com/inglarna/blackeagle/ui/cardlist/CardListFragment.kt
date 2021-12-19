@@ -60,7 +60,9 @@ class CardListFragment : Fragment() {
                 }
             }
         })
+
     }
+
     //when clicking in the toolbar
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
