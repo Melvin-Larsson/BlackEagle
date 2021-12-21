@@ -54,8 +54,6 @@ class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, p
         val params = holder.binding.aroundQuestionAnswer.layoutParams as ConstraintLayout.LayoutParams
         val checkboxView = holder.binding.checkBox
         val aroundquestionAnswer = holder.binding.aroundQuestionAnswer
-        val textboxQuesion = holder.binding.textViewQuestion
-        val textboxAnswer = holder.binding.textViewAnswer
 
         if(select){
             checkboxView.visibility = View.VISIBLE
@@ -74,10 +72,11 @@ class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, p
             checkboxView.visibility = View.INVISIBLE
             params.startToStart = checkboxView.id
             params.startToEnd = ConstraintLayout.LayoutParams.UNSET
-
+            //TODO: fixa den där width grejen på card
+            val width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350F, context.getResources().getDisplayMetrics()).toInt()
             val layout: LinearLayout = aroundquestionAnswer
             val params1: ViewGroup.LayoutParams = layout.layoutParams
-            params1.width = FrameLayout.LayoutParams.WRAP_CONTENT
+            params1.width = width
             params1.height = FrameLayout.LayoutParams.WRAP_CONTENT
             layout.layoutParams = params1
         }

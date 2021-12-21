@@ -20,6 +20,7 @@ import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.ui.addcard.AddCardActivity
 import com.inglarna.blackeagle.ui.decklist.MainFragment
+import com.inglarna.blackeagle.ui.question.QuestionActivity
 import com.inglarna.blackeagle.viewmodel.CardViewModel
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
