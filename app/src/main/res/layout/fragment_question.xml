@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view"
         tools:text="This is a temporary answer, and the answer is yes" />
 
-    <!--show hind button-->
+    <!--show hint button-->
     <Button
         android:id="@+id/button_show_hint"
         android:layout_width="match_parent"
@@ -75,5 +75,20 @@
         android:text="@string/show_answer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/button_next_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Nästa mannen"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
