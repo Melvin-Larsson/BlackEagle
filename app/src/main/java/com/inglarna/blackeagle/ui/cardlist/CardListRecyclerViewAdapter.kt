@@ -10,9 +10,11 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.inglarna.blackeagle.databinding.ListItemCardBinding
 import com.inglarna.blackeagle.model.Card
+import com.inglarna.blackeagle.model.Deck
 
 class CardListRecyclerViewAdapter (private val liveData: LiveData<List<Card>>?, private val lifecycleOwner: LifecycleOwner): RecyclerView.Adapter<CardListViewHolder>() {
     private var cards: List<Card> = ArrayList<Card>()
+    lateinit var onEditCardClicked: ((Card) -> Unit)
     val selectedCards: MutableList<Card> = ArrayList<Card>() //TODO: Prevent other classes from changing the content
     var select = false
         set(value){
@@ -32,6 +34,10 @@ class CardListRecyclerViewAdapter (private val liveData: LiveData<List<Card>>?, 
         return CardListViewHolder(binding)
     }
     override fun onBindViewHolder(holder: CardListViewHolder, position: Int) {
+        holder.itemView.setOnClickListener{
+            onEditCardClicked(cards[position])
+        }
+
         holder.binding.textViewAnswer.text = cards[position].question
         holder.binding.textViewQuestion.text = cards[position].answer
         holder.binding.checkBox.setOnCheckedChangeListener { checkbox, isChecked ->

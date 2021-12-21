@@ -56,8 +56,6 @@ class AddCardFragment : Fragment() {
                 Toast.makeText(requireContext(), "du lade till ett kort", Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(requireContext(), "du din fuling, fyll i fälten", Toast.LENGTH_SHORT).show()
-                binding.editTextAnswer.setText("")
-                binding.editTextQuestion.setText("")
             }
         }
         return binding.root
