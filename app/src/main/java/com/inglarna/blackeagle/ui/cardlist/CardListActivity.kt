@@ -3,6 +3,7 @@ package com.inglarna.blackeagle.ui.cardlist
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -23,6 +24,8 @@ class CardListActivity : SingleFragmentActivity() {
     companion object{
         private const val DECK_ID = "deckId"
         fun newIntent(context: Context, deckId : Long?) : Intent{
+            Log.d("CardList", "newIntent: " + deckId)
+
             val intent = Intent(context, CardListActivity::class.java)
             intent.putExtra(DECK_ID, deckId)
             return intent
@@ -37,6 +40,7 @@ class CardListActivity : SingleFragmentActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         id = intent.getLongExtra(DECK_ID, -1)
+        Log.d("CardList", "onCreate: " + id)
         //super.onCreate is after since it will call createFragment, createFragment needs a valid id
         super.onCreate(savedInstanceState)
     }

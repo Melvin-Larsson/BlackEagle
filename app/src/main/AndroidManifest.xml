@@ -47,6 +47,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.cardlist.CardListActivity"/>
         </activity>
+        <activity android:name=".ui.question.QuestionActivity"
+            android:parentActivityName=".ui.cardlist.CardListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.cardlist.CardListActivity"/>
+        </activity>
 
     </application>
 

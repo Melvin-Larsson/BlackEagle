@@ -18,6 +18,7 @@ import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.ui.addcard.AddCardActivity
+import com.inglarna.blackeagle.ui.question.QuestionActivity
 import com.inglarna.blackeagle.viewmodel.CardViewModel
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
@@ -84,6 +85,7 @@ class CardListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d("CardList", "deckId: " + deckId)
         deckId = arguments!!.getLong(DECK_ID, -1)
         adapter = CardListRecyclerViewAdapter(cardViewModel.getDeckViews(deckId), this)
         binding.recyclerViewCard.adapter = adapter
@@ -99,7 +101,7 @@ class CardListFragment : Fragment() {
         })
     }
     private fun startStudy(){
-        Toast.makeText(activity, "start study", Toast.LENGTH_SHORT).show()
+        startActivity(QuestionActivity.newIntent(requireContext(), deckId))
     }
     private fun favorites() {
         val deckDao = BlackEagleDatabase.getInstance(activity!!).deckDao()
