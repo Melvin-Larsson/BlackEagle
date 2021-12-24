@@ -1,28 +1,18 @@
 package com.inglarna.blackeagle.ui.decklist
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.ListItemDeckBinding
-import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.model.DeckWithCards
 import com.inglarna.blackeagle.repository.CardRepo
-import com.inglarna.blackeagle.repository.DeckRepo
-import com.inglarna.blackeagle.viewmodel.DeckViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class DeckListRecyclerViewAdapter(val context : Context,
                                   private val liveData: LiveData<List<DeckWithCards>>?,

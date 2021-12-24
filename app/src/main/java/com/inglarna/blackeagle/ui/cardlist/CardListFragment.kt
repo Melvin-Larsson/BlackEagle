@@ -1,15 +1,8 @@
 package com.inglarna.blackeagle.ui.cardlist
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
-import android.util.Log
 import android.view.*
-import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,9 +10,6 @@ import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentCardListBinding
 import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Card
-import com.inglarna.blackeagle.model.Deck
-import com.inglarna.blackeagle.ui.addcard.AddCardActivity
-import com.inglarna.blackeagle.ui.decklist.MainFragment
 import com.inglarna.blackeagle.ui.question.QuestionActivity
 import com.inglarna.blackeagle.viewmodel.CardViewModel
 import com.inglarna.blackeagle.viewmodel.DeckViewModel

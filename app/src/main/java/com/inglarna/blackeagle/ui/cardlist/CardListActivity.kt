@@ -3,20 +3,10 @@ package com.inglarna.blackeagle.ui.cardlist
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.TypedValue
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import com.inglarna.blackeagle.R
-import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.ui.SingleFragmentActivity
 import com.inglarna.blackeagle.ui.addcard.AddCardActivity
-import com.inglarna.blackeagle.viewmodel.DeckViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class CardListActivity : SingleFragmentActivity(), CardListFragment.EditCardSelectedCallBack {
 

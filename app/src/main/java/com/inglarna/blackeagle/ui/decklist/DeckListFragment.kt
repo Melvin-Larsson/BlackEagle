@@ -2,7 +2,6 @@ package com.inglarna.blackeagle.ui.decklist
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
