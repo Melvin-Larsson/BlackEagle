@@ -16,8 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.settings.SettingsActivity"
-            android:exported="true">
+        <activity android:name=".ui.settings.SettingsActivity">
         </activity>
         <activity android:name=".ui.convertnumber.ConvertNumbersActivity"
             android:exported="true">
