@@ -63,7 +63,7 @@ class DeckListRecyclerViewAdapter(val context : Context,
             }
         }
         //checkbox visibility
-        val params = holder.binding.textViewDeckName.layoutParams as ConstraintLayout.LayoutParams
+        val params = holder.binding.aroundDeck.layoutParams as ConstraintLayout.LayoutParams
         val checkboxView = holder.binding.checkboxDeck
         if(select){
             checkboxView.visibility = View.VISIBLE
