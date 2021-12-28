@@ -62,6 +62,7 @@ class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, p
             checkboxView.isChecked = selectedCards.contains(cards[position])
             params.startToEnd = checkboxView.id
             params.startToStart = ConstraintLayout.LayoutParams.UNSET
+
         }else{
             checkboxView.visibility = View.INVISIBLE
             params.startToStart = checkboxView.id
