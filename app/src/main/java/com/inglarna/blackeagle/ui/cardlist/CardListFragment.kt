@@ -1,8 +1,12 @@
 package com.inglarna.blackeagle.ui.cardlist
 
+import android.app.Activity
+import android.app.Instrumentation
 import android.content.Context
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +21,9 @@ import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import android.view.View
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import com.inglarna.blackeagle.ui.question.QuestionFragment
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 
@@ -30,8 +37,17 @@ class CardListFragment : Fragment() {
     private var favoriteButton: MenuItem? = null
     private var deleteButton: MenuItem? = null
     private var deckId: Long= -1
+    private val startStudyForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
+        if(result.resultCode == Activity.RESULT_OK){
+            val intent = result.data
+            if(intent!!.getBooleanExtra(QuestionFragment.DECK_FINISHED, false)){
+                showConfetti()
+            }
+        }
+    }
 
     companion object{
+        private const val TAG = "CardListFragment"
         private const val DECK_ID = "deckId"
         fun newInstance(deckId: Long) : CardListFragment{
             val fragment = CardListFragment()
@@ -111,24 +127,8 @@ class CardListFragment : Fragment() {
         }
     }
 
-    //particles
-
-    override fun onResume() {
-        super.onResume()
-        binding.viewKonfetti.build()
-            .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
-            .setDirection(0.0, 359.0)
-            .setSpeed(1f, 5f)
-            .setFadeOutEnabled(true)
-            .setTimeToLive(2000L)
-            .addShapes(Shape.Square, Shape.Circle)
-            .addSizes(Size(12))
-            .setPosition(-50f, binding.viewKonfetti.width + 50f, -50f, -50f)
-            .streamFor(300, 5000L)
-    }
-
     private fun startStudy(){
-        startActivity(QuestionActivity.newIntent(requireContext(), deckId))
+        startStudyForResult.launch(QuestionActivity.newIntent(context!!, deckId))
     }
     private fun favorites() {
         val deckDao = BlackEagleDatabase.getInstance(activity!!).deckDao()
@@ -159,5 +159,17 @@ class CardListFragment : Fragment() {
         }else{
             favoriteButton?.setIcon(R.drawable.ic_favorite_study_border)
         }
+    }
+    private fun showConfetti(){
+        binding.viewKonfetti.build()
+            .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+            .setDirection(0.0, 359.0)
+            .setSpeed(1f, 5f)
+            .setFadeOutEnabled(true)
+            .setTimeToLive(2000L)
+            .addShapes(Shape.Square, Shape.Circle)
+            .addSizes(Size(12))
+            .setPosition(-50f, binding.viewKonfetti.width + 50f, -50f, -50f)
+            .streamFor(300, 5000L)
     }
 }

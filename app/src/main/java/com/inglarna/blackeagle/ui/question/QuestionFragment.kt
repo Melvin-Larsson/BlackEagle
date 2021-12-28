@@ -1,8 +1,9 @@
 package com.inglarna.blackeagle.ui.question
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ class QuestionFragment : Fragment() {
     private lateinit var cardRepo : CardRepo
 
     companion object{
+        public const val DECK_FINISHED = "deckFinished"
         private const val DECK_ID = "deckId"
         private const val TAG = "Question"
         fun newInstance(deckId: Long): QuestionFragment {
@@ -42,11 +44,12 @@ class QuestionFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         deckId = arguments!!.getLong(DECK_ID, -1)
-        Log.d(TAG, "Current: " + Date().time / (1000*3600*24) + " looking for: " + ceil(ceil(Date().time / (1000.0*3600.0*24.0))))
         cardViewModel.getDeckByNextRepetition(deckId, ceil(Date().time / (1000.0*3600.0*24.0))).observe(this){
             cards = it
             if(cards.isNotEmpty()){
                 resetFields()
+            }else{
+                endActivity(true)
             }
         }
         binding.buttonShowHint.setOnClickListener {
@@ -77,7 +80,7 @@ class QuestionFragment : Fragment() {
             }
             //Next question
             if(cards.isEmpty()){
-                activity!!.finish()
+                endActivity(true)
             }else{
                 resetFields()
             }
@@ -93,6 +96,7 @@ class QuestionFragment : Fragment() {
         super.onAttach(context)
         cardRepo = CardRepo(context)
     }
+
     private fun resetFields(){
         //Set text
         binding.textViewQuestion.text = cards[0].question
@@ -103,5 +107,11 @@ class QuestionFragment : Fragment() {
         binding.textViewAnswer.visibility = View.INVISIBLE
         binding.difficultyButtonsContainer.visibility = View.GONE
         binding.buttonShowAnswer.visibility = View.VISIBLE
+    }
+    private fun endActivity(doneStudying: Boolean){
+        val result = Intent()
+        result.putExtra(DECK_FINISHED, doneStudying)
+        activity!!.setResult(Activity.RESULT_OK, result)
+        activity!!.finish()
     }
 }
