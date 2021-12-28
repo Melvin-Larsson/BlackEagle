@@ -20,6 +20,9 @@
     <string name="start_study">start study</string>
     <string name="favorite_study">favorite study</string>
     <string name="card_count">%1$d cards</string>
+    <string name="card_answer">Answer: %1$s</string>
+    <string name="card_question">Question: %1$s</string>
+    <string name="card_number">%1$d</string>
     <string name="all">All</string>
     <string name="folders">Folders</string>
     <string name="favourites">Favourites</string>

@@ -8,13 +8,7 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/rightGuidline"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.98" />
-
+    <!--checkbox-->
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="48dp"
@@ -23,35 +17,59 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/aroundQuestionAnswer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:drawable/dialog_holo_light_frame"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/checkBox"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="15dp">
 
+        <!--number-->
         <TextView
-            android:id="@+id/textViewAnswer"
+            android:id="@+id/cardNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="32"
             android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/checkBox"
-            app:layout_constraintTop_toBottomOf="@+id/textViewQuestion"
-            tools:text="Answer" />
-
-        <TextView
-            android:id="@+id/textViewQuestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"
-            app:layout_constraintStart_toEndOf="@+id/checkBox"
+            app:layout_constraintStart_toEndOf="@+id/cardNumber"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Question" />
-    </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!--question-->
+            <TextView
+                android:id="@+id/textViewQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                app:layout_constraintStart_toEndOf="@+id/checkBox"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Question" />
+
+            <!--answer-->
+            <TextView
+                android:id="@+id/textViewAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/checkBox"
+                app:layout_constraintTop_toBottomOf="@+id/textViewQuestion"
+                tools:text="Answer"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
