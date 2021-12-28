@@ -13,6 +13,7 @@ import com.inglarna.blackeagle.model.Card
 import android.widget.LinearLayout
 import android.util.TypedValue
 import android.widget.FrameLayout
+import com.inglarna.blackeagle.R
 
 
 class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, private val lifecycleOwner: LifecycleOwner, private val context: CardListFragment): RecyclerView.Adapter<CardListViewHolder>() {
@@ -41,8 +42,11 @@ class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, p
             onEditCardClicked(cards[position])
         }
 
-        holder.binding.textViewAnswer.text = cards[position].question
-        holder.binding.textViewQuestion.text = cards[position].answer
+
+        holder.binding.textViewQuestion.text = context.resources.getString(R.string.card_question, cards[position].question)
+        holder.binding.textViewAnswer.text = context.resources.getString(R.string.card_answer, cards[position].answer)
+        val cardNumber = position + 1
+        holder.binding.cardNumber.text = cardNumber.toString()
         holder.binding.checkBox.setOnCheckedChangeListener { checkbox, isChecked ->
             if (isChecked) {
                 selectedCards.add(cards[position])
@@ -52,32 +56,16 @@ class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, p
         }
         val params = holder.binding.aroundQuestionAnswer.layoutParams as ConstraintLayout.LayoutParams
         val checkboxView = holder.binding.checkBox
-        val aroundquestionAnswer = holder.binding.aroundQuestionAnswer
 
         if(select){
             checkboxView.visibility = View.VISIBLE
             checkboxView.isChecked = selectedCards.contains(cards[position])
             params.startToEnd = checkboxView.id
             params.startToStart = ConstraintLayout.LayoutParams.UNSET
-
-            val width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300F, context.getResources().getDisplayMetrics()).toInt()
-            val layout: LinearLayout = aroundquestionAnswer
-            val params1: ViewGroup.LayoutParams = layout.layoutParams
-            params1.width = width
-            params1.height = FrameLayout.LayoutParams.WRAP_CONTENT
-            layout.layoutParams = params1
-
         }else{
             checkboxView.visibility = View.INVISIBLE
             params.startToStart = checkboxView.id
             params.startToEnd = ConstraintLayout.LayoutParams.UNSET
-            //TODO: fixa den där width grejen på card
-            val width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350F, context.getResources().getDisplayMetrics()).toInt()
-            val layout: LinearLayout = aroundquestionAnswer
-            val params1: ViewGroup.LayoutParams = layout.layoutParams
-            params1.width = width
-            params1.height = FrameLayout.LayoutParams.WRAP_CONTENT
-            layout.layoutParams = params1
         }
     }
     override fun getItemCount(): Int = cards.size

@@ -1,6 +1,7 @@
 package com.inglarna.blackeagle.ui.cardlist
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -15,6 +16,9 @@ import com.inglarna.blackeagle.viewmodel.CardViewModel
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import android.view.View
+import nl.dionsegijn.konfetti.models.Shape
+import nl.dionsegijn.konfetti.models.Size
 
 class CardListFragment : Fragment() {
     lateinit var binding : FragmentCardListBinding
@@ -77,6 +81,7 @@ class CardListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentCardListBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -105,6 +110,23 @@ class CardListFragment : Fragment() {
             editCardSelectedCallBack = context
         }
     }
+
+    //particles
+
+    override fun onResume() {
+        super.onResume()
+        binding.viewKonfetti.build()
+            .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+            .setDirection(0.0, 359.0)
+            .setSpeed(1f, 5f)
+            .setFadeOutEnabled(true)
+            .setTimeToLive(2000L)
+            .addShapes(Shape.Square, Shape.Circle)
+            .addSizes(Size(12))
+            .setPosition(-50f, binding.viewKonfetti.width + 50f, -50f, -50f)
+            .streamFor(300, 5000L)
+    }
+
     private fun startStudy(){
         startActivity(QuestionActivity.newIntent(requireContext(), deckId))
     }
