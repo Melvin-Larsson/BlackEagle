@@ -18,8 +18,14 @@ class CardRepo (context: Context){
     fun deleteCard(card: Card){
         cardDao.deleteCard(card)
     }
+    fun updateCard(card: Card){
+        cardDao.updateCard(card)
+    }
     fun getFullDeck(deckId: Long): LiveData<List<Card>>{
         return cardDao.loadFullDeck(deckId)
+    }
+    fun getFullDeckByNextRepetition(deckId: Long, maxDay: Double): LiveData<List<Card>>{
+        return cardDao.loadFullDeckByNextRepetition(deckId, maxDay)
     }
     fun getDeckSize(deckId: Long) : LiveData<Int>{
         return cardDao.loadDeckSize(deckId)

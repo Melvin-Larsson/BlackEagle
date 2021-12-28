@@ -1,6 +1,8 @@
 package com.inglarna.blackeagle.ui.question
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,17 +10,24 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.inglarna.blackeagle.databinding.FragmentQuestionBinding
 import com.inglarna.blackeagle.model.Card
+import com.inglarna.blackeagle.repository.CardRepo
 import com.inglarna.blackeagle.viewmodel.CardViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.ceil
 
 class QuestionFragment : Fragment() {
     lateinit var binding: FragmentQuestionBinding
     private var deckId: Long = -1
-    private var index = 0
     private var cards: List<Card> = ArrayList<Card>()
     private val cardViewModel by viewModels<CardViewModel>()
+    private lateinit var cardRepo : CardRepo
 
     companion object{
         private const val DECK_ID = "deckId"
+        private const val TAG = "Question"
         fun newInstance(deckId: Long): QuestionFragment {
             val bundle = Bundle()
             bundle.putLong(DECK_ID, deckId)
@@ -33,7 +42,8 @@ class QuestionFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         deckId = arguments!!.getLong(DECK_ID, -1)
-        cardViewModel.getDeckViews(deckId).observe(this){
+        Log.d(TAG, "Current: " + Date().time / (1000*3600*24) + " looking for: " + ceil(ceil(Date().time / (1000.0*3600.0*24.0))))
+        cardViewModel.getDeckByNextRepetition(deckId, ceil(Date().time / (1000.0*3600.0*24.0))).observe(this){
             cards = it
             if(cards.isNotEmpty()){
                 resetFields()
@@ -49,28 +59,49 @@ class QuestionFragment : Fragment() {
                 //Show answer
                 binding.textViewAnswer.visibility = View.VISIBLE
                 //Switch buttons
-                binding.buttonNextQuestion.visibility = View.VISIBLE
+                binding.difficultyButtonsContainer.visibility = View.VISIBLE
                 binding.buttonShowAnswer.visibility = View.GONE
             }
         }
-        binding.buttonNextQuestion.setOnClickListener{
-            index ++
-            if(index >= cards.size){
+        var difficultyButtonListener = View.OnClickListener{view ->
+            //Inform card about repetition
+            var retrievability: Double = when(view.id){
+                binding.buttonEasy.id -> 0.9
+                binding.buttonMedium.id -> 0.5
+                else -> 0.0
+            }
+            var selectedCard = cards[0]
+            selectedCard.repeated(retrievability)
+            GlobalScope.launch {
+                cardRepo.updateCard(selectedCard)
+            }
+            //Next question
+            if(cards.isEmpty()){
                 activity!!.finish()
             }else{
                 resetFields()
             }
+
         }
+        binding.buttonEasy.setOnClickListener(difficultyButtonListener)
+        binding.buttonMedium.setOnClickListener(difficultyButtonListener)
+        binding.buttonDifficult.setOnClickListener(difficultyButtonListener)
+
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        cardRepo = CardRepo(context)
     }
     private fun resetFields(){
         //Set text
-        binding.textViewQuestion.text = cards[index].question
-        binding.textViewAnswer.text = cards[index].answer
-        binding.textViewHint.text = cards[index].hint
+        binding.textViewQuestion.text = cards[0].question
+        binding.textViewAnswer.text = cards[0].answer
+        binding.textViewHint.text = cards[0].hint
         //Reset visibilities
         binding.textViewHint.visibility = View.INVISIBLE
         binding.textViewAnswer.visibility = View.INVISIBLE
-        binding.buttonNextQuestion.visibility = View.GONE
+        binding.difficultyButtonsContainer.visibility = View.GONE
         binding.buttonShowAnswer.visibility = View.VISIBLE
     }
 }

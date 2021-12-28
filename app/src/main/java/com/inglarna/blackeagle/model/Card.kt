@@ -1,8 +1,13 @@
 package com.inglarna.blackeagle.model
 
+import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.math.exp
 import kotlin.math.ln
+import kotlin.math.roundToLong
 
 @Entity
 data class Card(
@@ -12,13 +17,41 @@ data class Card(
     var answer : String = "",
     var hint : String = "",
     var position : Int = 0,
-    var repititions: Int = 0){
+    var firstRepetition : Double? = null,
+    var nextRepetition : Double = millisToDays(Date().time).toDouble(),
+    var k : Double = 1.0,
+){
+    companion object{
+        private const val TAG = "Card"
+        private const val NEXT_REPETITION_RETRIEVABILITY  = 0.7
+        private val rand = Random()
+    }
 
 
-    fun nextRepitition() : Double{
+    /*fun nextRepetition() : Double{
         var t = 0.0
         val R = 0.7
         t = ln(R) * -repititions
         return t
+    }*/
+
+    fun repeated(retrieveability: Double){
+        if(retrieveability <= 0){
+            firstRepetition = null
+            nextRepetition = millisToDays(Date().time) + rand.nextDouble()
+            k = 1.0
+        }else{
+            if(firstRepetition == null){
+                firstRepetition = millisToDays(Date().time).toDouble()
+                nextRepetition = firstRepetition!! + 1
+            }else{
+                k *= NEXT_REPETITION_RETRIEVABILITY
+                var t = ln(k/0.8584) / -0.0881
+                nextRepetition = t.toLong() + firstRepetition!!
+            }
+        }
     }
+}
+private fun millisToDays(millis : Long) : Long{
+    return millis / (1000 * 3600 * 24)
 }

@@ -20,4 +20,7 @@ class CardViewModel (application: Application) : AndroidViewModel(application){
     fun getDeckViews(deckId: Long): LiveData<List<Card>> {
         return cardRepo.getFullDeck(deckId)
     }
+    fun getDeckByNextRepetition(deckId: Long, maxDay: Double):LiveData<List<Card>>{
+        return cardRepo.getFullDeckByNextRepetition(deckId, maxDay)
+    }
 }

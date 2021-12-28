@@ -15,6 +15,9 @@ interface CardDao {
     @Query("SELECT * FROM Card WHERE deckId = :deckId")
     fun loadFullDeck(deckId: Long): LiveData<List<Card>>
 
+    @Query("SELECT * FROM Card WHERE deckId = :deckId AND nextRepetition < :maxDay ORDER BY nextRepetition ASC")
+    fun loadFullDeckByNextRepetition(deckId: Long, maxDay :Double): LiveData<List<Card>>
+
     @Query("SELECT COUNT(deckId) FROM Card WHERE deckId = :deckId")
     fun loadDeckSize(deckId: Long): LiveData<Int>
 

@@ -76,18 +76,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
     <LinearLayout
+        android:id="@+id/difficulty_buttons_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone">
 
         <Button
-            android:id="@+id/button_next_question"
+            android:id="@+id/button_difficult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="Nästa mannen"/>
+            android:text="Kan n'te"/>
+        <Button
+            android:id="@+id/button_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kanish"/>
+        <Button
+            android:id="@+id/button_easy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="kan"/>
 
     </LinearLayout>
 
