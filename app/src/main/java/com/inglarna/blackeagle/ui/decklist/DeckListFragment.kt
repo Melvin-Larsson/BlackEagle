@@ -28,7 +28,6 @@ class DeckListFragment : Fragment() {
         fun newInstance(deckPage: Int): DeckListFragment{
             val fragment = DeckListFragment()
             val bundle = Bundle()
-
             bundle.putInt(PAGE_ID, deckPage)
             fragment.arguments = bundle
             return fragment
@@ -59,9 +58,15 @@ class DeckListFragment : Fragment() {
             deckViewModel.getDecks()
         }
         deckRecyclerViewAdapter = DeckListRecyclerViewAdapter(requireActivity(), data, requireActivity())
+
+
         deckRecyclerViewAdapter.onDeckClicked = {
-            deckSelectedCallback.onDeckSelected(it)
+
+                deckSelectedCallback.onDeckSelected(it)
+
         }
+
+
         binding.deckRecyclerView.adapter = deckRecyclerViewAdapter
         binding.deckRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }

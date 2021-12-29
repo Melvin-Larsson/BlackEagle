@@ -13,6 +13,7 @@ import com.inglarna.blackeagle.model.Card
 import android.widget.LinearLayout
 import android.util.TypedValue
 import android.widget.FrameLayout
+import android.widget.Toast
 import com.inglarna.blackeagle.R
 
 
@@ -41,6 +42,13 @@ class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, p
         holder.itemView.setOnClickListener{
             onEditCardClicked(cards[position])
         }
+
+        holder.itemView.setOnClickListener{
+            if (select){
+                holder.binding.checkBox.isChecked = !holder.binding.checkBox.isChecked
+            }
+        }
+
 
 
         holder.binding.textViewQuestion.text = context.resources.getString(R.string.card_question, cards[position].question)

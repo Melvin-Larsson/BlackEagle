@@ -62,7 +62,6 @@ class CardListFragment : Fragment() {
         fun onEditCardSelected(card: Card)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
