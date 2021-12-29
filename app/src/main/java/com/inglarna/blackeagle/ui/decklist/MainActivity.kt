@@ -27,6 +27,7 @@ class MainActivity : SingleFragmentNavMenuActivity(), DeckListFragment.DeckSelec
     }
 
     override fun onDeckSelected(deck: Deck) {
+
         startCardActivity(deck)
     }
 

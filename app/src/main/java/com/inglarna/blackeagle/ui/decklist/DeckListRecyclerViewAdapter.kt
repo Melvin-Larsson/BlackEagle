@@ -52,7 +52,11 @@ class DeckListRecyclerViewAdapter(val context : Context,
         holder.binding.textViewDeckName.text = decks[position].deck.name
         holder.binding.textViewCardCount.text = context.resources.getString(R.string.card_count, decks[position].cards.size)
         holder.itemView.setOnClickListener{
-            onDeckClicked(decks[position].deck)
+            if(!select){
+                onDeckClicked(decks[position].deck)
+            }else{
+                holder.binding.checkboxDeck.isChecked = !holder.binding.checkboxDeck.isChecked
+            }
         }
 
         holder.binding.checkboxDeck.setOnCheckedChangeListener { checkbox, ischecked ->

@@ -3,7 +3,6 @@ package com.inglarna.blackeagle.ui.cardlist
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -37,6 +36,7 @@ class CardListFragment : Fragment() {
     private lateinit var adapter : CardListRecyclerViewAdapter
     private var favoriteButton: MenuItem? = null
     private var deleteButton: MenuItem? = null
+    private var startStudyButton: MenuItem? = null
     private var deckId: Long= -1
     private var deckFinishedToday = false
 
@@ -46,7 +46,6 @@ class CardListFragment : Fragment() {
         fun newInstance(deckId: Long) : CardListFragment{
             val fragment = CardListFragment()
             val bundle = Bundle()
-            
             bundle.putLong(DECK_ID, deckId)
             fragment.arguments = bundle
             return fragment
@@ -65,6 +64,7 @@ class CardListFragment : Fragment() {
         inflater.inflate(R.menu.card_list_menu, menu)
         favoriteButton = menu.findItem(R.id.favoriteStudy)
         deleteButton = menu.findItem((R.id.delete))
+        startStudyButton = menu.findItem(R.id.startStudy)
         deckViewModel.getDecks()?.observe(this,{ decks->
             for(deckWithCards in decks){
                 if (deckWithCards.deck.id == deckId){
@@ -162,6 +162,8 @@ class CardListFragment : Fragment() {
     private fun select(){
         adapter.select = !adapter.select
         deleteButton?.isVisible = adapter.select
+        favoriteButton?.isVisible = !adapter.select
+        startStudyButton?.isVisible = !adapter.select
     }
     private fun delete(){
         val selectedCards = adapter.selectedCards.toMutableList()
@@ -182,13 +184,13 @@ class CardListFragment : Fragment() {
     }
     private fun showConfetti(){
         binding.viewKonfetti.build()
-            .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
-            .setDirection(0.0, 359.0)
             .setSpeed(1f, 5f)
-            .setFadeOutEnabled(true)
             .setTimeToLive(2000L)
-            .addShapes(Shape.Square, Shape.Circle)
+            .setFadeOutEnabled(true)
+            .setDirection(0.0, 359.0)
             .addSizes(Size(12))
+            .addShapes(Shape.Square, Shape.Circle)
+            .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
             .setPosition(-50f, binding.viewKonfetti.width + 50f, -50f, -50f)
             .streamFor(300, 5000L)
     }

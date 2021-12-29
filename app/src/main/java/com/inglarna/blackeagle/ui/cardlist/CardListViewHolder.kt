@@ -7,6 +7,7 @@ import com.inglarna.blackeagle.databinding.ListItemCardBinding
 import android.view.MenuItem
 import androidx.appcompat.widget.PopupMenu
 import com.inglarna.blackeagle.R
+import kotlinx.coroutines.selects.select
 
 
 class CardListViewHolder(val binding: ListItemCardBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener,
@@ -19,9 +20,10 @@ class CardListViewHolder(val binding: ListItemCardBinding): RecyclerView.ViewHol
 
 
     override fun onClick(p0: View?) {
-        /*
+            /*
         inspektera och edit
          */
+
     }
 
     override fun onLongClick(v: View): Boolean {
