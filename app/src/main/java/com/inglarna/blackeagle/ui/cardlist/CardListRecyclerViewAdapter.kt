@@ -12,12 +12,15 @@ import com.inglarna.blackeagle.model.Card
 
 import android.widget.LinearLayout
 import android.util.TypedValue
+import android.view.MenuItem
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import com.inglarna.blackeagle.R
 
 
-class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, private val lifecycleOwner: LifecycleOwner, private val context: CardListFragment): RecyclerView.Adapter<CardListViewHolder>() {
+class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, private val lifecycleOwner: LifecycleOwner, private val context: CardListFragment): RecyclerView.Adapter<CardListViewHolder>(),
+    PopupMenu.OnMenuItemClickListener {
     private var cards: List<Card> = ArrayList<Card>()
     lateinit var onEditCardClicked: ((Card) -> Unit)
     val selectedCards: MutableList<Card> = ArrayList<Card>() //TODO: Prevent other classes from changing the content
@@ -39,6 +42,7 @@ class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, p
         return CardListViewHolder(binding)
     }
     override fun onBindViewHolder(holder: CardListViewHolder, position: Int) {
+        //TODO: knas 2 set onclicklistner
         holder.itemView.setOnClickListener{
             onEditCardClicked(cards[position])
         }
@@ -49,6 +53,15 @@ class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, p
             }
         }
 
+        holder.itemView.setOnLongClickListener {
+            if (!select){
+                val popup = PopupMenu(holder.itemView.context, it)
+                popup.setOnMenuItemClickListener(this)
+                popup.inflate(R.menu.card_long_click_menu)
+                popup.show()
+            }
+            true
+        }
 
 
         holder.binding.textViewQuestion.text = context.resources.getString(R.string.card_question, cards[position].question)
@@ -79,4 +92,21 @@ class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, p
     }
     override fun getItemCount(): Int = cards.size
 
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.editCard-> editCard()
+            R.id.deleteCard-> delete()
+        }
+        return true
+    }
+
+    private fun editCard() {
+        //Toast.makeText(itemView.context, "edit", Toast.LENGTH_LONG).show()
+
+    }
+
+    private fun delete(){
+        //Toast.makeText(holder.itemView.context, "delete", Toast.LENGTH_LONG).show()
+    }
 }
