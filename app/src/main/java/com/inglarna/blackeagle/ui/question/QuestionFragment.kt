@@ -20,19 +20,23 @@ import kotlin.collections.ArrayList
 import kotlin.math.ceil
 
 class QuestionFragment : Fragment() {
-    lateinit var binding: FragmentQuestionBinding
+    private lateinit var binding: FragmentQuestionBinding
     private var deckId: Long = -1
-    private var cards: List<Card> = ArrayList<Card>()
+    private var forceStudy = false
+    private var cardsInitialized = false
+    private var cards: MutableList<Card> = ArrayList()
     private val cardViewModel by viewModels<CardViewModel>()
     private lateinit var cardRepo : CardRepo
 
     companion object{
-        public const val DECK_FINISHED = "deckFinished"
+        const val DECK_FINISHED = "deckFinished"
         private const val DECK_ID = "deckId"
+        private const val FORCE_STUDY = "forceStudy"
         private const val TAG = "Question"
-        fun newInstance(deckId: Long): QuestionFragment {
+        fun newInstance(deckId: Long, forceStudy: Boolean = false): QuestionFragment {
             val bundle = Bundle()
             bundle.putLong(DECK_ID, deckId)
+            bundle.putBoolean(FORCE_STUDY, forceStudy)
             val fragment = QuestionFragment()
             fragment.arguments = bundle
             return fragment
@@ -44,8 +48,14 @@ class QuestionFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         deckId = arguments!!.getLong(DECK_ID, -1)
-        cardViewModel.getDeckByNextRepetition(deckId, ceil(Date().time / (1000.0*3600.0*24.0))).observe(this){
-            cards = it
+        forceStudy = arguments!!.getBoolean(FORCE_STUDY, false)
+
+        val maxDate = if(forceStudy){Double.MAX_VALUE} else{ceil(Date().time / (1000.0*3600.0*24.0))}
+        cardViewModel.getDeckByNextRepetition(deckId, maxDate).observe(this){
+            if(!forceStudy || !cardsInitialized){
+                cards = it.toMutableList()
+                cardsInitialized = true
+            }
             if(cards.isNotEmpty()){
                 resetFields()
             }else{
@@ -78,11 +88,12 @@ class QuestionFragment : Fragment() {
             GlobalScope.launch {
                 cardRepo.updateCard(selectedCard)
             }
-            //Next question
-            if(cards.isEmpty()){
-                endActivity(true)
-            }else{
-                resetFields()
+            //Remove card from study queue or put it last in queue if necessary
+            if(forceStudy){
+                cards.remove(selectedCard)
+                if(view.id == binding.buttonDifficult.id){
+                    cards.add(selectedCard)
+                }
             }
 
         }
@@ -108,9 +119,9 @@ class QuestionFragment : Fragment() {
         binding.difficultyButtonsContainer.visibility = View.GONE
         binding.buttonShowAnswer.visibility = View.VISIBLE
     }
-    private fun endActivity(doneStudying: Boolean){
+    private fun endActivity(deckFinished: Boolean){
         val result = Intent()
-        result.putExtra(DECK_FINISHED, doneStudying)
+        result.putExtra(DECK_FINISHED, deckFinished)
         activity!!.setResult(Activity.RESULT_OK, result)
         activity!!.finish()
     }
