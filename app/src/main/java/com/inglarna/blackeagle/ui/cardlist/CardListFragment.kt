@@ -1,12 +1,10 @@
 package com.inglarna.blackeagle.ui.cardlist
 
 import android.app.Activity
-import android.app.Instrumentation
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,6 +24,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.inglarna.blackeagle.ui.question.QuestionFragment
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
+import java.util.*
+import kotlin.math.ceil
 
 class CardListFragment : Fragment() {
     lateinit var binding : FragmentCardListBinding
@@ -38,15 +38,8 @@ class CardListFragment : Fragment() {
     private var deleteButton: MenuItem? = null
     private var startStudyButton: MenuItem? = null
     private var deckId: Long= -1
-    private val startStudyForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
-        if(result.resultCode == Activity.RESULT_OK){
-            val intent = result.data
-            if(intent!!.getBooleanExtra(QuestionFragment.DECK_FINISHED, false)){
-                showConfetti()
-            }
-        }
-    }
-    //TODO: när select == true ska man inte kunna komma in i kortleken utan man ska markera istället
+    private var deckFinishedToday = false
+
     companion object{
         private const val TAG = "CardListFragment"
         private const val DECK_ID = "deckId"
@@ -88,7 +81,7 @@ class CardListFragment : Fragment() {
                 activity!!.finish()
                 return true
             }
-            R.id.startStudy -> startStudy()
+            R.id.startStudy -> study()
             R.id.favoriteStudy -> favorites()
             R.id.select -> select()
             R.id.delete -> delete()
@@ -98,7 +91,6 @@ class CardListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentCardListBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -116,6 +108,9 @@ class CardListFragment : Fragment() {
             /*val actionbar = activity
             actionbar!!.title = deck.name*/
         })
+        cardViewModel.getDeckByNextRepetition(deckId, ceil(Date().time / (1000 * 3600 * 24).toDouble())).observe(this, {
+            deckFinishedToday = it.isEmpty()
+        })
 
         adapter.onEditCardClicked = { card ->
             editCardSelectedCallBack.onEditCardSelected(card)
@@ -128,9 +123,33 @@ class CardListFragment : Fragment() {
         }
     }
 
-    private fun startStudy(){
-        startStudyForResult.launch(QuestionActivity.newIntent(context!!, deckId))
+    private val startStudyForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
+        if(result.resultCode == Activity.RESULT_OK){
+            val intent = result.data
+            if(intent!!.getBooleanExtra(QuestionFragment.DECK_FINISHED, false)){
+                showConfetti()
+            }
+        }
     }
+    private fun study(){
+        if(deckFinishedToday){
+            showConfirmExtraStudyDialog()
+        }else{
+            startStudyForResult.launch(QuestionActivity.newIntent(context!!, deckId, false))
+        }
+    }
+    private fun showConfirmExtraStudyDialog(){
+        AlertDialog.Builder(context)
+            .setTitle("Confirm")
+            .setMessage("Do you really want to study?")
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setPositiveButton(android.R.string.yes){dialog, _ ->
+                startStudyForResult.launch(QuestionActivity.newIntent(context!!, deckId, true))
+            }
+            .setNegativeButton(android.R.string.no, null)
+            .show()
+    }
+
     private fun favorites() {
         val deckDao = BlackEagleDatabase.getInstance(activity!!).deckDao()
 
