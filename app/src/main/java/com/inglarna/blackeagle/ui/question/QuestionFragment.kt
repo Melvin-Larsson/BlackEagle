@@ -42,10 +42,12 @@ class QuestionFragment : Fragment() {
             return fragment
         }
     }
+
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         binding = FragmentQuestionBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         deckId = arguments!!.getLong(DECK_ID, -1)
         forceStudy = arguments!!.getBoolean(FORCE_STUDY, false)
@@ -119,6 +121,7 @@ class QuestionFragment : Fragment() {
         binding.difficultyButtonsContainer.visibility = View.GONE
         binding.buttonShowAnswer.visibility = View.VISIBLE
     }
+
     private fun endActivity(deckFinished: Boolean){
         val result = Intent()
         result.putExtra(DECK_FINISHED, deckFinished)
