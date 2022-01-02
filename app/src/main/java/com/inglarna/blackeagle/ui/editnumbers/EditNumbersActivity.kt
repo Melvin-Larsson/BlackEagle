@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.ui.SingleFragmentActivity
 
-class EditConvertNumbersActivity: SingleFragmentActivity() {
-    override fun createFragment(): Fragment = EditConvertNumbersFragment()
+class EditNumbersActivity: SingleFragmentActivity() {
+    override fun createFragment(): Fragment = EditNumbersFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -25,7 +25,7 @@
 
     <!--The recyclerview that comes up after searching-->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/deck_recycler_view"
+        android:id="@+id/editNumbersRecyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

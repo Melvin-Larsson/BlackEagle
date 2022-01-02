@@ -18,15 +18,15 @@
         </activity>
         <activity android:name=".ui.settings.SettingsActivity">
         </activity>
-        <activity android:name=".ui.convertnumber.ConvertNumbersActivity"
+        <activity android:name=".ui.convertnumber.numbersActivity"
             android:exported="true">
         </activity>
-        <activity android:name=".ui.editnumbers.EditConvertNumbersActivity"
+        <activity android:name=".ui.editnumbers.EditNumbersActivity"
             android:exported="true"
-            android:parentActivityName=".ui.convertnumber.ConvertNumbersActivity">
+            android:parentActivityName=".ui.convertnumber.numbersActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.convertnumber.ConvertNumbersActivity"/>
+                android:value=".ui.convertnumber.numbersActivity"/>
         </activity>
         <activity android:name=".ui.about.AboutActivity"
             android:exported="true">

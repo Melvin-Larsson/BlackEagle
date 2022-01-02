@@ -4,13 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.R
-import com.inglarna.blackeagle.ui.editnumbers.EditConvertNumbersActivity
+import com.inglarna.blackeagle.ui.editnumbers.EditNumbersActivity
 import com.inglarna.blackeagle.ui.SingleFragmentNavMenuActivity
 
-class ConvertNumbersActivity: SingleFragmentNavMenuActivity(), ConvertNumbersFragment.Callbacks {
+class numbersActivity: SingleFragmentNavMenuActivity(), numbersFragment.Callbacks {
 
     override fun createFragment(): Fragment {
-        val fragment = ConvertNumbersFragment.newInstance()
+        val fragment = numbersFragment.newInstance()
         fragment.callbacks = this
         return fragment
     }
@@ -22,7 +22,7 @@ class ConvertNumbersActivity: SingleFragmentNavMenuActivity(), ConvertNumbersFra
     }
     //when clicking edit button
     override fun onEditButtonPressed() {
-        val intentConvertNumbers = Intent(this, EditConvertNumbersActivity::class.java)
+        val intentConvertNumbers = Intent(this, EditNumbersActivity::class.java)
         startActivity(intentConvertNumbers)
     }
 

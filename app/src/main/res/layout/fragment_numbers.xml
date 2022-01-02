@@ -9,7 +9,7 @@
 
     <!--button for editing the list of all the numbers-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/editConvertNumbersButton"
+        android:id="@+id/editNumbersButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"

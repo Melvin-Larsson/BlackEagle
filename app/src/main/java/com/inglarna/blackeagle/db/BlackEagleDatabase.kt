@@ -6,11 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.model.Deck
+import com.inglarna.blackeagle.model.WordNumber
 
-@Database(entities = arrayOf(Card::class, Deck::class), version = 1)
+@Database(entities = arrayOf(Card::class, Deck::class, WordNumber::class), version = 1)
 abstract class BlackEagleDatabase :RoomDatabase() {
     abstract fun deckDao(): DeckDao
     abstract fun cardDao(): CardDao
+    abstract  fun wordNumberDao(): WordNumberDao
 
     companion object{
         private var instance: BlackEagleDatabase? = null

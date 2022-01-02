@@ -42,16 +42,18 @@ class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, p
         return CardListViewHolder(binding)
     }
     override fun onBindViewHolder(holder: CardListViewHolder, position: Int) {
-        //TODO: knas 2 set onclicklistner
         holder.itemView.setOnClickListener{
             onEditCardClicked(cards[position])
-        }
-
-        holder.itemView.setOnClickListener{
             if (select){
                 holder.binding.checkBox.isChecked = !holder.binding.checkBox.isChecked
             }
         }
+
+        /*holder.itemView.setOnClickListener{
+            if (select){
+                holder.binding.checkBox.isChecked = !holder.binding.checkBox.isChecked
+            }
+        }*/
 
         holder.itemView.setOnLongClickListener {
             if (!select){

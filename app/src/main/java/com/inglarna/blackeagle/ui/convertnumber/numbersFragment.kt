@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.inglarna.blackeagle.databinding.FragmentConvertNumbersBinding
+import com.inglarna.blackeagle.databinding.FragmentNumbersBinding
 
-class ConvertNumbersFragment: Fragment() {
+class numbersFragment: Fragment() {
 
-    lateinit var binding: FragmentConvertNumbersBinding
+    lateinit var binding: FragmentNumbersBinding
     lateinit var callbacks: Callbacks
 
     interface Callbacks{
@@ -18,12 +18,12 @@ class ConvertNumbersFragment: Fragment() {
     }
 
     companion object{
-        fun newInstance() = ConvertNumbersFragment()
+        fun newInstance() = numbersFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentConvertNumbersBinding.inflate(inflater, container, false)
-        binding.editConvertNumbersButton.setOnClickListener(){
+        binding = FragmentNumbersBinding.inflate(inflater, container, false)
+        binding.editNumbersButton.setOnClickListener(){
             callbacks.onEditButtonPressed()
         }
         return binding.root
