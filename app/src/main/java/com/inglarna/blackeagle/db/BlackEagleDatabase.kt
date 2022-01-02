@@ -18,10 +18,9 @@ abstract class BlackEagleDatabase :RoomDatabase() {
         private var instance: BlackEagleDatabase? = null
         fun getInstance(context: Context): BlackEagleDatabase{
             if(instance == null){
-                instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    BlackEagleDatabase::class.java,
-                    "Database").build()
+                instance = Room.databaseBuilder(context.applicationContext,BlackEagleDatabase::class.java,"Database")
+                    .createFromAsset("database/numbers.db")
+                    .build()
             }
             return instance as BlackEagleDatabase
         }
