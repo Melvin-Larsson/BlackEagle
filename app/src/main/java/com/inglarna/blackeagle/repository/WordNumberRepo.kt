@@ -17,6 +17,9 @@ class WordNumberRepo(context: Context) {
     fun getWords(numbers: List<Int>): LiveData<List<WordNumber>>{
         return wordNumberDao.getWords(numbers)
     }
+    fun getWords(search: String): LiveData<List<WordNumber>>{
+        return wordNumberDao.getWords(search)
+    }
 
 
 }

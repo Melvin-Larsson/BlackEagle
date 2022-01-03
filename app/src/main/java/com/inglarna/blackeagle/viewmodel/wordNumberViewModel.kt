@@ -16,4 +16,7 @@ class wordNumberViewModel(application: Application) : AndroidViewModel(applicati
     fun getWords(numbers: List<Int>): LiveData<List<WordNumber>>{
         return wordNumberRepo.getWords(numbers)
     }
+    fun getWords(search: String): LiveData<List<WordNumber>>{
+        return wordNumberRepo.getWords(search)
+    }
 }

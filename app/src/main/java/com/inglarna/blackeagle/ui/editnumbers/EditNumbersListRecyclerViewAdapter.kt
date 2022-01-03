@@ -1,6 +1,7 @@
 package com.inglarna.blackeagle.ui.editnumbers
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
@@ -10,11 +11,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inglarna.blackeagle.databinding.ListItemNumberBinding
 import com.inglarna.blackeagle.model.WordNumber
 
-class EditNumbersListRecyclerViewAdapter(val context : Context, private val liveData: LiveData<List<WordNumber>>?, private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<EditNumbersListViewHolder>() {
-
+class EditNumbersListRecyclerViewAdapter(val context : Context, liveData: LiveData<List<WordNumber>>?, private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<EditNumbersListViewHolder>() {
     private var wordNumber: List<WordNumber> = ArrayList<WordNumber>()
-
+    var liveData = liveData
+    set(value){
+        //FIXME: Unsafe question marks?, could observeLiveData be removed?
+        field?.removeObservers(lifecycleOwner)
+        field = value
+        observeLiveData()
+    }
     init {
+       observeLiveData()
+    }
+    private fun observeLiveData(){
         liveData?.observe(lifecycleOwner){
             wordNumber = it
             notifyDataSetChanged()

@@ -15,4 +15,6 @@ interface WordNumberDao {
     @Query("SELECT * FROM WordNumber WHERE number IN (:numbers)")
     fun getWords(numbers: List<Int>): LiveData<List<WordNumber>>
 
+    @Query("SELECT * FROM WordNumber WHERE word LIKE '%' || :search || '%' OR number LIKE :search || '%'")
+    fun getWords(search: String): LiveData<List<WordNumber>>
 }
