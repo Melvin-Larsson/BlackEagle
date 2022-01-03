@@ -1,10 +1,8 @@
 package com.inglarna.blackeagle.ui.editnumbers
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +11,8 @@ import com.inglarna.blackeagle.model.WordNumber
 
 class EditNumbersListRecyclerViewAdapter(val context : Context, liveData: LiveData<List<WordNumber>>?, private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<EditNumbersListViewHolder>() {
     private var wordNumber: List<WordNumber> = ArrayList<WordNumber>()
+    var onNumberWordClicked: ((WordNumber) -> Unit) = {}
+
     var liveData = liveData
     set(value){
         //FIXME: Unsafe question marks?, could observeLiveData be removed?
@@ -38,6 +38,9 @@ class EditNumbersListRecyclerViewAdapter(val context : Context, liveData: LiveDa
     override fun onBindViewHolder(holder: EditNumbersListViewHolder, position: Int) {
         holder.binding.textViewNumber.text = wordNumber[position].number.toString()
         holder.binding.textViewWord.text = wordNumber[position].word
+        holder.binding.root.setOnClickListener{
+            onNumberWordClicked(wordNumber[position])
+        }
     }
 
     override fun getItemCount(): Int {

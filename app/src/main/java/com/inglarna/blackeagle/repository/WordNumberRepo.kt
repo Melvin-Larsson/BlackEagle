@@ -20,6 +20,9 @@ class WordNumberRepo(context: Context) {
     fun getWords(search: String): LiveData<List<WordNumber>>{
         return wordNumberDao.getWords(search)
     }
+    fun updateWord(wordNumber: WordNumber){
+        wordNumberDao.updateWord(wordNumber)
+    }
 
 
 }
