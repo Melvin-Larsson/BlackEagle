@@ -6,15 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.inglarna.blackeagle.databinding.FragmentEditNumbersBinding
-import com.inglarna.blackeagle.model.DeckWithCards
-import com.inglarna.blackeagle.model.WordNumber
-import com.inglarna.blackeagle.ui.convertnumber.numbersFragment
-import com.inglarna.blackeagle.ui.decklist.DeckListRecyclerViewAdapter
-import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import com.inglarna.blackeagle.viewmodel.wordNumberViewModel
 
 class EditNumbersFragment: Fragment() {

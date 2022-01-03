@@ -6,7 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.ui.about.AboutActivity
-import com.inglarna.blackeagle.ui.convertnumber.numbersActivity
+import com.inglarna.blackeagle.ui.convertnumber.NumbersActivity
 import com.inglarna.blackeagle.ui.decklist.MainActivity
 import com.inglarna.blackeagle.ui.settings.SettingsActivity
 //Test
@@ -43,7 +43,7 @@ abstract class SingleFragmentNavMenuActivity: SingleFragmentActivity() {
         startActivity(Intent(this, MainActivity::class.java))
     }
     private fun startConvertNumbers(){
-        startActivity(Intent(this, numbersActivity::class.java))
+        startActivity(Intent(this, NumbersActivity::class.java))
     }
     private fun startSettings(){
         startActivity(Intent(this, SettingsActivity::class.java))
