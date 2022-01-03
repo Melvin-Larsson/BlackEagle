@@ -4,7 +4,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/yourDecks"
-        android:title="@string/your_decks"/>
+        android:title="@string/your_decks" />
     <item
         android:id="@+id/convertNumbers"
         android:title="@string/convert_numbers"/>

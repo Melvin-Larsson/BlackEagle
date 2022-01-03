@@ -3,10 +3,9 @@ package com.inglarna.blackeagle.ui.editnumbers
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.InputType
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,9 +21,15 @@ class EditNumbersFragment: Fragment() {
     private lateinit var binding: FragmentEditNumbersBinding
     private lateinit var wordNumberRecyclerViewAdapter: EditNumbersListRecyclerViewAdapter
     private val wordNumberViewModel by viewModels<wordNumberViewModel>()
+    private var resetButton: MenuItem? = null
 
     companion object{
         fun newInstance() = EditNumbersFragment
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -44,6 +49,22 @@ class EditNumbersFragment: Fragment() {
         }
         binding.editNumbersRecyclerview.adapter = wordNumberRecyclerViewAdapter
         binding.editNumbersRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.edit_numbers_menu, menu)
+        resetButton = menu.findItem(R.id.reset)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.reset -> resetWordNumber()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun resetWordNumber() {
+        Toast.makeText(context, "reset", Toast.LENGTH_SHORT).show()
     }
 
 

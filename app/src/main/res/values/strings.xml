@@ -38,4 +38,5 @@
     <string name="edit">edit</string>
     <string name="title_edit_number_word">What word should be associated with %1$d?</string>
     <string name="update">Update</string>
+    <string name="reset">reset</string>
 </resources>
