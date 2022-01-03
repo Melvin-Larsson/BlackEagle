@@ -57,18 +57,16 @@ class DeckListFragment : Fragment() {
         else{
             deckViewModel.getDecks()
         }
-        deckRecyclerViewAdapter = DeckListRecyclerViewAdapter(requireActivity(), data, requireActivity())
 
+        deckRecyclerViewAdapter = DeckListRecyclerViewAdapter(requireActivity(), data, requireActivity())
+        binding.deckRecyclerView.adapter = deckRecyclerViewAdapter
+        binding.deckRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         deckRecyclerViewAdapter.onDeckClicked = {
 
                 deckSelectedCallback.onDeckSelected(it)
 
         }
-
-
-        binding.deckRecyclerView.adapter = deckRecyclerViewAdapter
-        binding.deckRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {

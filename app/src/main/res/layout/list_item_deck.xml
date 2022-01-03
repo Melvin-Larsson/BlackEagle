@@ -22,7 +22,7 @@
         android:id="@+id/aroundDeck"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@android:drawable/dialog_holo_light_frame"
+        android:background="@drawable/card_shadow"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
