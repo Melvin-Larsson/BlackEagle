@@ -13,4 +13,7 @@ class wordNumberViewModel(application: Application) : AndroidViewModel(applicati
     fun getNumberViews(): LiveData<List<WordNumber>> {
         return wordNumberRepo.getNumbers()
     }
+    fun getWords(numbers: List<Int>): LiveData<List<WordNumber>>{
+        return wordNumberRepo.getWords(numbers)
+    }
 }

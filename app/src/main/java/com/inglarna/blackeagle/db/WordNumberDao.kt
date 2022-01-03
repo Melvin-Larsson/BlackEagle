@@ -12,6 +12,7 @@ interface WordNumberDao {
     @Query("SELECT * FROM WordNumber")
     fun loadAll(): LiveData<List<WordNumber>>
 
-    @Query("SELECT * FROM WordNumber WHERE id = :wordNumberId")
-    fun loadFullDeck(wordNumberId: Long): LiveData<List<WordNumber>>
+    @Query("SELECT * FROM WordNumber WHERE number IN (:numbers)")
+    fun getWords(numbers: List<Int>): LiveData<List<WordNumber>>
+
 }

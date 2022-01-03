@@ -7,10 +7,10 @@ import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.ui.editnumbers.EditNumbersActivity
 import com.inglarna.blackeagle.ui.SingleFragmentNavMenuActivity
 
-class numbersActivity: SingleFragmentNavMenuActivity(), numbersFragment.Callbacks {
+class NumbersActivity: SingleFragmentNavMenuActivity(), NumbersFragment.Callbacks {
 
     override fun createFragment(): Fragment {
-        val fragment = numbersFragment.newInstance()
+        val fragment = NumbersFragment.newInstance()
         fragment.callbacks = this
         return fragment
     }
