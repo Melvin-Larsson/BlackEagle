@@ -3,15 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/reset"
+        android:id="@+id/questionMark"
         android:title="@string/reset"
-        android:icon="@drawable/ic_reset"
-        app:showAsAction="ifRoom"
-        android:visible="true"/>
-    <item
-        android:id="@+id/checkBoxNumbers"
-        android:title="@string/checkbox"
-        android:icon="@drawable/ic_checkbox"
+        android:icon="@drawable/ic_question_mark"
         app:showAsAction="ifRoom"
         android:visible="true"/>
 </menu>

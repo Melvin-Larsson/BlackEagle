@@ -57,8 +57,10 @@ class CardListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //toolbar
         setHasOptionsMenu(true)
     }
+
     //card list menu is used as a toolbar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.card_list_menu, menu)
@@ -95,6 +97,7 @@ class CardListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //creating adapter
         deckId = arguments!!.getLong(DECK_ID, -1)
         adapter = CardListRecyclerViewAdapter(cardViewModel.getDeckViews(deckId), this, this)
         binding.recyclerViewCard.adapter = adapter
@@ -160,6 +163,7 @@ class CardListFragment : Fragment() {
         }
     }
     private fun select(){
+        //visibility of toolbar and checkbox
         adapter.select = !adapter.select
         deleteButton?.isVisible = adapter.select
         favoriteButton?.isVisible = !adapter.select
