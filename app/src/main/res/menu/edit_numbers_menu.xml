@@ -7,11 +7,18 @@
         android:title="@string/reset"
         android:icon="@drawable/ic_reset"
         app:showAsAction="ifRoom"
-        android:visible="true"/>
+        android:visible="false"/>
+    <item
+        android:id="@+id/selectAllNumbers"
+        android:title="@string/selectAll"
+        android:icon="@drawable/ic_select_all"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
     <item
         android:id="@+id/checkBoxNumbers"
         android:title="@string/checkbox"
         android:icon="@drawable/ic_checkbox"
         app:showAsAction="ifRoom"
         android:visible="true"/>
+
 </menu>

@@ -1,12 +1,10 @@
 package com.inglarna.blackeagle.ui.decklist
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -22,7 +20,7 @@ class DeckListRecyclerViewAdapter(val context : Context,
                                   private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<DeckListViewHolder>() {
     private var cardRepo = CardRepo(context)
     private var decks: List<DeckWithCards> = ArrayList<DeckWithCards>()
-    val selectedDecks: MutableList<Deck> = ArrayList<Deck>()
+    val selectedDecks: MutableSet<Deck> = HashSet<Deck>()
     lateinit var onDeckClicked: ((Deck) -> Unit)
     var select = false
         set(value){
@@ -89,17 +87,13 @@ class DeckListRecyclerViewAdapter(val context : Context,
     }
 
     fun selectAll(){
-
-        if (selectedDecks.size != decks.size) {
+        if (selectedDecks.size == decks.size) {
+            selectedDecks.clear()
+        }else{
             selectedDecks.clear()
             for (d in decks) {
                 selectedDecks.add(d.deck)
-
             }
-            Log.d(TAG, selectedDecks.size.toString())
-            Log.d(TAG, decks.size.toString())
-        }else{
-            selectedDecks.clear()
         }
         notifyDataSetChanged()
     }

@@ -15,7 +15,7 @@ import com.inglarna.blackeagle.model.WordNumber
 class EditNumbersListRecyclerViewAdapter(val context : Context, liveData: LiveData<List<WordNumber>>?, private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<EditNumbersListViewHolder>() {
     private var wordNumber: List<WordNumber> = ArrayList()
     var onNumberWordClicked: ((WordNumber) -> Unit) = {}
-    val selectedWordNumbers: MutableList<WordNumber> = ArrayList()
+    val selectedWordNumbers: MutableSet<WordNumber> = HashSet<WordNumber>()
     var select = false
         set(value){
             field = value
@@ -78,5 +78,16 @@ class EditNumbersListRecyclerViewAdapter(val context : Context, liveData: LiveDa
 
     override fun getItemCount(): Int {
         return wordNumber.size
+    }
+    fun selectAll(){
+        if (selectedWordNumbers.size == wordNumber.size){
+            selectedWordNumbers.clear()
+        }else{
+            selectedWordNumbers.clear()
+            for (w in wordNumber){
+                selectedWordNumbers.add(w)
+            }
+        }
+        notifyDataSetChanged()
     }
 }

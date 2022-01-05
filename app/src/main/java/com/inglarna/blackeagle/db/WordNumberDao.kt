@@ -24,5 +24,5 @@ interface WordNumberDao {
     fun updateWord(wordNumber: WordNumber)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateWords(wordNumbers: List<WordNumber>)
+    fun updateWords(wordNumbers: MutableSet<WordNumber>)
 }
