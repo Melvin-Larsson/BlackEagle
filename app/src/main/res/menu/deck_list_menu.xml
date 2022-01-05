@@ -11,8 +11,15 @@
         app:showAsAction="ifRoom"
         android:visible="false"/>
     <item
+        android:id="@+id/selectAll"
+        android:title="@string/selectAll"
+        android:icon="@drawable/ic_select_all"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
+    <item
         android:id="@+id/checkbox"
         android:title="@string/checkbox"
         android:icon="@drawable/ic_checkbox"
         app:showAsAction="ifRoom"/>
+
 </menu>

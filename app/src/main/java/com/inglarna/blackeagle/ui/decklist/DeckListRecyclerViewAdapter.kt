@@ -1,9 +1,12 @@
 package com.inglarna.blackeagle.ui.decklist
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -84,4 +87,21 @@ class DeckListRecyclerViewAdapter(val context : Context,
     override fun getItemCount(): Int {
         return decks.size
     }
+
+    fun selectAll(){
+
+        if (selectedDecks.size != decks.size) {
+            selectedDecks.clear()
+            for (d in decks) {
+                selectedDecks.add(d.deck)
+
+            }
+            Log.d(TAG, selectedDecks.size.toString())
+            Log.d(TAG, decks.size.toString())
+        }else{
+            selectedDecks.clear()
+        }
+        notifyDataSetChanged()
+    }
+
 }
