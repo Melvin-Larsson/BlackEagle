@@ -52,6 +52,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.cardlist.CardListActivity"/>
         </activity>
+        <activity android:name=".ui.tutorialnumbers.TutorialNumbersActivity"
+            android:parentActivityName=".ui.convertnumber.NumbersActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.convertnumber.NumbersActivity"/>
+        </activity>
 
     </application>
 
