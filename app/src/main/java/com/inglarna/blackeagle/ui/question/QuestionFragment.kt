@@ -75,7 +75,8 @@ class QuestionFragment : Fragment() {
                 binding.textViewAnswer.visibility = View.VISIBLE
                 //Switch buttons
                 binding.difficultyButtonsContainer.visibility = View.VISIBLE
-                binding.buttonShowAnswer.visibility = View.GONE
+                binding.buttonShowAnswer.visibility = View.INVISIBLE
+                binding.buttonShowHint.visibility = View.INVISIBLE
             }
         }
         var difficultyButtonListener = View.OnClickListener{view ->
@@ -120,6 +121,7 @@ class QuestionFragment : Fragment() {
         binding.textViewAnswer.visibility = View.INVISIBLE
         binding.difficultyButtonsContainer.visibility = View.GONE
         binding.buttonShowAnswer.visibility = View.VISIBLE
+        binding.buttonShowHint.visibility = View.VISIBLE
     }
 
     private fun endActivity(deckFinished: Boolean){
