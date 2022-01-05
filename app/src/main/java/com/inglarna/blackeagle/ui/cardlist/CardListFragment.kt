@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -118,7 +119,7 @@ class CardListFragment : Fragment() {
         initializeCardMoving()
         //Actionbar title
         deckViewModel.getDeck(deckId).observe(this, {deck->
-            getActivity()!!.setTitle("title")
+            activity?.title = deck.name
             /*val actionbar = activity
             actionbar!!.title = deck.name*/
         })
@@ -136,6 +137,7 @@ class CardListFragment : Fragment() {
         touchHelperCallback.clearViewCallback = SimpleItemTouchHelperCallback.ClearViewCallback{
             GlobalScope.launch {
                 cardViewModel.updateCards(adapter.movedCards)
+                adapter.movedCards.clear()
             }
         }
         val touchHelper = ItemTouchHelper(touchHelperCallback)

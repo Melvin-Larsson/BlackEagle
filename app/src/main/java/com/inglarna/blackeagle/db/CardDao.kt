@@ -21,6 +21,9 @@ interface CardDao {
     @Query("SELECT COUNT(deckId) FROM Card WHERE deckId = :deckId")
     fun loadDeckSize(deckId: Long): LiveData<Int>
 
+    @Query("SELECT MAX(position) FROM Card WHERE deckId = :deckId")
+    fun getMaxPosition(deckId: Long) : Int
+
     @Insert(onConflict = IGNORE)
     fun insertCard(card: Card): Long
 

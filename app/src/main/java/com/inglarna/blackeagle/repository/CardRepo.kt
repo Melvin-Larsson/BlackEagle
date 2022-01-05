@@ -33,4 +33,7 @@ class CardRepo (context: Context){
     fun getDeckSize(deckId: Long) : LiveData<Int>{
         return cardDao.loadDeckSize(deckId)
     }
+    fun getMaxPosition(deckId: Long): Int{
+        return cardDao.getMaxPosition(deckId)
+    }
 }

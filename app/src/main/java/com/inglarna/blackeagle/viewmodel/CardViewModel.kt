@@ -29,4 +29,7 @@ class CardViewModel (application: Application) : AndroidViewModel(application){
     fun updateCards(cards: Set<Card>){
         cardRepo.updateCards(cards)
     }
+    fun getMaxPosition(deckId: Long): Int{
+        return cardRepo.getMaxPosition(deckId)
+    }
 }

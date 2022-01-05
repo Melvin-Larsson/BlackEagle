@@ -68,7 +68,7 @@ class AddCardFragment : Fragment() {
                 card.answer = answer
                 card.hint = hint
                 GlobalScope.launch {
-                    card.position = deckViewModel.getDeckSize(deckId)
+                    card.position = cardViewModel.getMaxPosition(deckId) + 1
                     cardViewModel.addCard(card)
                 }
                 binding.editTextAnswer.setText("")

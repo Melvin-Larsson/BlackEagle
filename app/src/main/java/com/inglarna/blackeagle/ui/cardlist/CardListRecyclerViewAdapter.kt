@@ -1,5 +1,6 @@
 package com.inglarna.blackeagle.ui.cardlist
 
+import android.util.Log
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -20,6 +21,7 @@ import kotlin.collections.ArrayList
 import android.view.MotionEvent
 import androidx.constraintlayout.widget.ConstraintSet
 import kotlin.collections.HashSet
+import kotlin.math.absoluteValue
 
 
 class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner: LifecycleOwner,private val context: CardListFragment):
@@ -31,13 +33,15 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
     lateinit var onDeleteCardClicked: ((Card) -> Unit)
     var onStartDrag : ((RecyclerView.ViewHolder) -> Unit) = {}
     private var longClickPosition = -1
-
     var select = false
         set(value){
             field = value
             selectedCards.clear()
             notifyDataSetChanged()
         }
+    companion object{
+        const val TAG = "CardListRecyclerViewAdapter"
+    }
 
     init {
         liveData?.observe(lifecycleOwner){
@@ -143,14 +147,14 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
             -1
         }
         for (i in fromPosition..toPosition - step){
-            //Add to moved set
-            movedCards.add(cards[i])
-            movedCards.add(cards[i+step])
             //Swap card positions
             val temp = cards[i].position
             cards[i].position = cards[i + step].position
             cards[i + step].position = temp
             Collections.swap(cards, i, i + step)
+            //Add to moved set
+            movedCards.add(cards[i])
+            movedCards.add(cards[i+step])
         }
         notifyItemMoved(fromPosition, toPosition)
     }
