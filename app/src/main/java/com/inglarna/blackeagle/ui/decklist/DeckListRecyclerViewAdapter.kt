@@ -35,10 +35,6 @@ class DeckListRecyclerViewAdapter(val context : Context,
         })
     }
 
-    //interface DeckListRecyclerViewListener{
-    //    fun onDeckClicked(deck : Deck)
-    //}
-
     companion object{
         private const val TAG = "DeckListAdapter"
     }
@@ -49,7 +45,6 @@ class DeckListRecyclerViewAdapter(val context : Context,
     }
 
     override fun onBindViewHolder(holder: DeckListViewHolder, position: Int) {
-
         holder.binding.textViewDeckName.text = decks[position].deck.name
         holder.binding.textViewCardCount.text = context.resources.getString(R.string.card_count, decks[position].cards.size)
         holder.itemView.setOnClickListener{

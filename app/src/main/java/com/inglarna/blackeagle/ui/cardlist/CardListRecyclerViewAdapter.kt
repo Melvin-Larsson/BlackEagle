@@ -22,9 +22,11 @@ import com.inglarna.blackeagle.R
 class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?,
                                   private val lifecycleOwner: LifecycleOwner,
                                   private val context: CardListFragment): RecyclerView.Adapter<CardListViewHolder>(), PopupMenu.OnMenuItemClickListener {
+    private var longClickPosition = -1
     private var cards: List<Card> = ArrayList<Card>()
     lateinit var onEditCardClicked: ((Card) -> Unit)
-    val selectedCards: MutableList<Card> = ArrayList<Card>() //TODO: Prevent other classes from changing the content
+    lateinit var onDeleteCardClicked: ((Card) -> Unit)
+    val selectedCards: MutableSet<Card> = HashSet<Card>() //TODO: Prevent other classes from changing the content
     var select = false
         set(value){
             field = value
@@ -62,10 +64,10 @@ class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?,
                 popup.setOnMenuItemClickListener(this)
                 popup.inflate(R.menu.card_long_click_menu)
                 popup.show()
+                longClickPosition = holder.adapterPosition
             }
             true
         }
-
 
         holder.binding.textViewQuestion.text = context.resources.getString(R.string.card_question, cards[position].question)
         holder.binding.textViewAnswer.text = context.resources.getString(R.string.card_answer, cards[position].answer)
@@ -103,13 +105,23 @@ class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?,
         }
         return true
     }
-
+    fun selectAll(){
+        if (selectedCards.size == cards.size){
+            selectedCards.clear()
+        }else{
+            selectedCards.clear()
+            for (c in cards){
+                selectedCards.add(c)
+            }
+        }
+        notifyDataSetChanged()
+    }
     private fun editCard() {
+        //TODO: gör nåt melvin
         //Toast.makeText(itemView.context, "edit", Toast.LENGTH_LONG).show()
-
     }
 
     private fun delete(){
-        //Toast.makeText(holder.itemView.context, "delete", Toast.LENGTH_LONG).show()
+        onDeleteCardClicked(cards[longClickPosition])
     }
 }

@@ -22,6 +22,12 @@
         app:showAsAction="ifRoom"
         android:visible="false"/>
     <item
+        android:id="@+id/selectAllCards"
+        android:title="@string/select_all_cards"
+        android:icon="@drawable/ic_select_all"
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/select"
         android:title="@string/select_multiple_decks"
         android:icon="@drawable/ic_checkbox"

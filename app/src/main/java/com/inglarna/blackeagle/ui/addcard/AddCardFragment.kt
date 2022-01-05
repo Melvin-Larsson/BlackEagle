@@ -1,10 +1,18 @@
 package com.inglarna.blackeagle.ui.addcard
 
+import android.app.Activity.RESULT_OK
+import android.app.Instrumentation
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.inglarna.blackeagle.databinding.FragmentEditCardBinding
@@ -17,7 +25,14 @@ class AddCardFragment : Fragment() {
     lateinit var binding : FragmentEditCardBinding
     private val cardViewModel by viewModels<CardViewModel>()
     private var deckId: Long= -1
-
+    private var imageUri: Uri? = null
+    val gallary = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+    val startGalleryResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
+        if (result.resultCode == RESULT_OK) {
+            imageUri = result.data?.data
+            binding.imageQuestion.setImageURI(imageUri)
+        }
+    }
 
     companion object{
         private const val DECK_ID = "deckID"
@@ -32,6 +47,11 @@ class AddCardFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         deckId = arguments!!.getLong(DECK_ID, -1)
         binding = FragmentEditCardBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.buttonAddCard.setOnClickListener{
             val regexPattern = Regex("^\\s*$")
             if (!regexPattern.matches(binding.editTextAnswer.text.toString()) &&
@@ -56,6 +76,13 @@ class AddCardFragment : Fragment() {
                 Toast.makeText(requireContext(), "du din fuling, fyll i fälten", Toast.LENGTH_SHORT).show()
             }
         }
-        return binding.root
+
+        binding.imageButtonQuestion.setOnClickListener{
+            startGalleryResult.launch(gallary)
+        }
+        binding.imageButtonAnswer.setOnClickListener{
+            startGalleryResult.launch(gallary)
+        }
+
     }
 }

@@ -19,6 +19,7 @@ import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.inglarna.blackeagle.ui.question.QuestionFragment
@@ -37,6 +38,7 @@ class CardListFragment : Fragment() {
     private var favoriteButton: MenuItem? = null
     private var deleteButton: MenuItem? = null
     private var startStudyButton: MenuItem? = null
+    private var selectAllButton: MenuItem? = null
     private var deckId: Long= -1
     private var deckFinishedToday = false
 
@@ -64,6 +66,7 @@ class CardListFragment : Fragment() {
     //card list menu is used as a toolbar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.card_list_menu, menu)
+        selectAllButton = menu.findItem(R.id.selectAllCards)
         favoriteButton = menu.findItem(R.id.favoriteStudy)
         deleteButton = menu.findItem((R.id.delete))
         startStudyButton = menu.findItem(R.id.startStudy)
@@ -83,10 +86,11 @@ class CardListFragment : Fragment() {
                 activity!!.finish()
                 return true
             }
-            R.id.startStudy -> study()
-            R.id.favoriteStudy -> favorites()
             R.id.select -> select()
             R.id.delete -> delete()
+            R.id.startStudy -> study()
+            R.id.favoriteStudy -> favorites()
+            R.id.selectAllCards -> selectAll()
         }
         return true
     }
@@ -104,6 +108,11 @@ class CardListFragment : Fragment() {
         binding.recyclerViewCard.layoutManager = LinearLayoutManager(requireContext())
         binding.buttonAddCard.setOnClickListener{
             onAddCardClicked()
+        }
+        adapter.onDeleteCardClicked={ card ->
+            GlobalScope.launch {
+                cardViewModel.deleteCard(card)
+            }
         }
         //Actionbar title
         deckViewModel.getDeck(deckId).observe(this, {deck->
@@ -153,6 +162,10 @@ class CardListFragment : Fragment() {
             .show()
     }
 
+    private fun selectAll() {
+        adapter.selectAll()
+    }
+
     private fun favorites() {
         val deckDao = BlackEagleDatabase.getInstance(activity!!).deckDao()
 
@@ -166,6 +179,7 @@ class CardListFragment : Fragment() {
         //visibility of toolbar and checkbox
         adapter.select = !adapter.select
         deleteButton?.isVisible = adapter.select
+        selectAllButton?.isVisible = adapter.select
         favoriteButton?.isVisible = !adapter.select
         startStudyButton?.isVisible = !adapter.select
     }
@@ -176,8 +190,10 @@ class CardListFragment : Fragment() {
                 cardViewModel.deleteCard(card)
             }
         }
+
         adapter.select = false
         deleteButton?.isVisible = false
+        selectAllButton?.isVisible = false
     }
     private fun setFavoriteIcon(favorite: Boolean){
         if (favorite){

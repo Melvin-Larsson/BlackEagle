@@ -43,4 +43,7 @@
     <string name="hard">Hard</string>
     <string name="easy">Easy</string>
     <string name="selectAll">select all</string>
+    <string name="select_all_cards">select all cards</string>
+    <string name="write_number">write number</string>
+    <string name="todo">TODO</string>
 </resources>

@@ -12,28 +12,31 @@
         android:id="@+id/editNumbersButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
         android:layout_margin="16dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        app:srcCompat="@android:drawable/ic_menu_edit"
+        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck"
+        android:contentDescription="@string/todo" />
 
     <!--write number field-->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="350dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:inputType="number"
             android:id="@+id/text_input_convert_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="write number" />
+            android:hint="@string/write_number"
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!--the converted words-->

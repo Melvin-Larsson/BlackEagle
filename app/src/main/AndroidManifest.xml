@@ -31,7 +31,6 @@
         <activity android:name=".ui.about.AboutActivity"
             android:exported="true">
         </activity>
-
         <activity android:name=".ui.cardlist.CardListActivity"
             android:exported="true"
             android:parentActivityName=".ui.decklist.MainActivity">
@@ -45,6 +44,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.cardlist.CardListActivity"/>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".ui.question.QuestionActivity"
             android:parentActivityName=".ui.cardlist.CardListActivity">
