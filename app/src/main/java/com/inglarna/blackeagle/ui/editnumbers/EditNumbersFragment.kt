@@ -73,6 +73,8 @@ class EditNumbersFragment: Fragment() {
 
     private fun checkBoxVisibility() {
         Toast.makeText(context, "checkbox", Toast.LENGTH_SHORT).show()
+        wordNumberRecyclerViewAdapter.select = !wordNumberRecyclerViewAdapter.select
+
     }
 
     private fun showEditNumberWordDialog(wordNumber: WordNumber){
