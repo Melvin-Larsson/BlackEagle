@@ -131,7 +131,7 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         for (i in fromPosition..toPosition - step){
             //Add to moved set
             movedCards.add(cards[i])
-            movedCards.add(cards[i+1])
+            movedCards.add(cards[i+step])
             //Swap card positions
             val temp = cards[i].position
             cards[i].position = cards[i + step].position
