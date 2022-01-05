@@ -3,6 +3,7 @@ package com.inglarna.blackeagle.ui.editnumbers
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.Toast
@@ -70,7 +71,7 @@ class EditNumbersFragment: Fragment() {
 
     private fun resetWordNumber() {
         //Update words
-        val selectedNumbers = wordNumberRecyclerViewAdapter.selectedWordNumbers
+        val selectedNumbers = wordNumberRecyclerViewAdapter.selectedWordNumbers.toMutableList()
         val defaultWords = BlackEagleDatabase.loadDefaultNumberWords(context!!)
         for(selectedNumber in selectedNumbers){
             selectedNumber.word = defaultWords[selectedNumber.number]
