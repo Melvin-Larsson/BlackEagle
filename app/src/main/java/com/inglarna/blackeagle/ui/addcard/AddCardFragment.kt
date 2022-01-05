@@ -18,12 +18,14 @@ import androidx.fragment.app.viewModels
 import com.inglarna.blackeagle.databinding.FragmentEditCardBinding
 import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.viewmodel.CardViewModel
+import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class AddCardFragment : Fragment() {
     lateinit var binding : FragmentEditCardBinding
     private val cardViewModel by viewModels<CardViewModel>()
+    private val deckViewModel by viewModels<DeckViewModel>()
     private var deckId: Long= -1
     private var imageUri: Uri? = null
     val gallary = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
@@ -66,6 +68,7 @@ class AddCardFragment : Fragment() {
                 card.answer = answer
                 card.hint = hint
                 GlobalScope.launch {
+                    card.position = deckViewModel.getDeckSize(deckId)
                     cardViewModel.addCard(card)
                 }
                 binding.editTextAnswer.setText("")

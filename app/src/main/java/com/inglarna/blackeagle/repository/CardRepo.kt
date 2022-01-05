@@ -21,6 +21,9 @@ class CardRepo (context: Context){
     fun updateCard(card: Card){
         cardDao.updateCard(card)
     }
+    fun updateCards(cards: Set<Card>){
+        cardDao.updateCards(cards)
+    }
     fun getFullDeck(deckId: Long): LiveData<List<Card>>{
         return cardDao.loadFullDeck(deckId)
     }
