@@ -21,7 +21,7 @@ import com.inglarna.blackeagle.viewmodel.CardViewModel
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-
+//TODO: spara bilderna melvin
 class AddCardFragment : Fragment() {
     lateinit var binding : FragmentEditCardBinding
     private val cardViewModel by viewModels<CardViewModel>()
@@ -29,10 +29,22 @@ class AddCardFragment : Fragment() {
     private var deckId: Long= -1
     private var imageUri: Uri? = null
     val gallary = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-    val startGalleryResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
+    val startGalleryResultQuestion = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
             imageUri = result.data?.data
             binding.imageQuestion.setImageURI(imageUri)
+        }
+    }
+    val startGalleryResultAnswer = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
+        if (result.resultCode == RESULT_OK) {
+            imageUri = result.data?.data
+            binding.imageAnswer.setImageURI(imageUri)
+        }
+    }
+    val startGalleryResultHint = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
+        if (result.resultCode == RESULT_OK) {
+            imageUri = result.data?.data
+            binding.imageHint.setImageURI(imageUri)
         }
     }
 
@@ -81,11 +93,13 @@ class AddCardFragment : Fragment() {
         }
 
         binding.imageButtonQuestion.setOnClickListener{
-            startGalleryResult.launch(gallary)
+            startGalleryResultQuestion.launch(gallary)
         }
         binding.imageButtonAnswer.setOnClickListener{
-            startGalleryResult.launch(gallary)
+            startGalleryResultAnswer.launch(gallary)
         }
-
+        binding.imageButtonHint.setOnClickListener{
+            startGalleryResultHint.launch(gallary)
+        }
     }
 }

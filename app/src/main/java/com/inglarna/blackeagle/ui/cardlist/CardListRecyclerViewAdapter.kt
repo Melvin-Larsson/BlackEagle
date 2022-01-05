@@ -1,6 +1,7 @@
 package com.inglarna.blackeagle.ui.cardlist
 
 import android.util.Log
+import android.annotation.SuppressLint
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -69,6 +70,7 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
             if (select){
                 holder.binding.checkBox.isChecked = !holder.binding.checkBox.isChecked
             }
+            //TODO: inspektera kort
         }
         //Long click
         holder.itemView.setOnLongClickListener {
