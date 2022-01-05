@@ -23,7 +23,7 @@ class WordNumberRepo(context: Context) {
     fun updateWord(wordNumber: WordNumber){
         wordNumberDao.updateWord(wordNumber)
     }
-    fun updateWords(wordNumbers: List<WordNumber>){
+    fun updateWords(wordNumbers: MutableSet<WordNumber>){
         wordNumberDao.updateWords(wordNumbers)
     }
 

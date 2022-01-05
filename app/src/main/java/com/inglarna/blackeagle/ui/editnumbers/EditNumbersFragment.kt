@@ -24,6 +24,7 @@ class EditNumbersFragment: Fragment() {
     private val wordNumberViewModel by viewModels<wordNumberViewModel>()
     private var resetButton: MenuItem? = null
     private var checkBoxButton: MenuItem? = null
+    private var selectAllButton: MenuItem? = null
 
     companion object{
         fun newInstance() = EditNumbersFragment
@@ -58,14 +59,21 @@ class EditNumbersFragment: Fragment() {
         menuInflater.inflate(R.menu.edit_numbers_menu, menu)
         resetButton = menu.findItem(R.id.reset)
         checkBoxButton = menu.findItem(R.id.checkBoxNumbers)
+        selectAllButton = menu.findItem(R.id.selectAllNumbers)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
+            R.id.selectAllNumbers -> selectAll()
             R.id.reset -> resetWordNumber()
             R.id.checkBoxNumbers -> checkBoxVisibility()
+
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun selectAll() {
+        wordNumberRecyclerViewAdapter.selectAll()
     }
 
     private fun resetWordNumber() {
@@ -86,7 +94,8 @@ class EditNumbersFragment: Fragment() {
     private fun checkBoxVisibility() {
         Toast.makeText(context, "checkbox", Toast.LENGTH_SHORT).show()
         wordNumberRecyclerViewAdapter.select = !wordNumberRecyclerViewAdapter.select
-
+        resetButton?.isVisible = wordNumberRecyclerViewAdapter.select
+        selectAllButton?.isVisible = wordNumberRecyclerViewAdapter.select
     }
 
     private fun showEditNumberWordDialog(wordNumber: WordNumber){

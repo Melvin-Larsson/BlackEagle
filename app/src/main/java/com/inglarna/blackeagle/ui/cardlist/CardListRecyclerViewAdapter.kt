@@ -19,8 +19,9 @@ import androidx.appcompat.widget.PopupMenu
 import com.inglarna.blackeagle.R
 
 
-class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?, private val lifecycleOwner: LifecycleOwner, private val context: CardListFragment): RecyclerView.Adapter<CardListViewHolder>(),
-    PopupMenu.OnMenuItemClickListener {
+class CardListRecyclerViewAdapter(private val liveData: LiveData<List<Card>>?,
+                                  private val lifecycleOwner: LifecycleOwner,
+                                  private val context: CardListFragment): RecyclerView.Adapter<CardListViewHolder>(), PopupMenu.OnMenuItemClickListener {
     private var cards: List<Card> = ArrayList<Card>()
     lateinit var onEditCardClicked: ((Card) -> Unit)
     val selectedCards: MutableList<Card> = ArrayList<Card>() //TODO: Prevent other classes from changing the content
