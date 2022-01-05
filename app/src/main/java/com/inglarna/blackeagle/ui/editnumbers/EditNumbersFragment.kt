@@ -69,6 +69,7 @@ class EditNumbersFragment: Fragment() {
     }
 
     private fun resetWordNumber() {
+        //Update words
         val selectedNumbers = wordNumberRecyclerViewAdapter.selectedWordNumbers
         val defaultWords = BlackEagleDatabase.loadDefaultNumberWords(context!!)
         for(selectedNumber in selectedNumbers){
@@ -77,6 +78,9 @@ class EditNumbersFragment: Fragment() {
         GlobalScope.launch {
             wordNumberViewModel.updateWords(selectedNumbers)
         }
+        //Unselect
+        wordNumberRecyclerViewAdapter.select = false
+
     }
 
     private fun checkBoxVisibility() {
