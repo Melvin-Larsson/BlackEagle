@@ -17,8 +17,11 @@ class DeckRepo(context: Context) {
         deck.id = newId
         return newId
     }
-    fun getDeck(id: Long) : LiveData<Deck>{
+    fun getDeck(id: Long): LiveData<Deck>{
         return deckDao.loadLiveDeck(id)
+    }
+    fun getDeckSize(id: Long): Int{
+        return deckDao.getDeckSize(id)
     }
 
     fun deleteDeck(deck: Deck) {

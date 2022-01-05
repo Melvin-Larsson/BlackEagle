@@ -12,7 +12,7 @@ interface CardDao {
     @Query("SELECT * FROM Card Where id = :cardId")
     fun loadCard(cardId: Long): Card
 
-    @Query("SELECT * FROM Card WHERE deckId = :deckId")
+    @Query("SELECT * FROM Card WHERE deckId = :deckId ORDER BY position ASC")
     fun loadFullDeck(deckId: Long): LiveData<List<Card>>
 
     @Query("SELECT * FROM Card WHERE deckId = :deckId AND nextRepetition < :maxDay ORDER BY nextRepetition ASC")
@@ -26,6 +26,9 @@ interface CardDao {
 
     @Update(onConflict = REPLACE)
     fun updateCard(card: Card)
+
+    @Update(onConflict = REPLACE)
+    fun updateCards(cards: Set<Card>)
 
     @Delete
     fun deleteCard(card: Card)

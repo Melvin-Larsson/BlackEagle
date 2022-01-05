@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.inglarna.blackeagle.ui.question.QuestionFragment
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
@@ -105,6 +106,7 @@ class CardListFragment : Fragment() {
         binding.buttonAddCard.setOnClickListener{
             onAddCardClicked()
         }
+        initializeCardMoving()
         //Actionbar title
         deckViewModel.getDeck(deckId).observe(this, {deck->
             getActivity()!!.setTitle("title")
@@ -118,6 +120,20 @@ class CardListFragment : Fragment() {
         adapter.onEditCardClicked = { card ->
             editCardSelectedCallBack.onEditCardSelected(card)
         }
+    }
+    private fun initializeCardMoving(){
+        val touchHelperCallback = SimpleItemTouchHelperCallback()
+        touchHelperCallback.touchHelperAdapter = adapter
+        touchHelperCallback.clearViewCallback = SimpleItemTouchHelperCallback.ClearViewCallback{
+            GlobalScope.launch {
+                cardViewModel.updateCards(adapter.movedCards)
+            }
+        }
+        val touchHelper = ItemTouchHelper(touchHelperCallback)
+        adapter.onStartDrag = {viewHolder ->
+            touchHelper.startDrag(viewHolder)
+        }
+        touchHelper.attachToRecyclerView(binding.recyclerViewCard)
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)

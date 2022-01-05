@@ -31,6 +31,9 @@ interface DeckDao {
     @Query("SELECT * FROM Deck WHERE favorite=1")
     fun getFavoriteDecks(): LiveData<List<DeckWithCards>>
 
+    @Query("SELECT COUNT(id) FROM Card WHERE deckId=:id")
+    fun getDeckSize(id: Long): Int
+
     @Insert(onConflict = IGNORE)
     fun insertDeck(deck: Deck) : Long?
 
