@@ -22,4 +22,7 @@ interface WordNumberDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateWord(wordNumber: WordNumber)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun updateWords(wordNumbers: List<WordNumber>)
 }

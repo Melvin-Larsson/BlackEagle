@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentEditNumbersBinding
+import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.WordNumber
 import com.inglarna.blackeagle.viewmodel.wordNumberViewModel
 import kotlinx.coroutines.GlobalScope
@@ -68,7 +69,15 @@ class EditNumbersFragment: Fragment() {
     }
 
     private fun resetWordNumber() {
-        Toast.makeText(context, "reset", Toast.LENGTH_SHORT).show()
+        var selectedNumbers = wordNumberRecyclerViewAdapter.selectedWordNumbers
+        var defaultWords = BlackEagleDatabase.loadDefaultNumberWords(context!!)
+        for(i in selectedNumbers.indices){
+            selectedNumbers[i].word = defaultWords[selectedNumbers[i].number]
+            GlobalScope.launch {
+                wordNumberViewModel.updateWords(selectedNumbers)
+            }
+        }
+
     }
 
     private fun checkBoxVisibility() {

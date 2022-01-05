@@ -22,4 +22,7 @@ class wordNumberViewModel(application: Application) : AndroidViewModel(applicati
     fun updateWord(wordNumber: WordNumber){
         wordNumberRepo.updateWord(wordNumber)
     }
+    fun updateWords(wordNumbers: List<WordNumber>){
+        wordNumberRepo.updateWords(wordNumbers)
+    }
 }

@@ -13,9 +13,9 @@ import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.model.WordNumber
 
 class EditNumbersListRecyclerViewAdapter(val context : Context, liveData: LiveData<List<WordNumber>>?, private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<EditNumbersListViewHolder>() {
-    private var wordNumber: List<WordNumber> = ArrayList<WordNumber>()
+    private var wordNumber: List<WordNumber> = ArrayList()
     var onNumberWordClicked: ((WordNumber) -> Unit) = {}
-    val selectedWordNumbers: MutableList<WordNumber> = ArrayList<WordNumber>()
+    val selectedWordNumbers: MutableList<WordNumber> = ArrayList()
     var select = false
         set(value){
             field = value

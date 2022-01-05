@@ -23,6 +23,9 @@ class WordNumberRepo(context: Context) {
     fun updateWord(wordNumber: WordNumber){
         wordNumberDao.updateWord(wordNumber)
     }
+    fun updateWords(wordNumbers: List<WordNumber>){
+        wordNumberDao.updateWords(wordNumbers)
+    }
 
 
 }
