@@ -70,7 +70,8 @@ abstract class BlackEagleDatabase :RoomDatabase(){
         fun loadDefaultNumberWords(context: Context) : List<String>{
             val numberWordFileId = when(Locale.getDefault().language){
                 "sv"->R.raw.number_words_swedish
-                else -> R.raw.number_words_swedish
+                "en"->R.raw.number_words_english
+                else -> R.raw.number_words_english
             }
             return loadDefaultNumberWordsFromFile(numberWordFileId, context)
         }
