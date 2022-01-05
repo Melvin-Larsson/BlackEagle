@@ -34,7 +34,7 @@ class EditNumbersFragment: Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentEditNumbersBinding.inflate(inflater, container, false)
         binding.textInputSearch?.addTextChangedListener{
             wordNumberRecyclerViewAdapter.liveData = wordNumberViewModel.getWords(binding.textInputSearch?.text.toString())
@@ -69,8 +69,8 @@ class EditNumbersFragment: Fragment() {
     }
 
     private fun resetWordNumber() {
-        var selectedNumbers = wordNumberRecyclerViewAdapter.selectedWordNumbers
-        var defaultWords = BlackEagleDatabase.loadDefaultNumberWords(context!!)
+        val selectedNumbers = wordNumberRecyclerViewAdapter.selectedWordNumbers
+        val defaultWords = BlackEagleDatabase.loadDefaultNumberWords(context!!)
         for(selectedNumber in selectedNumbers){
             selectedNumber.word = defaultWords[selectedNumber.number]
         }
