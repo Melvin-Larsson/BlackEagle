@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.inglarna.blackeagle.ImageStorage
 import com.inglarna.blackeagle.databinding.FragmentEditCardBinding
 import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.viewmodel.CardViewModel
@@ -27,28 +29,34 @@ class AddCardFragment : Fragment() {
     private val cardViewModel by viewModels<CardViewModel>()
     private val deckViewModel by viewModels<DeckViewModel>()
     private var deckId: Long= -1
-    private var imageUri: Uri? = null
+    private var imageUriQuestion: Uri? = null
+    private var imageUriAnswer: Uri? = null
+    private var imageUriHint: Uri? = null
+    private var imageFileNameQuestion = ""
+    private var imageFileNameAnswer = ""
+    private var imageFileNameHint = ""
     val gallary = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
     val startGalleryResultQuestion = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
-            imageUri = result.data?.data
-            binding.imageQuestion.setImageURI(imageUri)
+            imageUriQuestion = result.data?.data
+            binding.imageQuestion.setImageURI(imageUriQuestion)
         }
     }
     val startGalleryResultAnswer = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
-            imageUri = result.data?.data
-            binding.imageAnswer.setImageURI(imageUri)
+            imageUriAnswer = result.data?.data
+            binding.imageAnswer.setImageURI(imageUriAnswer)
         }
     }
     val startGalleryResultHint = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
-            imageUri = result.data?.data
-            binding.imageHint.setImageURI(imageUri)
+            imageUriHint = result.data?.data
+            binding.imageHint.setImageURI(imageUriHint)
         }
     }
 
     companion object{
+        private const val TAG = "addCardFragment"
         private const val DECK_ID = "deckID"
         fun newInstance(id: Long): AddCardFragment {
             val addCardFragment = AddCardFragment()
@@ -82,6 +90,13 @@ class AddCardFragment : Fragment() {
                 GlobalScope.launch {
                     card.position = cardViewModel.getMaxPosition(deckId) + 1
                     cardViewModel.addCard(card)
+                    Log.d(TAG, card.id.toString())
+                    imageFileNameQuestion = card.id.toString() + "question"
+                    imageFileNameAnswer = card.id.toString() + "Answer"
+                    imageFileNameHint = card.id.toString() + "Hint"
+                    ImageStorage.saveToInternalStorage(context!!, imageUriQuestion!!, imageFileNameQuestion)
+                    ImageStorage.saveToInternalStorage(context!!, imageUriAnswer!!, imageFileNameAnswer)
+                    ImageStorage.saveToInternalStorage(context!!, imageUriHint!!, imageFileNameHint)
                 }
                 binding.editTextAnswer.setText("")
                 binding.editTextQuestion.setText("")
