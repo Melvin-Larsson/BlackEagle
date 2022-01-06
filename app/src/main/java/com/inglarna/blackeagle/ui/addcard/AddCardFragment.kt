@@ -94,13 +94,20 @@ class AddCardFragment : Fragment() {
                     imageFileNameQuestion = card.id.toString() + "question"
                     imageFileNameAnswer = card.id.toString() + "Answer"
                     imageFileNameHint = card.id.toString() + "Hint"
-                    ImageStorage.saveToInternalStorage(context!!, imageUriQuestion!!, imageFileNameQuestion)
-                    ImageStorage.saveToInternalStorage(context!!, imageUriAnswer!!, imageFileNameAnswer)
-                    ImageStorage.saveToInternalStorage(context!!, imageUriHint!!, imageFileNameHint)
+
+                    if(imageUriQuestion != null){ ImageStorage.saveToInternalStorage(context!!, imageUriQuestion!!, imageFileNameQuestion)}
+                    if (imageUriAnswer != null){ImageStorage.saveToInternalStorage(context!!, imageUriAnswer!!, imageFileNameAnswer)}
+                    if(imageUriHint != null){ ImageStorage.saveToInternalStorage(context!!, imageUriHint!!, imageFileNameHint)}
                 }
-                binding.editTextAnswer.setText("")
                 binding.editTextQuestion.setText("")
+                binding.editTextAnswer.setText("")
                 binding.hint.setText("")
+
+                binding.imageQuestion.setImageResource(0)
+                binding.imageAnswer.setImageResource(0)
+                binding.imageHint.setImageResource(0)
+                binding.imageQuestion
+                binding.imageAnswer.invalidate()
                 Toast.makeText(requireContext(), "du lade till ett kort", Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(requireContext(), "du din fuling, fyll i fälten", Toast.LENGTH_SHORT).show()
