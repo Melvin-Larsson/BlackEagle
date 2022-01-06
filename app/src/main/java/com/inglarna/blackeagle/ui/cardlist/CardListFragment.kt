@@ -24,6 +24,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.inglarna.blackeagle.ui.card.CardActivity
 import com.inglarna.blackeagle.ui.question.QuestionFragment
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
@@ -33,7 +34,6 @@ import kotlin.math.ceil
 class CardListFragment : Fragment() {
     lateinit var binding : FragmentCardListBinding
     lateinit var onAddCardClicked: (()-> Unit)
-    lateinit var editCardSelectedCallBack: EditCardSelectedCallBack
     private val cardViewModel by viewModels<CardViewModel>()
     private val deckViewModel by viewModels<DeckViewModel>()
     private lateinit var adapter : CardListRecyclerViewAdapter
@@ -54,9 +54,6 @@ class CardListFragment : Fragment() {
             fragment.arguments = bundle
             return fragment
         }
-    }
-    interface EditCardSelectedCallBack{
-        fun onEditCardSelected(card: Card)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,6 +113,10 @@ class CardListFragment : Fragment() {
                 cardViewModel.deleteCard(card)
             }
         }
+        adapter.onEditCardClicked = { card ->
+            Log.d(TAG, "ques: " + card.question + " id: " + card.id)
+            startActivity(CardActivity.newIntent(context!!, card.deckId, card.id))
+        }
         initializeCardMoving()
         //Actionbar title
         deckViewModel.getDeck(deckId).observe(this, {deck->
@@ -127,9 +128,6 @@ class CardListFragment : Fragment() {
             deckFinishedToday = it.isEmpty()
         })
 
-        adapter.onEditCardClicked = { card ->
-            editCardSelectedCallBack.onEditCardSelected(card)
-        }
     }
     private fun initializeCardMoving(){
         val touchHelperCallback = SimpleItemTouchHelperCallback()
@@ -145,12 +143,6 @@ class CardListFragment : Fragment() {
             touchHelper.startDrag(viewHolder)
         }
         touchHelper.attachToRecyclerView(binding.recyclerViewCard)
-    }
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if(context is EditCardSelectedCallBack){
-            editCardSelectedCallBack = context
-        }
     }
 
     private val startStudyForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->

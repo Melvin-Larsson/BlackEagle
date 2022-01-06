@@ -31,6 +31,10 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
     val selectedCards: MutableList<Card> = ArrayList() //TODO: Prevent other classes from changing the content
     val movedCards: MutableSet<Card> = HashSet()
     var onEditCardClicked: ((Card) -> Unit) = {}
+    set(value){
+        field = value
+        Log.d("carre", "set")
+    }
     lateinit var onDeleteCardClicked: ((Card) -> Unit)
     var onStartDrag : ((RecyclerView.ViewHolder) -> Unit) = {}
     private var longClickPosition = -1
@@ -134,8 +138,7 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         notifyDataSetChanged()
     }
     private fun editCard() {
-        //TODO: gör nåt melvin
-        //Toast.makeText(itemView.context, "edit", Toast.LENGTH_LONG).show()
+        onEditCardClicked(cards[longClickPosition])
     }
 
     private fun delete(){

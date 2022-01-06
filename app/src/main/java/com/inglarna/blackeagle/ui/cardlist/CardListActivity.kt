@@ -6,9 +6,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.ui.SingleFragmentActivity
-import com.inglarna.blackeagle.ui.addcard.AddCardActivity
+import com.inglarna.blackeagle.ui.card.CardActivity
 
-class CardListActivity : SingleFragmentActivity(), CardListFragment.EditCardSelectedCallBack {
+class CardListActivity : SingleFragmentActivity() {
 
     var id: Long = -1
 
@@ -23,7 +23,7 @@ class CardListActivity : SingleFragmentActivity(), CardListFragment.EditCardSele
     override fun createFragment(): Fragment{
         val fragment = CardListFragment.newInstance(id)
         fragment.onAddCardClicked = {
-            startActivity(AddCardActivity.newIntent(this, id))
+            startActivity(CardActivity.newIntent(this, id))
         }
         return fragment
     }
@@ -31,9 +31,5 @@ class CardListActivity : SingleFragmentActivity(), CardListFragment.EditCardSele
         id = intent.getLongExtra(DECK_ID, -1)
         //super.onCreate is after since it will call createFragment, createFragment needs a valid id
         super.onCreate(savedInstanceState)
-    }
-
-    override fun onEditCardSelected(card: Card) {
-
     }
 }
