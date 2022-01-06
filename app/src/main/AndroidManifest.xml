@@ -38,7 +38,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.decklist.MainActivity"/>
         </activity>
-        <activity android:name=".ui.addcard.AddCardActivity"
+        <activity android:name=".ui.card.CardActivity"
             android:exported="true"
             android:parentActivityName=".ui.cardlist.CardListActivity">
             <meta-data

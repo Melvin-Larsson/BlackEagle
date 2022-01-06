@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.inglarna.blackeagle.databinding.FragmentEditCardBinding
+import com.inglarna.blackeagle.databinding.FragmentCardBinding
 
 class EditCardFragment: Fragment() {
-    lateinit var binding: FragmentEditCardBinding
+    lateinit var binding: FragmentCardBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentEditCardBinding.inflate(inflater, container, false)
+        binding = FragmentCardBinding.inflate(inflater, container, false)
         return binding.root
     }
 }

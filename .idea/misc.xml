@@ -37,6 +37,7 @@
         <entry key="app/src/main/res/drawable/square_button.xml" value="0.3177083333333333" />
         <entry key="app/src/main/res/layout/activity_fragment.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/fragment_card.xml" value="0.20677083333333332" />
         <entry key="app/src/main/res/layout/fragment_card_list.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/fragment_deck_list.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/fragment_deck_pager.xml" value="0.19791666666666666" />
