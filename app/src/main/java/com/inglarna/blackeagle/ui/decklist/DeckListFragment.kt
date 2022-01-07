@@ -2,7 +2,10 @@ package com.inglarna.blackeagle.ui.decklist
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -14,6 +17,7 @@ import com.inglarna.blackeagle.model.DeckWithCards
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.File
 
 class DeckListFragment : Fragment() {
     private lateinit var binding : FragmentDeckListBinding
@@ -25,6 +29,7 @@ class DeckListFragment : Fragment() {
     private var pageId = -1
 
     companion object{
+        private const val TAG = "DeckListFragment"
         private const val PAGE_ID = "pageId"
         fun newInstance(deckPage: Int): DeckListFragment{
             val fragment = DeckListFragment()
@@ -88,12 +93,9 @@ class DeckListFragment : Fragment() {
             R.id.checkbox -> checkboxVisibility()
             R.id.delete -> delete()
             R.id.selectAll -> selectAll()
+            R.id.importDeck -> import()
         }
         return true
-    }
-
-    private fun selectAll() {
-        deckRecyclerViewAdapter.selectAll()
     }
 
     private fun checkboxVisibility(){
@@ -101,6 +103,7 @@ class DeckListFragment : Fragment() {
         deleteButton?.isVisible = deckRecyclerViewAdapter.select
         selectAllButton?.isVisible = deckRecyclerViewAdapter.select
     }
+
     private fun delete(){
         val selectedDecks = deckRecyclerViewAdapter.selectedDecks.toMutableList()
         GlobalScope.launch {
@@ -111,5 +114,21 @@ class DeckListFragment : Fragment() {
         deckRecyclerViewAdapter.select = false
         deleteButton?.isVisible = false
         selectAllButton?.isVisible = false
+    }
+
+    private fun selectAll() {
+        deckRecyclerViewAdapter.selectAll()
+    }
+
+    private val startFileExplorerForResult = registerForActivityResult(ActivityResultContracts.GetContent()){ uri ->
+        //FIXME: This probably does not work in all instances
+        var path = uri.path
+        if(path!!.contains("raw:")){
+            path = path!!.substring(path.indexOf("raw:") + 4)
+        }
+        val deckWithCards = DeckWithCards.import(context!!, File(path))
+    }
+    private fun import(){
+        startFileExplorerForResult.launch("*/*")
     }
 }

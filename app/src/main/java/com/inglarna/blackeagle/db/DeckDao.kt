@@ -16,8 +16,10 @@ interface DeckDao {
     @Query("SELECT * FROM Deck WHERE id=:id")
     fun getDeck(id: Long) : Deck
 
-    //@Query("SELECT * FROM Deck WHERE favorite=1")
-    //fun getFavouriteDecks(): LiveData<List<Deck>>
+    @Transaction
+    @Query("SELECT * FROM Deck WHERE id=:id")
+    fun getDeckWithCards(id:Long): DeckWithCards
+
 
     @Transaction
     @Query ("SELECT * FROM Deck WHERE id= :id")
@@ -35,13 +37,12 @@ interface DeckDao {
     fun getDeckSize(id: Long): Int
 
     @Insert(onConflict = IGNORE)
-    fun insertDeck(deck: Deck) : Long?
+    fun insertDeck(deck: Deck) : Long
 
     @Update(onConflict = REPLACE)
     fun updateDeck(deck: Deck)
 
     @Delete
     fun deleteDeck(deck: Deck)
-
 
 }

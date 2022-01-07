@@ -11,8 +11,11 @@ class CardViewModel (application: Application) : AndroidViewModel(application){
     private var cardRepo: CardRepo = CardRepo(getApplication())
     var id : Long = -1
 
-    fun addCard(card: Card){
-        cardRepo.addCard(card)
+    fun addCard(card: Card): Long{
+        return cardRepo.addCard(card)
+    }
+    fun addCards(cards: List<Card>): List<Long>{
+        return cardRepo.addCards(cards)
     }
     fun deleteCard(card: Card){
         cardRepo.deleteCard(card)

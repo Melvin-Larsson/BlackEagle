@@ -1,7 +1,9 @@
 package com.inglarna.blackeagle.model
 
+import android.content.Context
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.OutputStreamWriter
 
 @Entity
 data class Deck (

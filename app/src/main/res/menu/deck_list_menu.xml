@@ -21,5 +21,8 @@
         android:title="@string/checkbox"
         android:icon="@drawable/ic_checkbox"
         app:showAsAction="ifRoom"/>
-
+    <item
+        android:id="@+id/importDeck"
+        android:title="@string/importDeck"
+        app:showAsAction="never"/>
 </menu>

@@ -10,10 +10,13 @@ class CardRepo (context: Context){
     private val db = BlackEagleDatabase.getInstance(context)
     private val cardDao: CardDao = db.cardDao()
 
-    fun addCard(card: Card): Long?{
+    fun addCard(card: Card): Long{
         val newId = cardDao.insertCard(card)
         card.id = newId
         return newId
+    }
+    fun addCards(cards: List<Card>): List<Long>{
+        return cardDao.insertCards(cards)
     }
     fun deleteCard(card: Card){
         cardDao.deleteCard(card)

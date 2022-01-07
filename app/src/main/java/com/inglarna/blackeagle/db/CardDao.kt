@@ -28,6 +28,9 @@ interface CardDao {
     @Insert(onConflict = IGNORE)
     fun insertCard(card: Card): Long
 
+    @Insert(onConflict = IGNORE)
+    fun insertCards(cards: List<Card>): List<Long>
+
     @Update(onConflict = REPLACE)
     fun updateCard(card: Card)
 
@@ -36,4 +39,7 @@ interface CardDao {
 
     @Delete
     fun deleteCard(card: Card)
+
+    @Delete
+    fun deleteCards(cards: List<Card>)
 }

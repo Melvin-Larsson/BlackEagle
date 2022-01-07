@@ -32,4 +32,8 @@
         android:title="@string/select_multiple_decks"
         android:icon="@drawable/ic_checkbox"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/exportDeck"
+        android:title="@string/exportDeck"
+        app:showAsAction="never"/>
 </menu>

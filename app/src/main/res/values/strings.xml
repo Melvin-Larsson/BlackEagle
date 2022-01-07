@@ -46,4 +46,6 @@
     <string name="select_all_cards">select all cards</string>
     <string name="write_number">write number</string>
     <string name="todo">TODO</string>
+    <string name="exportDeck">Export</string>
+    <string name="importDeck">Import</string>
 </resources>

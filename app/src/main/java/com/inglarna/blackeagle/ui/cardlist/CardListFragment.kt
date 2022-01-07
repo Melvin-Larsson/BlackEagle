@@ -2,7 +2,6 @@ package com.inglarna.blackeagle.ui.cardlist
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -13,17 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentCardListBinding
 import com.inglarna.blackeagle.db.BlackEagleDatabase
-import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.ui.question.QuestionActivity
 import com.inglarna.blackeagle.viewmodel.CardViewModel
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.inglarna.blackeagle.model.DeckWithCards
 import com.inglarna.blackeagle.ui.card.CardActivity
 import com.inglarna.blackeagle.ui.question.QuestionFragment
 import nl.dionsegijn.konfetti.models.Shape
@@ -90,6 +90,7 @@ class CardListFragment : Fragment() {
             R.id.startStudy -> study()
             R.id.favoriteStudy -> favorites()
             R.id.selectAllCards -> selectAll()
+            R.id.exportDeck -> export()
         }
         return true
     }
@@ -205,6 +206,12 @@ class CardListFragment : Fragment() {
         deleteButton?.isVisible = false
         selectAllButton?.isVisible = false
     }
+    private fun export(){
+        GlobalScope.launch {
+            deckViewModel.getDeckWithCards(deckId).export(context!!)
+        }
+    }
+
     private fun setFavoriteIcon(favorite: Boolean){
         if (favorite){
             favoriteButton?.setIcon(R.drawable.ic_favorite_study)

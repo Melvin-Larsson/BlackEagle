@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.net.toUri
+import com.inglarna.blackeagle.PictureUtils
 
 
 //TODO: spara bilderna melvin
@@ -63,12 +66,13 @@ class CardFragment : Fragment() {
         }
     }
 
-
-
     companion object{
         private const val TAG = "addCardFragment"
         private const val DECK_ID = "deckID"
         private const val CARD_ID = "cardID"
+        private const val ANSWER_FILE_IDENTIFIER = "answer"
+        private const val QUESTION_FILE_IDENTIFIER = "question"
+        private const val HINT_FILE_IDENTIFIER = "hint"
         fun newInstance(id: Long): CardFragment {
             val cardFragment = CardFragment()
             val bundle = Bundle()
@@ -149,6 +153,7 @@ class CardFragment : Fragment() {
                binding.editTextAnswer.setText(card.answer)
                binding.editTextHint.setText(card.hint)
             })
+            loadImages()
         }
 
         binding.buttonAddCard.setOnClickListener{
@@ -176,9 +181,9 @@ class CardFragment : Fragment() {
                         cardViewModel.updateCard(newCard!!)
                     }
 
-                    imageFileNameQuestion = card?.id.toString() + "question"
-                    imageFileNameAnswer = card?.id.toString() + "Answer"
-                    imageFileNameHint = card?.id.toString() + "Hint"
+                    imageFileNameQuestion = newCard?.id.toString() + QUESTION_FILE_IDENTIFIER
+                    imageFileNameAnswer = newCard?.id.toString() + ANSWER_FILE_IDENTIFIER
+                    imageFileNameHint = newCard?.id.toString() + HINT_FILE_IDENTIFIER
 
                     if(imageUriQuestion != null){ ImageStorage.saveToInternalStorage(context!!, imageUriQuestion!!, imageFileNameQuestion)}
                     if (imageUriAnswer != null){ImageStorage.saveToInternalStorage(context!!, imageUriAnswer!!, imageFileNameAnswer)}
@@ -208,5 +213,19 @@ class CardFragment : Fragment() {
         binding.imageButtonHint.setOnClickListener{
             startGalleryResultHint.launch(gallery)
         }
+    }
+    private fun loadImages(){
+        val imageFiles = PictureUtils.getImageFilesFromId(context!!.filesDir, cardId)
+        for(file in imageFiles){
+            Log.d(TAG, file.name)
+            if(file.name.contains(QUESTION_FILE_IDENTIFIER)){
+                binding.imageQuestion.setImageURI(file.toUri())
+            }else if(file.name.contains(ANSWER_FILE_IDENTIFIER)){
+                binding.imageAnswer.setImageURI(file.toUri())
+            }else if(file.name.contains(HINT_FILE_IDENTIFIER)){
+                binding.imageHint.setImageURI(file.toUri())
+            }
+        }
+
     }
 }
