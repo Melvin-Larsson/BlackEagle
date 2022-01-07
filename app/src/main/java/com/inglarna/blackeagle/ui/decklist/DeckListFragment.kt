@@ -1,16 +1,22 @@
 package com.inglarna.blackeagle.ui.decklist
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import android.text.InputType
 import android.view.*
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckListBinding
+import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.model.DeckWithCards
+import com.inglarna.blackeagle.ui.card.CardActivity
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -65,16 +71,42 @@ class DeckListFragment : Fragment() {
         else{
             deckViewModel.getDecks()
         }
-
         deckRecyclerViewAdapter = DeckListRecyclerViewAdapter(requireActivity(), data, requireActivity())
         binding.deckRecyclerView.adapter = deckRecyclerViewAdapter
         binding.deckRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         deckRecyclerViewAdapter.onDeckClicked = {
-
                 deckSelectedCallback.onDeckSelected(it)
-
         }
+        deckRecyclerViewAdapter.onDeleteDeckClicked={ deck ->
+            GlobalScope.launch {
+                deckViewModel.deleteDeck(deck)
+            }
+        }
+        deckRecyclerViewAdapter.onEditDeckClicked={ deck ->
+            editDeckName(deck)
+        }
+    }
+
+    private fun editDeckName(deck: Deck) {
+        val deckEditText = EditText(requireContext())
+        deckEditText.setText(deck.name)
+        deckEditText.inputType = InputType.TYPE_CLASS_TEXT
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Your new name of the deck")
+            .setView(deckEditText)
+            .setPositiveButton("Edit"){dialog, _ ->
+                deck.name = deckEditText.text.toString()
+                val deckDao = BlackEagleDatabase.getInstance(requireContext()).deckDao()
+                GlobalScope.launch {
+                    deckDao.updateDeck(deck)
+                }
+                Toast.makeText(requireContext(), "edited $deck", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
