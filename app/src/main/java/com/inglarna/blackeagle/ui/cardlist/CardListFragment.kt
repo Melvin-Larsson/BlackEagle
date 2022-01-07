@@ -115,7 +115,6 @@ class CardListFragment : Fragment() {
             }
         }
         adapter.onEditCardClicked = { card ->
-            Log.d(TAG, "ques: " + card.question + " id: " + card.id)
             startActivity(CardActivity.newIntent(context!!, card.deckId, card.id))
         }
         initializeCardMoving()

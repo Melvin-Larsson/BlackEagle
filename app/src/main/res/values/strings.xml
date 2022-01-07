@@ -48,4 +48,6 @@
     <string name="todo">TODO</string>
     <string name="exportDeck">Export</string>
     <string name="importDeck">Import</string>
+    <string name="convertTutorial">Converting numbers is mainly used for remembering a sequence of numbers. Every number from 0–9 can be translated to a sound according to
+        the table below.</string>
 </resources>
