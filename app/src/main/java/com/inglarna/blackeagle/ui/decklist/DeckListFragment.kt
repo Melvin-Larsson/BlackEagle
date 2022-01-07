@@ -130,10 +130,6 @@ class DeckListFragment : Fragment() {
         return true
     }
 
-    private fun selectAll() {
-        deckRecyclerViewAdapter.selectAll()
-    }
-
     private fun checkboxVisibility(){
         deckRecyclerViewAdapter.select = !deckRecyclerViewAdapter.select
         deleteButton?.isVisible = deckRecyclerViewAdapter.select
