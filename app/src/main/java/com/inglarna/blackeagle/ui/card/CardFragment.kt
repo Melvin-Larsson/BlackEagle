@@ -1,17 +1,23 @@
 package com.inglarna.blackeagle.ui.card
 
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.view.inputmethod.EditorInfoCompat
+import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.inglarna.blackeagle.ImageStorage
@@ -20,6 +26,10 @@ import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.viewmodel.CardViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
+import androidx.constraintlayout.widget.ConstraintSet
+
+
 //TODO: spara bilderna melvin
 class CardFragment : Fragment() {
     lateinit var binding : FragmentCardBinding
@@ -53,6 +63,8 @@ class CardFragment : Fragment() {
         }
     }
 
+
+
     companion object{
         private const val TAG = "addCardFragment"
         private const val DECK_ID = "deckID"
@@ -73,10 +85,58 @@ class CardFragment : Fragment() {
             return cardFragment
         }
     }
-    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCardBinding.inflate(inflater, container, false)
+
+        val editText = object : AppCompatEditText(context!!) {
+
+            override fun onCreateInputConnection(editorInfo: EditorInfo): InputConnection? {
+                val ic: InputConnection? = super.onCreateInputConnection(editorInfo)
+                EditorInfoCompat.setContentMimeTypes(editorInfo, arrayOf("image/png"))
+
+                val callback =
+                    InputConnectionCompat.OnCommitContentListener { inputContentInfo, flags, opts ->
+                        val lacksPermission = (flags and
+                                InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION) != 0
+                        // read and display inputContentInfo asynchronously
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && lacksPermission) {
+                            try {
+                                inputContentInfo.requestPermission()
+                            } catch (e: Exception) {
+                                return@OnCommitContentListener false // return false if failed
+                            }
+                        }
+
+                        // read and display inputContentInfo asynchronously.
+                        // call inputContentInfo.releasePermission() as needed.
+
+                        true  // return true if succeeded
+                    }
+                return ic?.let { InputConnectionCompat.createWrapper(it, editorInfo, callback) }
+            }
+        }
+        /*
+        val parentLayout = binding.Layout
+        val set = ConstraintSet()
+        editText.id = 1
+        parentLayout.addView(editText, 0)
+
+        set.clone(parentLayout)
+        set.connect(
+            editText.getId(),
+            ConstraintSet.TOP,
+            parentLayout.getId(),
+            ConstraintSet.TOP,
+            60
+        )
+        set.applyTo(parentLayout)
+
+        binding.Layout.addView(editText)*/
         return binding.root
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -87,9 +147,8 @@ class CardFragment : Fragment() {
                this.card = card
                binding.editTextQuestion.setText(card.question)
                binding.editTextAnswer.setText(card.answer)
-               binding.hint.setText(card.hint)
+               binding.editTextHint.setText(card.hint)
             })
-
         }
 
         binding.buttonAddCard.setOnClickListener{
@@ -98,7 +157,7 @@ class CardFragment : Fragment() {
                 !regexPattern.matches(binding.editTextQuestion.text.toString())) {
                 val question = binding.editTextQuestion.text.toString()
                 val answer = binding.editTextAnswer.text.toString()
-                val hint = binding.hint.text.toString()
+                val hint = binding.editTextHint.text.toString()
 
                 val newCard = if(card == null){
                     Card()
@@ -117,9 +176,9 @@ class CardFragment : Fragment() {
                         cardViewModel.updateCard(newCard!!)
                     }
 
-                    imageFileNameQuestion = card.id.toString() + "question"
-                    imageFileNameAnswer = card.id.toString() + "Answer"
-                    imageFileNameHint = card.id.toString() + "Hint"
+                    imageFileNameQuestion = card?.id.toString() + "question"
+                    imageFileNameAnswer = card?.id.toString() + "Answer"
+                    imageFileNameHint = card?.id.toString() + "Hint"
 
                     if(imageUriQuestion != null){ ImageStorage.saveToInternalStorage(context!!, imageUriQuestion!!, imageFileNameQuestion)}
                     if (imageUriAnswer != null){ImageStorage.saveToInternalStorage(context!!, imageUriAnswer!!, imageFileNameAnswer)}
@@ -127,7 +186,7 @@ class CardFragment : Fragment() {
                 }
                 binding.editTextQuestion.setText("")
                 binding.editTextAnswer.setText("")
-                binding.hint.setText("")
+                binding.editTextHint.setText("")
 
                 binding.imageQuestion.setImageResource(0)
                 binding.imageAnswer.setImageResource(0)

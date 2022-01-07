@@ -107,8 +107,8 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         if(select){
             checkboxView.visibility = View.VISIBLE
             checkboxView.isChecked = selectedCards.contains(cards[position])
-            params.startToEnd = checkboxView.id
             params.startToStart = ConstraintLayout.LayoutParams.UNSET
+            params.startToEnd = checkboxView.id
 
         }else{
             checkboxView.visibility = View.INVISIBLE
