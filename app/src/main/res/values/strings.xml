@@ -46,4 +46,6 @@
     <string name="select_all_cards">select all cards</string>
     <string name="write_number">write number</string>
     <string name="todo">TODO</string>
+    <string name="convertTutorial">Converting numbers is mainly used for remembering a sequence of numbers. Every number from 0–9 can be translated to a sound according to
+        the table below.</string>
 </resources>
