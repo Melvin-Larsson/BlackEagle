@@ -23,6 +23,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toFile
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.model.DeckWithCards
 import com.inglarna.blackeagle.ui.card.CardActivity
 import com.inglarna.blackeagle.ui.question.QuestionFragment
@@ -42,6 +43,7 @@ class CardListFragment : Fragment() {
     private var startStudyButton: MenuItem? = null
     private var selectAllButton: MenuItem? = null
     private var deckId: Long= -1
+    private lateinit var deck: Deck
     private var deckFinishedToday = false
 
     companion object{
@@ -103,6 +105,9 @@ class CardListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //creating adapter
         deckId = arguments!!.getLong(DECK_ID, -1)
+        deckViewModel.getDeck(deckId).observe(this){
+            deck = it
+        }
         adapter = CardListRecyclerViewAdapter(cardViewModel.getDeckViews(deckId), this, this)
         binding.recyclerViewCard.adapter = adapter
         binding.recyclerViewCard.layoutManager = LinearLayoutManager(requireContext())
@@ -205,10 +210,16 @@ class CardListFragment : Fragment() {
         deleteButton?.isVisible = false
         selectAllButton?.isVisible = false
     }
-    private fun export(){
-        GlobalScope.launch {
-            deckViewModel.getDeckWithCards(deckId).export(context!!)
+
+    private val startFileExplorerForResult = registerForActivityResult(ActivityResultContracts.CreateDocument()){uri->
+        if(uri != null){
+            GlobalScope.launch {
+                deckViewModel.getDeckWithCards(deckId).export(context!!, uri)
+            }
         }
+    }
+    private fun export(){
+        startFileExplorerForResult.launch(deck.name + ".be")
     }
 
     private fun setFavoriteIcon(favorite: Boolean){
