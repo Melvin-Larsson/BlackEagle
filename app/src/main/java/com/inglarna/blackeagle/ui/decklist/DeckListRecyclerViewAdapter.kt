@@ -51,7 +51,7 @@ class DeckListRecyclerViewAdapter(val context : Context,
 
     override fun onBindViewHolder(holder: DeckListViewHolder, position: Int) {
         holder.binding.textViewDeckName.text = decks[position].deck.name
-        holder.binding.textViewCardCount.text = context.resources.getString(R.string.card_count, decks[position].cards.size)
+        holder.binding.textViewCardCount.text = context.resources.getQuantityString(R.plurals.card_count, decks[position].cards.size, decks[position].cards.size)
         holder.itemView.setOnClickListener{
             if(!select){
                 onDeckClicked(decks[position].deck)

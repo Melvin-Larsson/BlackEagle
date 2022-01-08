@@ -41,6 +41,8 @@ class CardListFragment : Fragment() {
     private var deleteButton: MenuItem? = null
     private var startStudyButton: MenuItem? = null
     private var selectAllButton: MenuItem? = null
+    private var exportButton: MenuItem? = null
+    private var closeSelectButton: MenuItem? = null
     private var deckId: Long= -1
     private var deckFinishedToday = false
 
@@ -69,6 +71,8 @@ class CardListFragment : Fragment() {
         favoriteButton = menu.findItem(R.id.favoriteStudy)
         deleteButton = menu.findItem((R.id.delete))
         startStudyButton = menu.findItem(R.id.startStudy)
+        exportButton = menu.findItem(R.id.exportDeck)
+        closeSelectButton = menu.findItem(R.id.closeSelect)
         deckViewModel.getDecks()?.observe(this,{ decks->
             for(deckWithCards in decks){
                 if (deckWithCards.deck.id == deckId){
@@ -85,15 +89,17 @@ class CardListFragment : Fragment() {
                 activity!!.finish()
                 return true
             }
-            R.id.select -> select()
             R.id.delete -> delete()
             R.id.startStudy -> study()
             R.id.favoriteStudy -> favorites()
             R.id.selectAllCards -> selectAll()
             R.id.exportDeck -> export()
+            R.id.closeSelect -> closeSelect()
         }
         return true
     }
+
+
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentCardListBinding.inflate(inflater, container, false)
@@ -117,6 +123,10 @@ class CardListFragment : Fragment() {
         adapter.onEditCardClicked = { card ->
             startActivity(CardActivity.newIntent(context!!, card.deckId, card.id))
         }
+
+        adapter.selectMultipleCallback = {
+            select()
+        }
         initializeCardMoving()
         //Actionbar title
         deckViewModel.getDeck(deckId).observe(this, {deck->
@@ -127,6 +137,8 @@ class CardListFragment : Fragment() {
         cardViewModel.getDeckByNextRepetition(deckId, ceil(Date().time / (1000 * 3600 * 24).toDouble())).observe(this, {
             deckFinishedToday = it.isEmpty()
         })
+
+
 
     }
     private fun initializeCardMoving(){
@@ -160,6 +172,7 @@ class CardListFragment : Fragment() {
             startStudyForResult.launch(QuestionActivity.newIntent(context!!, deckId, false))
         }
     }
+
     private fun showConfirmExtraStudyDialog(){
         AlertDialog.Builder(context)
             .setTitle("Confirm")
@@ -187,11 +200,16 @@ class CardListFragment : Fragment() {
     }
     private fun select(){
         //visibility of toolbar and checkbox
-        adapter.select = !adapter.select
         deleteButton?.isVisible = adapter.select
         selectAllButton?.isVisible = adapter.select
+        closeSelectButton?.isVisible = adapter.select
         favoriteButton?.isVisible = !adapter.select
         startStudyButton?.isVisible = !adapter.select
+        exportButton?.isVisible = !adapter.select
+    }
+    private fun closeSelect() {
+        adapter.select = !adapter.select
+        select()
     }
     private fun delete(){
         val selectedCards = adapter.selectedCards.toMutableList()

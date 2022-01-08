@@ -19,7 +19,10 @@
     <string name="add_card">Add card</string>
     <string name="start_study">start study</string>
     <string name="favorite_study">favorite study</string>
-    <string name="card_count">%1$d cards</string>
+    <plurals name="card_count">
+        <item quantity="one">%d Card</item>
+        <item quantity="other">%d Cards</item>
+    </plurals>
     <string name="card_answer">Answer: %1$s</string>
     <string name="card_question">Question: %1$s</string>
     <string name="card_number">%1$d</string>
@@ -49,5 +52,6 @@
     <string name="exportDeck">Export</string>
     <string name="importDeck">Import</string>
     <string name="convertTutorial">Converting numbers is mainly used for remembering a sequence of numbers. Every number from 0–9 can be translated to a sound according to
-        the table below.</string>
+        the table below. The sounds can then be used to create different words.</string>
+    <string name="closeSelect">Close</string>
 </resources>

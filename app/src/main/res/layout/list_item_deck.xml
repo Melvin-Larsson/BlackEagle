@@ -50,6 +50,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/aroundDeck"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/aroundDeck"
-            tools:text="25 cards" />
+            tools:text="25 cards"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

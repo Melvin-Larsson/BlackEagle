@@ -32,7 +32,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //Setup adapter
-        Log.d("MainFrag", "onViewCreated")
         val adapter = DeckFragmentPagerAdapter(this)
         binding.deckPager.adapter = adapter
         TabLayoutMediator(binding.deckTabLayout, binding.deckPager){tab, position ->

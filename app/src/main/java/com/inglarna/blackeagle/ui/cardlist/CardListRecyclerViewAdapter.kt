@@ -26,12 +26,13 @@ import kotlin.math.absoluteValue
 
 
 class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner: LifecycleOwner,private val context: CardListFragment):
-    RecyclerView.Adapter<CardListViewHolder>(), PopupMenu.OnMenuItemClickListener, SimpleItemTouchHelperCallback.ItemTouchHelperAdapter {
+    RecyclerView.Adapter<CardListViewHolder>(), SimpleItemTouchHelperCallback.ItemTouchHelperAdapter {
     private var cards: List<Card> = ArrayList()
-    val selectedCards: MutableList<Card> = ArrayList() //TODO: Prevent other classes from changing the content
+    val selectedCards: MutableSet<Card> = HashSet() //TODO: Prevent other classes from changing the content
     val movedCards: MutableSet<Card> = HashSet()
     var onEditCardClicked: ((Card) -> Unit) = {}
     var onDeleteCardClicked: ((Card) -> Unit) = {}
+    var selectMultipleCallback: (() -> Unit) = {}
     var onStartDrag : ((RecyclerView.ViewHolder) -> Unit) = {}
     private var longClickPosition = -1
     var select = false
@@ -55,6 +56,7 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         val binding = ListItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CardListViewHolder(binding)
     }
+    @SuppressLint("LongLogTag")
     override fun onBindViewHolder(holder: CardListViewHolder, position: Int) {
         holder.binding.dragHandle.setOnTouchListener(object : View.OnTouchListener{
             override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -66,20 +68,18 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         })
         //Click listener
         holder.itemView.setOnClickListener{
-            onEditCardClicked(cards[position])
+
             if (select){
                 holder.binding.checkBox.isChecked = !holder.binding.checkBox.isChecked
+            }else{
+                onEditCardClicked(cards[position])
             }
-            //TODO: inspektera kort
         }
         //Long click
         holder.itemView.setOnLongClickListener {
             if (!select){
-                val popup = PopupMenu(holder.itemView.context, it)
-                popup.setOnMenuItemClickListener(this)
-                popup.inflate(R.menu.card_long_click_menu)
-                popup.show()
-                longClickPosition = holder.adapterPosition
+                select = !select
+                selectMultipleCallback()
             }
             true
         }
@@ -101,6 +101,7 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         val checkboxView = holder.binding.checkBox
 
         if(select){
+            Log.d(TAG, "hej")
             checkboxView.visibility = View.VISIBLE
             checkboxView.isChecked = selectedCards.contains(cards[position])
             params.startToStart = ConstraintLayout.LayoutParams.UNSET
@@ -114,14 +115,6 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
     }
     override fun getItemCount(): Int = cards.size
 
-
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
-            R.id.editCard-> editCard()
-            R.id.deleteCard-> delete()
-        }
-        return true
-    }
     fun selectAll(){
         if (selectedCards.size == cards.size){
             selectedCards.clear()
@@ -133,21 +126,15 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         }
         notifyDataSetChanged()
     }
-    private fun editCard() {
-        onEditCardClicked(cards[longClickPosition])
-    }
-
-    private fun delete(){
-        onDeleteCardClicked(cards[longClickPosition])
-    }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
-        var step = if(fromPosition < toPosition) {
+
+        var step = if (fromPosition < toPosition) {
             1
-        }else{
+        } else {
             -1
         }
-        for (i in fromPosition..toPosition - step){
+        for (i in fromPosition..toPosition - step) {
             //Swap card positions
             val temp = cards[i].position
             cards[i].position = cards[i + step].position
@@ -155,8 +142,9 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
             Collections.swap(cards, i, i + step)
             //Add to moved set
             movedCards.add(cards[i])
-            movedCards.add(cards[i+step])
+            movedCards.add(cards[i + step])
         }
         notifyItemMoved(fromPosition, toPosition)
+
     }
 }

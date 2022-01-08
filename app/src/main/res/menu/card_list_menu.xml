@@ -14,7 +14,10 @@
         android:title="@string/favorite_study"
         android:icon="@drawable/ic_favorite_study_border"
         app:showAsAction="ifRoom"/>
-
+    <item
+        android:id="@+id/exportDeck"
+        android:title="@string/exportDeck"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/delete"
         android:title="@string/delete"
@@ -28,12 +31,9 @@
         android:visible="false"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/select"
-        android:title="@string/select_multiple_decks"
-        android:icon="@drawable/ic_checkbox"
+        android:id="@+id/closeSelect"
+        android:title="@string/closeSelect"
+        android:icon="@drawable/ic_close_select"
+        android:visible="false"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/exportDeck"
-        android:title="@string/exportDeck"
-        app:showAsAction="never"/>
 </menu>
