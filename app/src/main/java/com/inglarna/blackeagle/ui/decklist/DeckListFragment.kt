@@ -24,6 +24,7 @@ class DeckListFragment : Fragment() {
     private var deleteButton: MenuItem? = null
     private var selectAllButton: MenuItem? = null
     private var closeButton: MenuItem? = null
+    private var importButton: MenuItem? = null
     private var pageId = -1
 
     companion object{
@@ -90,7 +91,7 @@ class DeckListFragment : Fragment() {
         deleteButton = menu.findItem((R.id.delete))
         selectAllButton = menu.findItem((R.id.selectAll))
         closeButton = menu.findItem((R.id.closeSelect))
-
+        importButton = menu.findItem((R.id.importDeck))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -110,6 +111,7 @@ class DeckListFragment : Fragment() {
         deleteButton?.isVisible = adapter.select
         selectAllButton?.isVisible = adapter.select
         closeButton?.isVisible = adapter.select
+        importButton?.isVisible = !adapter.select
     }
 
     private fun delete(){

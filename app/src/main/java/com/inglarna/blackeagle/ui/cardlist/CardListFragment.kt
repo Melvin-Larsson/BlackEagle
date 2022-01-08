@@ -104,7 +104,12 @@ class CardListFragment : Fragment() {
         //creating adapter
         deckId = arguments!!.getLong(DECK_ID, -1)
         deckViewModel.getDeck(deckId).observe(this){
-            deck = it
+            if (it == null){
+                activity?.finish()
+            }else{
+                deck = it
+                activity?.title = deck.name
+            }
         }
         adapter = CardListRecyclerViewAdapter(cardViewModel.getDeckViews(deckId), this, this)
         binding.recyclerViewCard.adapter = adapter
@@ -116,6 +121,7 @@ class CardListFragment : Fragment() {
             GlobalScope.launch {
                 cardViewModel.deleteCard(card)
             }
+
         }
         adapter.onEditCardClicked = { card ->
             startActivity(CardActivity.newIntent(context!!, card.deckId, card.id))
@@ -126,11 +132,6 @@ class CardListFragment : Fragment() {
         }
         initializeCardMoving()
         //Actionbar title
-        deckViewModel.getDeck(deckId).observe(this, {deck->
-            activity?.title = deck.name
-            /*val actionbar = activity
-            actionbar!!.title = deck.name*/
-        })
         cardViewModel.getDeckByNextRepetition(deckId, ceil(Date().time / (1000 * 3600 * 24).toDouble())).observe(this, {
             deckFinishedToday = it.isEmpty()
         })
@@ -187,7 +188,6 @@ class CardListFragment : Fragment() {
         deleteButton?.isVisible = adapter.select
         selectAllButton?.isVisible = adapter.select
         closeSelectButton?.isVisible = adapter.select
-        favoriteButton?.isVisible = !adapter.select
         startStudyButton?.isVisible = !adapter.select
         moreButton?.isVisible = !adapter.select
     }

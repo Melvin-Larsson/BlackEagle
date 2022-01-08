@@ -1,13 +1,9 @@
 package com.inglarna.blackeagle.model
 
-import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.math.exp
 import kotlin.math.ln
-import kotlin.math.roundToLong
 
 @Entity
 data class Card(
