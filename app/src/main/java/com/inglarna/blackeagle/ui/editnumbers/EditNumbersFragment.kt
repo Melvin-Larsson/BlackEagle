@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class EditNumbersFragment: Fragment() {
     private lateinit var binding: FragmentEditNumbersBinding
-    private lateinit var wordNumberRecyclerViewAdapter: EditNumbersListRecyclerViewAdapter
+    private lateinit var adapter: EditNumbersListRecyclerViewAdapter
     private val wordNumberViewModel by viewModels<wordNumberViewModel>()
     private var resetButton: MenuItem? = null
     private var checkBoxButton: MenuItem? = null
@@ -39,7 +39,7 @@ class EditNumbersFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentEditNumbersBinding.inflate(inflater, container, false)
         binding.textInputSearch?.addTextChangedListener{
-            wordNumberRecyclerViewAdapter.liveData = wordNumberViewModel.getWords(binding.textInputSearch?.text.toString())
+            adapter.liveData = wordNumberViewModel.getWords(binding.textInputSearch?.text.toString())
         }
         return binding.root
     }
@@ -47,11 +47,11 @@ class EditNumbersFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        wordNumberRecyclerViewAdapter = EditNumbersListRecyclerViewAdapter(requireContext(), wordNumberViewModel.getNumberViews(), this)
-        wordNumberRecyclerViewAdapter.onNumberWordClicked = {
+        adapter = EditNumbersListRecyclerViewAdapter(requireContext(), wordNumberViewModel.getNumberViews(), this)
+        adapter.onNumberWordClicked = {
             showEditNumberWordDialog(it)
         }
-        binding.editNumbersRecyclerview.adapter = wordNumberRecyclerViewAdapter
+        binding.editNumbersRecyclerview.adapter = adapter
         binding.editNumbersRecyclerview.layoutManager = LinearLayoutManager(requireContext())
     }
 
@@ -74,12 +74,12 @@ class EditNumbersFragment: Fragment() {
     }
 
     private fun selectAll() {
-        wordNumberRecyclerViewAdapter.selectAll()
+        adapter.selectAll()
     }
 
     private fun resetWordNumber() {
         //Update words
-        val selectedNumbers = wordNumberRecyclerViewAdapter.selectedWordNumbers.toHashSet()
+        val selectedNumbers = adapter.selectedWordNumbers.toHashSet()
         val defaultWords = BlackEagleDatabase.loadDefaultNumberWords(context!!)
         for(selectedNumber in selectedNumbers){
             selectedNumber.word = defaultWords[selectedNumber.number]
@@ -88,15 +88,15 @@ class EditNumbersFragment: Fragment() {
             wordNumberViewModel.updateWords(selectedNumbers)
         }
         //Unselect
-        wordNumberRecyclerViewAdapter.select = false
+        adapter.select = false
 
     }
 
     private fun checkBoxVisibility() {
         Toast.makeText(context, "checkbox", Toast.LENGTH_SHORT).show()
-        wordNumberRecyclerViewAdapter.select = !wordNumberRecyclerViewAdapter.select
-        resetButton?.isVisible = wordNumberRecyclerViewAdapter.select
-        selectAllButton?.isVisible = wordNumberRecyclerViewAdapter.select
+        adapter.select = !adapter.select
+        resetButton?.isVisible = adapter.select
+        selectAllButton?.isVisible = adapter.select
     }
 
     private fun showEditNumberWordDialog(wordNumber: WordNumber){

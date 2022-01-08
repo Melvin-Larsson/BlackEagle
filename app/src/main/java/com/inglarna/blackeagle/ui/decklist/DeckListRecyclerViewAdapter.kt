@@ -20,12 +20,11 @@ import com.inglarna.blackeagle.repository.CardRepo
 class DeckListRecyclerViewAdapter(val context : Context,
                                   private val liveData: LiveData<List<DeckWithCards>>?,
                                   private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<DeckListViewHolder>(), PopupMenu.OnMenuItemClickListener {
-    private var cardRepo = CardRepo(context)
     private var decks: List<DeckWithCards> = ArrayList<DeckWithCards>()
     private var longClickPosition = -1
     val selectedDecks: MutableSet<Deck> = HashSet<Deck>()
     lateinit var onDeckClicked: ((Deck) -> Unit)
-    var onEditDeckClicked: ((Deck) -> Unit) = {}
+    var selectMultipleCallback: (() -> Unit) = {}
     var onDeleteDeckClicked: ((Deck) -> Unit) = {}
     var select = false
         set(value){
@@ -63,11 +62,8 @@ class DeckListRecyclerViewAdapter(val context : Context,
         //long click
         holder.itemView.setOnLongClickListener {
             if (!select){
-                val popup = PopupMenu(holder.itemView.context, it)
-                popup.setOnMenuItemClickListener(this)
-                popup.inflate(R.menu.deck_long_click_menu)
-                popup.show()
-                longClickPosition = holder.adapterPosition
+                select = !select
+                selectMultipleCallback()
             }
             true
         }
@@ -111,7 +107,6 @@ class DeckListRecyclerViewAdapter(val context : Context,
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item!!.itemId){
-            R.id.editDeck -> editDeck()
             R.id.deleteDeck -> deleteDeck()
         }
         return true
@@ -120,9 +115,4 @@ class DeckListRecyclerViewAdapter(val context : Context,
     private fun deleteDeck() {
         onDeleteDeckClicked(decks[longClickPosition].deck)
     }
-
-    private fun editDeck() {
-        onEditDeckClicked(decks[longClickPosition].deck)
-    }
-
 }

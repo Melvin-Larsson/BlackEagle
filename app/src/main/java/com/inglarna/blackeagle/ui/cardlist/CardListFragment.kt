@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,12 +18,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import android.view.View
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toFile
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.inglarna.blackeagle.model.Deck
-import com.inglarna.blackeagle.model.DeckWithCards
 import com.inglarna.blackeagle.ui.card.CardActivity
 import com.inglarna.blackeagle.ui.question.QuestionFragment
 import nl.dionsegijn.konfetti.models.Shape
@@ -42,8 +38,8 @@ class CardListFragment : Fragment() {
     private var deleteButton: MenuItem? = null
     private var startStudyButton: MenuItem? = null
     private var selectAllButton: MenuItem? = null
-    private var exportButton: MenuItem? = null
     private var closeSelectButton: MenuItem? = null
+    private var moreButton: MenuItem? = null
     private var deckId: Long= -1
     private lateinit var deck: Deck
     private var deckFinishedToday = false
@@ -70,10 +66,9 @@ class CardListFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.card_list_menu, menu)
         selectAllButton = menu.findItem(R.id.selectAllCards)
-        favoriteButton = menu.findItem(R.id.favoriteStudy)
         deleteButton = menu.findItem((R.id.delete))
         startStudyButton = menu.findItem(R.id.startStudy)
-        exportButton = menu.findItem(R.id.exportDeck)
+        moreButton = menu.findItem(R.id.more)
         closeSelectButton = menu.findItem(R.id.closeSelect)
         deckViewModel.getDecks()?.observe(this,{ decks->
             for(deckWithCards in decks){
@@ -93,15 +88,12 @@ class CardListFragment : Fragment() {
             }
             R.id.delete -> delete()
             R.id.startStudy -> study()
-            R.id.favoriteStudy -> favorites()
-            R.id.selectAllCards -> selectAll()
-            R.id.exportDeck -> export()
+            R.id.selectAllCards -> adapter.selectAll()
+            R.id.more -> startActivity(EditDeckActivity.newIntent(context!!, deck.id))
             R.id.closeSelect -> closeSelect()
         }
         return true
     }
-
-
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentCardListBinding.inflate(inflater, container, false)
@@ -130,7 +122,7 @@ class CardListFragment : Fragment() {
         }
 
         adapter.selectMultipleCallback = {
-            select()
+            toolbarVisibility()
         }
         initializeCardMoving()
         //Actionbar title
@@ -190,31 +182,19 @@ class CardListFragment : Fragment() {
             .show()
     }
 
-    private fun selectAll() {
-        adapter.selectAll()
-    }
-
-    private fun favorites() {
-        val deckDao = BlackEagleDatabase.getInstance(activity!!).deckDao()
-
-        GlobalScope.launch {
-            val deck = deckDao.getDeck(deckId)
-            deck.favorite = !deck.favorite
-            deckDao.updateDeck(deck)
-        }
-    }
-    private fun select(){
+    private fun toolbarVisibility(){
         //visibility of toolbar and checkbox
         deleteButton?.isVisible = adapter.select
         selectAllButton?.isVisible = adapter.select
         closeSelectButton?.isVisible = adapter.select
         favoriteButton?.isVisible = !adapter.select
         startStudyButton?.isVisible = !adapter.select
-        exportButton?.isVisible = !adapter.select
+        moreButton?.isVisible = !adapter.select
     }
+
     private fun closeSelect() {
         adapter.select = !adapter.select
-        select()
+        toolbarVisibility()
     }
     private fun delete(){
         val selectedCards = adapter.selectedCards.toMutableList()
@@ -225,19 +205,7 @@ class CardListFragment : Fragment() {
         }
 
         adapter.select = false
-        deleteButton?.isVisible = false
-        selectAllButton?.isVisible = false
-    }
-
-    private val startFileExplorerForResult = registerForActivityResult(ActivityResultContracts.CreateDocument()){uri->
-        if(uri != null){
-            GlobalScope.launch {
-                deckViewModel.getDeckWithCards(deckId).export(context!!, uri)
-            }
-        }
-    }
-    private fun export(){
-        startFileExplorerForResult.launch(deck.name + ".be")
+        toolbarVisibility()
     }
 
     private fun setFavoriteIcon(favorite: Boolean){

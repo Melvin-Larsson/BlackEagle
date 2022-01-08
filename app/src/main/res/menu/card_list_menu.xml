@@ -10,14 +10,10 @@
         android:icon="@drawable/ic_start_study"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/favoriteStudy"
-        android:title="@string/favorite_study"
-        android:icon="@drawable/ic_favorite_study_border"
+        android:id="@+id/more"
+        android:title="@string/more"
+        android:icon="@drawable/ic_more"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/exportDeck"
-        android:title="@string/exportDeck"
-        app:showAsAction="never"/>
     <item
         android:id="@+id/delete"
         android:title="@string/delete"

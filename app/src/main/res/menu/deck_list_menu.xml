@@ -10,6 +10,7 @@
         android:icon="@drawable/ic_delete"
         app:showAsAction="ifRoom"
         android:visible="false"/>
+
     <item
         android:id="@+id/selectAll"
         android:title="@string/selectAll"
@@ -17,12 +18,13 @@
         app:showAsAction="ifRoom"
         android:visible="false"/>
     <item
-        android:id="@+id/checkbox"
-        android:title="@string/checkbox"
-        android:icon="@drawable/ic_checkbox"
-        app:showAsAction="ifRoom"/>
-    <item
         android:id="@+id/importDeck"
         android:title="@string/importDeck"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/closeSelect"
+        android:title="@string/closeSelect"
+        android:icon="@drawable/ic_close_select"
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
 </menu>

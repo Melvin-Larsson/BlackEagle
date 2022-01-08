@@ -17,6 +17,7 @@
         <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/layout/fragment_deck_pager.xml" value="0.371875" />
         <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/layout/fragment_edit_card.xml" value="0.371875" />
         <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/layout/fragment_edit_convert_numbers.xml" value="0.371875" />
+        <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/layout/fragment_edit_deck.xml" value="0.371875" />
         <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/layout/fragment_main.xml" value="0.371875" />
         <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/layout/fragment_pager.xml" value="0.371875" />
         <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/layout/fragment_question.xml" value="0.371875" />
@@ -29,6 +30,7 @@
         <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/menu/app_bar_menu.xml" value="0.371875" />
         <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/menu/card_list_menu.xml" value="0.371875" />
         <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/menu/card_long_click_menu.xml" value="0.371875" />
+        <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/menu/deck_list_menu.xml" value="0.371875" />
         <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/menu/deck_long_click_menu.xml" value="0.371875" />
         <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/menu/edit_card_menu.xml" value="0.371875" />
         <entry key="..\:/Users/runne/android_projects/blackeagle/app/src/main/res/menu/edit_numbers_menu.xml" value="0.371875" />

@@ -1,40 +1,29 @@
 package com.inglarna.blackeagle.ui.decklist
 
-import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.text.InputType
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toFile
-import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckListBinding
-import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.model.DeckWithCards
-import com.inglarna.blackeagle.ui.card.CardActivity
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileReader
 
 class DeckListFragment : Fragment() {
     private lateinit var binding : FragmentDeckListBinding
     lateinit var deckSelectedCallback: DeckSelectedCallback
     private val deckViewModel by viewModels<DeckViewModel>()
-    private lateinit var deckRecyclerViewAdapter: DeckListRecyclerViewAdapter
+    private lateinit var adapter: DeckListRecyclerViewAdapter
     private var deleteButton: MenuItem? = null
     private var selectAllButton: MenuItem? = null
+    private var closeButton: MenuItem? = null
     private var pageId = -1
 
     companion object{
@@ -79,80 +68,62 @@ class DeckListFragment : Fragment() {
         else{
             deckViewModel.getDecks()
         }
-        deckRecyclerViewAdapter = DeckListRecyclerViewAdapter(requireActivity(), data, requireActivity())
-        binding.deckRecyclerView.adapter = deckRecyclerViewAdapter
+        adapter = DeckListRecyclerViewAdapter(requireActivity(), data, requireActivity())
+        binding.deckRecyclerView.adapter = adapter
         binding.deckRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        deckRecyclerViewAdapter.onDeckClicked = {
+        adapter.onDeckClicked = {
                 deckSelectedCallback.onDeckSelected(it)
         }
-        deckRecyclerViewAdapter.onDeleteDeckClicked={ deck ->
+        adapter.onDeleteDeckClicked={ deck ->
             GlobalScope.launch {
                 deckViewModel.deleteDeck(deck)
             }
         }
-        deckRecyclerViewAdapter.onEditDeckClicked={ deck ->
-            editDeckName(deck)
+        adapter.selectMultipleCallback = {
+            toolbarVisibility()
         }
-    }
-
-    private fun editDeckName(deck: Deck) {
-        val deckEditText = EditText(requireContext())
-        deckEditText.setText(deck.name)
-        deckEditText.inputType = InputType.TYPE_CLASS_TEXT
-
-        AlertDialog.Builder(requireContext())
-            .setTitle("Your new name of the deck")
-            .setView(deckEditText)
-            .setPositiveButton("Edit"){dialog, _ ->
-                deck.name = deckEditText.text.toString()
-                val deckDao = BlackEagleDatabase.getInstance(requireContext()).deckDao()
-                GlobalScope.launch {
-                    deckDao.updateDeck(deck)
-                }
-                Toast.makeText(requireContext(), "edited $deck", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-            }
-            .create()
-            .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.deck_list_menu, menu)
         deleteButton = menu.findItem((R.id.delete))
         selectAllButton = menu.findItem((R.id.selectAll))
+        closeButton = menu.findItem((R.id.closeSelect))
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.checkbox -> checkboxVisibility()
             R.id.delete -> delete()
             R.id.selectAll -> selectAll()
             R.id.importDeck -> import()
+            R.id.closeSelect -> closeSelect()
         }
         return true
     }
-
-    private fun checkboxVisibility(){
-        deckRecyclerViewAdapter.select = !deckRecyclerViewAdapter.select
-        deleteButton?.isVisible = deckRecyclerViewAdapter.select
-        selectAllButton?.isVisible = deckRecyclerViewAdapter.select
+    private fun closeSelect() {
+        adapter.select = !adapter.select
+        toolbarVisibility()
+    }
+    private fun toolbarVisibility(){
+        deleteButton?.isVisible = adapter.select
+        selectAllButton?.isVisible = adapter.select
+        closeButton?.isVisible = adapter.select
     }
 
     private fun delete(){
-        val selectedDecks = deckRecyclerViewAdapter.selectedDecks.toMutableList()
+        val selectedDecks = adapter.selectedDecks.toMutableList()
         GlobalScope.launch {
             for (deck in selectedDecks){
                 deckViewModel.deleteDeck(deck)
             }
         }
-        deckRecyclerViewAdapter.select = false
-        deleteButton?.isVisible = false
-        selectAllButton?.isVisible = false
+        toolbarVisibility()
     }
 
     private fun selectAll() {
-        deckRecyclerViewAdapter.selectAll()
+        adapter.selectAll()
     }
 
     private val startFileExplorerForResult = registerForActivityResult(ActivityResultContracts.GetContent()){ uri ->

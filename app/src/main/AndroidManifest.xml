@@ -41,7 +41,7 @@
         <activity android:name=".ui.card.CardActivity"
             android:exported="true"
             android:parentActivityName=".ui.cardlist.CardListActivity">
-            meta-data
+            <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".ui.cardlist.CardListActivity"/>
         </activity>
@@ -56,6 +56,12 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.convertnumber.NumbersActivity"/>
+        </activity>
+        <activity android:name=".ui.cardlist.EditDeckActivity"
+            android:parentActivityName=".ui.cardlist.CardListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.cardlist.CardListActivity"/>
         </activity>
 
     </application>

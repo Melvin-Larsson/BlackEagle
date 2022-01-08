@@ -1,16 +1,13 @@
 package com.inglarna.blackeagle.ui.convertnumber
 
-import android.content.Intent
+
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentNumbersBinding
-import com.inglarna.blackeagle.ui.decklist.MainActivity
 import com.inglarna.blackeagle.ui.tutorialnumbers.TutorialNumbersActivity
 import com.inglarna.blackeagle.viewmodel.wordNumberViewModel
 

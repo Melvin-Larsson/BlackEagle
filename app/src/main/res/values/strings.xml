@@ -54,4 +54,10 @@
     <string name="convertTutorial">Converting numbers is mainly used for remembering a sequence of numbers. Every number from 0–9 can be translated to a sound according to
         the table below. The sounds can then be used to create different words.</string>
     <string name="closeSelect">Close</string>
+    <string name="export">export</string>
+    <string name="add_to_folder">add to folder</string>
+    <string name="add_to_favourites">add to favourites</string>
+    <string name="cancel">cancel</string>
+    <string name="more">More</string>
+    <string name="edit_deck_name">edit deck name</string>
 </resources>
