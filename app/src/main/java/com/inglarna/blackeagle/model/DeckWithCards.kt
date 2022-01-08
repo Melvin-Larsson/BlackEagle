@@ -1,6 +1,7 @@
 package com.inglarna.blackeagle.model
 
 import android.content.Context
+import android.net.Uri
 import android.os.Environment
 import android.util.Log
 import androidx.room.Embedded
@@ -11,9 +12,11 @@ import com.inglarna.blackeagle.repository.DeckRepo
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.*
+import java.util.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
+import kotlin.collections.ArrayList
 
 data class DeckWithCards(
     @Embedded val deck: Deck,
@@ -29,17 +32,17 @@ data class DeckWithCards(
         private const val DECK_FILE_NAME = "deck"
         const val FILE_TYPE = "be"
 
-        fun import(context: Context, source: File){
-            val destination = File(context.filesDir, source.name.removeSuffix("." + source.extension))
-            unzip(source, destination)
+        fun import(context: Context, source: Uri){
+            val destination = File(context.filesDir, UUID.randomUUID().toString())
+            unzip(context, source, destination)
             val deckWithCards = parseDeckWithCards(File(destination, DECK_FILE_NAME))
             saveDeck(context, deckWithCards, destination)
         }
-        private fun unzip(source: File, destination: File){
+        private fun unzip(context: Context, source: Uri, destination: File){
             if(!destination.exists()){
                 destination.mkdir()
             }
-            val zipInputStream = ZipInputStream(BufferedInputStream(FileInputStream(source)))
+            val zipInputStream = ZipInputStream(BufferedInputStream(context.contentResolver.openInputStream(source)))
             var filename: String
             var zipEntry: ZipEntry?
             val buffer = ByteArray(BUFFER_SIZE)
@@ -147,16 +150,15 @@ data class DeckWithCards(
     }
 
     
-    fun export(context: Context){
-        val mediaStorageDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), deck.name)
-        if(!mediaStorageDir.exists()){
-            if(!mediaStorageDir.mkdir()){
-                Log.d(TAG, "Error creating: " + mediaStorageDir.path)
-            }
+    fun export(context: Context, destinationFolder: Uri){
+        val tempDir = File(context.filesDir, UUID.randomUUID().toString())
+        if(!tempDir.exists()){
+            tempDir.mkdir()
         }
-        writeImageFiles(context, mediaStorageDir)
-        writeDeck( mediaStorageDir)
-        zip(mediaStorageDir, File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), deck.name + "." + FILE_TYPE))
+        writeImageFiles(context, tempDir)
+        writeDeck(tempDir)
+        zip(context, tempDir, destinationFolder)
+        deleteDirectory(tempDir)
     }
     private fun writeImageFiles(context: Context, destinationFolder: File){
         val imageFiles = getImageFiles(context.filesDir)
@@ -210,8 +212,8 @@ data class DeckWithCards(
         }
         outputStreamWriter.close()
     }
-    private fun zip(source: File, destination: File){
-        val zipOutputStream = ZipOutputStream(BufferedOutputStream(FileOutputStream(destination)))
+    private fun zip(context: Context, source: File, destination: Uri){
+        val zipOutputStream = ZipOutputStream(BufferedOutputStream(context.contentResolver.openOutputStream(destination)))
         val data = ByteArray(BUFFER_SIZE)
         val files = source.listFiles()
         if(files != null){

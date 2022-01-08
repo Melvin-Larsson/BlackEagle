@@ -23,7 +23,10 @@ import com.inglarna.blackeagle.ui.card.CardActivity
 import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.BufferedReader
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileReader
 
 class DeckListFragment : Fragment() {
     private lateinit var binding : FragmentDeckListBinding
@@ -153,12 +156,9 @@ class DeckListFragment : Fragment() {
     }
 
     private val startFileExplorerForResult = registerForActivityResult(ActivityResultContracts.GetContent()){ uri ->
-        //FIXME: This probably does not work in all instances
-        var path = uri.path
-        if(path!!.contains("raw:")){
-            path = path!!.substring(path.indexOf("raw:") + 4)
+        if(uri != null){
+            DeckWithCards.import(context!!, uri)
         }
-        val deckWithCards = DeckWithCards.import(context!!, File(path))
     }
     private fun import(){
         startFileExplorerForResult.launch("*/*")
