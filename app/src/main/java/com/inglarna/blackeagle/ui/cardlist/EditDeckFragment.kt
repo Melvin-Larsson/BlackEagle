@@ -51,8 +51,13 @@ class EditDeckFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         deckId = arguments!!.getLong(DECK_ID, -1)
         deckViewModel.getDeck(deckId).observe(this){
+
+            if (it == null){
+                activity?.finish()
+            }else{
+                deck = it
                 setFavoriteIcon(it.favorite)
-            deck = it
+            }
         }
         binding.exportButton.setOnClickListener{
             startFileExplorerForResult.launch(deck.name + ".be")
@@ -83,7 +88,10 @@ class EditDeckFragment : Fragment() {
     }
 
     private fun deleteDeck() {
-        TODO("Not yet implemented")
+        GlobalScope.launch {
+            deckViewModel.deleteDeck(deck)
+        }
+        activity?.finish()
     }
     private fun editDeckName(deck: Deck) {
         val deckEditText = EditText(requireContext())
