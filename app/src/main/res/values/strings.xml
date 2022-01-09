@@ -62,4 +62,5 @@
     <string name="more">More</string>
     <string name="edit_deck_name">edit deck name</string>
     <string name="study">study</string>
+    <string name="show_html">Show HTML</string>
 </resources>
