@@ -178,9 +178,9 @@ class CardFragment : Fragment() {
             if(!binding.switchShowHtml.isChecked){
                 convertFieldsToHtml()
             }
-            card.question = binding.editTextQuestion.text.toString()
-            card.answer = binding.editTextAnswer.text.toString()
-            card.hint = binding.editTextHint.text.toString()
+            card.question = binding.editTextQuestion.text.toString().trim()
+            card.answer = binding.editTextAnswer.text.toString().trim()
+            card.hint = binding.editTextHint.text.toString().trim()
             removeUnusedImages()
             if(!binding.switchShowHtml.isChecked){
                 convertFieldsFromHtml()
@@ -322,24 +322,27 @@ class CardFragment : Fragment() {
     }
     private fun convertFieldsFromHtml(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            binding.editTextAnswer.setText(Html.fromHtml(binding.editTextAnswer.text.toString(), Html.FROM_HTML_MODE_COMPACT, imageGetter,null))
-            binding.editTextQuestion.setText(Html.fromHtml(binding.editTextQuestion.text.toString(), Html.FROM_HTML_MODE_COMPACT, imageGetter,null))
-            binding.editTextHint.setText(Html.fromHtml(binding.editTextHint.text.toString(), Html.FROM_HTML_MODE_COMPACT, imageGetter,null))
+            binding.editTextAnswer.setText(Html.fromHtml(binding.editTextAnswer.text.toString(), Html.FROM_HTML_MODE_COMPACT, imageGetter,null).trim())
+            binding.editTextQuestion.setText(Html.fromHtml(binding.editTextQuestion.text.toString(), Html.FROM_HTML_MODE_COMPACT, imageGetter,null).trim())
+            binding.editTextHint.setText(Html.fromHtml(binding.editTextHint.text.toString(), Html.FROM_HTML_MODE_COMPACT, imageGetter,null).trim())
         }else{
-            binding.editTextAnswer.setText(Html.fromHtml(binding.editTextAnswer.text.toString(), imageGetter,null))
-            binding.editTextQuestion.setText(Html.fromHtml(binding.editTextQuestion.text.toString(), imageGetter,null))
-            binding.editTextHint.setText(Html.fromHtml(binding.editTextHint.text.toString(), imageGetter,null))
+            binding.editTextAnswer.setText(Html.fromHtml(binding.editTextAnswer.text.toString(), imageGetter,null).trim())
+            binding.editTextQuestion.setText(Html.fromHtml(binding.editTextQuestion.text.toString(), imageGetter,null).trim())
+            binding.editTextHint.setText(Html.fromHtml(binding.editTextHint.text.toString(), imageGetter,null).trim())
         }
     }
     private fun convertFieldsToHtml(){
+        binding.editTextAnswer.clearComposingText()
+        binding.editTextQuestion.clearComposingText()
+        binding.editTextHint.clearComposingText()
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            binding.editTextAnswer.setText(Html.toHtml(binding.editTextAnswer.text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE))
-            binding.editTextQuestion.setText(Html.toHtml(binding.editTextQuestion.text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE))
-            binding.editTextHint.setText(Html.toHtml(binding.editTextHint.text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE))
+            binding.editTextAnswer.setText(Html.toHtml(binding.editTextAnswer.text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE).trim())
+            binding.editTextQuestion.setText(Html.toHtml(binding.editTextQuestion.text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE).trim())
+            binding.editTextHint.setText(Html.toHtml(binding.editTextHint.text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE).trim())
         }else{
-            binding.editTextAnswer.setText(Html.toHtml(binding.editTextAnswer.text))
-            binding.editTextQuestion.setText(Html.toHtml(binding.editTextQuestion.text))
-            binding.editTextHint.setText(Html.toHtml(binding.editTextHint.text))
+            binding.editTextAnswer.setText(Html.toHtml(binding.editTextAnswer.text).trim())
+            binding.editTextQuestion.setText(Html.toHtml(binding.editTextQuestion.text).trim())
+            binding.editTextHint.setText(Html.toHtml(binding.editTextHint.text).trim())
         }
         removeTrailingNewLines()
     }
@@ -348,8 +351,5 @@ class CardFragment : Fragment() {
         binding.editTextQuestion.setText(binding.editTextQuestion.text.toString().replace(regex, ""))
         binding.editTextAnswer.setText(binding.editTextAnswer.text.toString().replace(regex, ""))
         binding.editTextHint.setText(binding.editTextHint.text.toString().replace(regex, ""))
-
     }
-
-
 }
