@@ -133,13 +133,13 @@ class QuestionFragment : Fragment() {
         //Set text
         binding.textViewQuestion.text = cards[0].question
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            binding.textViewQuestion.text = Html.fromHtml(cards[0].question, Html.FROM_HTML_MODE_COMPACT, imageGetter,null)
-            binding.textViewAnswer.text = Html.fromHtml(cards[0].answer, Html.FROM_HTML_MODE_COMPACT, imageGetter,null)
-            binding.textViewHint.text = Html.fromHtml(cards[0].hint, Html.FROM_HTML_MODE_COMPACT, imageGetter,null)
+            binding.textViewQuestion.text = Html.fromHtml(cards[0].question, Html.FROM_HTML_MODE_COMPACT, imageGetter,null).trim()
+            binding.textViewAnswer.text = Html.fromHtml(cards[0].answer, Html.FROM_HTML_MODE_COMPACT, imageGetter,null).trim()
+            binding.textViewHint.text = Html.fromHtml(cards[0].hint, Html.FROM_HTML_MODE_COMPACT, imageGetter,null).trim()
         }else{
-            binding.textViewQuestion.text = Html.fromHtml(cards[0].question, imageGetter,null)
-            binding.textViewAnswer.text = Html.fromHtml(cards[0].answer, imageGetter,null)
-            binding.textViewHint.text = Html.fromHtml(cards[0].hint, imageGetter,null)
+            binding.textViewQuestion.text = Html.fromHtml(cards[0].question, imageGetter,null).trim()
+            binding.textViewAnswer.text = Html.fromHtml(cards[0].answer, imageGetter,null).trim()
+            binding.textViewHint.text = Html.fromHtml(cards[0].hint, imageGetter,null).trim()
         }
         //Reset visibilities
         binding.textViewHint.visibility = View.GONE

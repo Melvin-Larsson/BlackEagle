@@ -100,13 +100,12 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         //Data on card
         val question = replaceImages(cards[position].question)
         val answer = replaceImages(cards[position].answer)
-        Log.d(TAG, question)
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            holder.binding.textViewQuestion.text = Html.fromHtml(question, Html.FROM_HTML_MODE_COMPACT, imageGetter,null)
-            holder.binding.textViewAnswer.text = Html.fromHtml(answer, Html.FROM_HTML_MODE_COMPACT, imageGetter,null)
+            holder.binding.textViewQuestion.text = Html.fromHtml(question, Html.FROM_HTML_MODE_COMPACT, imageGetter,null).trim()
+            holder.binding.textViewAnswer.text = Html.fromHtml(answer, Html.FROM_HTML_MODE_COMPACT, imageGetter,null).trim()
         }else{
-            holder.binding.textViewQuestion.text = Html.fromHtml(question,imageGetter,null)
-            holder.binding.textViewAnswer.text = Html.fromHtml(answer, imageGetter,null)
+            holder.binding.textViewQuestion.text = Html.fromHtml(question,imageGetter,null).trim()
+            holder.binding.textViewAnswer.text = Html.fromHtml(answer, imageGetter,null).trim()
 
         }
         val cardNumber = position + 1
