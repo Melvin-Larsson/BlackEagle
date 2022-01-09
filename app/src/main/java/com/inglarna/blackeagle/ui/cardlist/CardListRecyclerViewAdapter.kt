@@ -2,6 +2,12 @@ package com.inglarna.blackeagle.ui.cardlist
 
 import android.util.Log
 import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.os.Build
+import android.text.Html
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -21,11 +27,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 import android.view.MotionEvent
 import androidx.constraintlayout.widget.ConstraintSet
+import java.io.File
 import kotlin.collections.HashSet
 import kotlin.math.absoluteValue
 
 
-class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner: LifecycleOwner,private val context: CardListFragment):
+class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner: LifecycleOwner,private val context: Context):
     RecyclerView.Adapter<CardListViewHolder>(), SimpleItemTouchHelperCallback.ItemTouchHelperAdapter {
     private var cards: List<Card> = ArrayList()
     val selectedCards: MutableSet<Card> = HashSet() //TODO: Prevent other classes from changing the content
@@ -56,7 +63,14 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         val binding = ListItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CardListViewHolder(binding)
     }
-    @SuppressLint("LongLogTag")
+
+    private val imageGetter = object: Html.ImageGetter {
+        override fun getDrawable(source: String): Drawable {
+            val drawable = BitmapDrawable(context.resources, BitmapFactory.decodeFile(File(context.filesDir, source).path))
+            drawable.setBounds(0,0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+            return drawable
+        }
+    }
     override fun onBindViewHolder(holder: CardListViewHolder, position: Int) {
         holder.binding.dragHandle.setOnTouchListener(object : View.OnTouchListener{
             override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -83,10 +97,18 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
             }
             true
         }
-
         //Data on card
-        holder.binding.textViewQuestion.text = context.resources.getString(R.string.card_question, cards[position].question)
-        holder.binding.textViewAnswer.text = context.resources.getString(R.string.card_answer, cards[position].answer)
+        val question = replaceImages(cards[position].question)
+        val answer = replaceImages(cards[position].answer)
+        Log.d(TAG, question)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            holder.binding.textViewQuestion.text = Html.fromHtml(question, Html.FROM_HTML_MODE_COMPACT, imageGetter,null)
+            holder.binding.textViewAnswer.text = Html.fromHtml(answer, Html.FROM_HTML_MODE_COMPACT, imageGetter,null)
+        }else{
+            holder.binding.textViewQuestion.text = Html.fromHtml(question,imageGetter,null)
+            holder.binding.textViewAnswer.text = Html.fromHtml(answer, imageGetter,null)
+
+        }
         val cardNumber = position + 1
         holder.binding.cardNumber.text = cardNumber.toString()
         //Checkbox
@@ -101,7 +123,6 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         val checkboxView = holder.binding.checkBox
 
         if(select){
-            Log.d(TAG, "hej")
             checkboxView.visibility = View.VISIBLE
             checkboxView.isChecked = selectedCards.contains(cards[position])
             params.startToStart = ConstraintLayout.LayoutParams.UNSET
@@ -128,7 +149,6 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
-
         var step = if (fromPosition < toPosition) {
             1
         } else {
@@ -146,5 +166,10 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         }
         notifyItemMoved(fromPosition, toPosition)
 
+    }
+
+    private fun replaceImages(string: String): String{
+        val imageRegex = Regex("<img src=\".*\">")
+        return string.replace(imageRegex, "(img)")
     }
 }

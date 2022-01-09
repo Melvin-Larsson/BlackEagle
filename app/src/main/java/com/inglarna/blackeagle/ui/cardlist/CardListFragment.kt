@@ -2,6 +2,7 @@ package com.inglarna.blackeagle.ui.cardlist
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -116,7 +117,7 @@ class CardListFragment : Fragment() {
                 activity?.title = deck.name
             }
         }
-        adapter = CardListRecyclerViewAdapter(cardViewModel.getDeckViews(deckId), this, this)
+        adapter = CardListRecyclerViewAdapter(cardViewModel.getDeckViews(deckId), this, context!!)
         binding.recyclerViewCard.adapter = adapter
         binding.recyclerViewCard.layoutManager = LinearLayoutManager(requireContext())
         binding.buttonAddCard.setOnClickListener{

@@ -120,8 +120,8 @@ data class DeckWithCards(
                     val imageFiles = PictureUtils.getImageFilesFromId(imageSource, oldCardId)
                     val idRegex = Regex("^\\d+")
                     for(image in imageFiles){
-                        val oldImgTag = "<img src=\"${image.name}\"/>"
-                        val newImgTag = "<img src=\"${card.id}${image.name.replace(idRegex, "")}\"/>"
+                        val oldImgTag = "<img src=\"${image.name}\">"
+                        val newImgTag = "<img src=\"${card.id}${image.name.replace(idRegex, "")}\">"
                         card.question = card.question.replace(oldImgTag, newImgTag)
                         card.answer = card.answer.replace(oldImgTag, newImgTag)
                         card.hint = card.hint.replace(oldImgTag, newImgTag)

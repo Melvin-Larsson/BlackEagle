@@ -1,7 +1,6 @@
 package com.inglarna.blackeagle.ui.card
 
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -23,7 +22,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.inputmethod.EditorInfoCompat
 import androidx.core.view.inputmethod.InputConnectionCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.inglarna.blackeagle.ImageStorage
@@ -36,17 +34,14 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.*
-import kotlin.collections.HashMap
 
-
-//TODO: spara bilderna melvin
 class CardFragment : Fragment() {
     lateinit var binding : FragmentCardBinding
     private val cardViewModel by viewModels<CardViewModel>()
     private var deckId: Long= -1
     private var cardId: Long = -1
+    private var isEditingCard = false
     private lateinit var card : Card
-    private var images = HashMap<String, Uri>()
     private val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
 
     companion object{
@@ -71,9 +66,6 @@ class CardFragment : Fragment() {
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCardBinding.inflate(inflater, container, false)
         val editText = object : AppCompatEditText(context!!) {
@@ -124,11 +116,15 @@ class CardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         deckId = arguments!!.getLong(DECK_ID, -1)
         cardId = arguments!!.getLong(CARD_ID, -1)
+        //If card is being added
         if (cardId == -1L){
-            Log.d(TAG, "hej")
+            isEditingCard = false
             activity?.title = context?.getString(R.string.add_card)
             binding.buttonAddCard.text = context?.getString(R.string.add_card)
-        }else{
+        }
+        //If card is being edited
+        else{
+            isEditingCard = true
             activity?.title = context?.getString(R.string.edit_card)
             binding.buttonAddCard.text = context?.getString(R.string.edit_card)
         }
@@ -138,6 +134,7 @@ class CardFragment : Fragment() {
                binding.editTextQuestion.setText(card.question)
                binding.editTextAnswer.setText(card.answer)
                binding.editTextHint.setText(card.hint)
+               convertFieldsFromHtml()
             })
         }else{
             card = Card()
@@ -145,6 +142,9 @@ class CardFragment : Fragment() {
 
         binding.buttonAddCard.setOnClickListener{
             saveCard()
+            if(!isEditingCard){
+                reset()
+            }
         }
         binding.imageButtonQuestion.setOnClickListener{
             startGalleryResultQuestion.launch(gallery)
@@ -155,14 +155,18 @@ class CardFragment : Fragment() {
         binding.imageButtonHint.setOnClickListener{
             startGalleryResultHint.launch(gallery)
         }
-        val imageGetter = object: Html.ImageGetter {
-            override fun getDrawable(source: String): Drawable {
-                val drawable = BitmapDrawable(resources, BitmapFactory.decodeFile(File(context?.filesDir, source).path))
-                drawable.setBounds(0,0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-                Log.d(TAG, "draww")
-                return drawable
+        binding.switchShowHtml.setOnCheckedChangeListener{_, state ->
+            if(state){
+                convertFieldsToHtml()
+            }else{
+                convertFieldsFromHtml()
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        removeUnusedImages()
     }
 
     private fun saveCard(){
@@ -171,12 +175,16 @@ class CardFragment : Fragment() {
             !regexPattern.matches(binding.editTextQuestion.text.toString())) {
 
             card.deckId = deckId
+            if(!binding.switchShowHtml.isChecked){
+                convertFieldsToHtml()
+            }
             card.question = binding.editTextQuestion.text.toString()
-            Log.d(TAG, card.question)
             card.answer = binding.editTextAnswer.text.toString()
             card.hint = binding.editTextHint.text.toString()
-            saveImages()
             removeUnusedImages()
+            if(!binding.switchShowHtml.isChecked){
+                convertFieldsFromHtml()
+            }
             GlobalScope.launch {
                 //Add card
                 if(card.id == null){
@@ -189,47 +197,66 @@ class CardFragment : Fragment() {
                     cardViewModel.updateCard(card)
                 }
             }
-            binding.editTextQuestion.setText("")
-            binding.editTextAnswer.setText("")
-            binding.editTextHint.setText("")
-            card = Card()
-
             Toast.makeText(requireContext(), "du lade till ett kort", Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(requireContext(), "du din fuling, fyll i fälten", Toast.LENGTH_SHORT).show()
         }
+    }
+    private fun reset(){
+        binding.editTextQuestion.setText("")
+        binding.editTextAnswer.setText("")
+        binding.editTextHint.setText("")
+        card = Card()
     }
 
     private val startGalleryResultQuestion = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
             val uri = result.data?.data
             //Images are saved at once since the user might delete them from the device before the cards is saved
-            val imageName = storeImage(uri!!)
-            binding.editTextQuestion.append("<img src=\"${imageName}\"/>")
+            val imageName = saveImage(uri!!)
+            if(!binding.switchShowHtml.isChecked){
+                convertFieldsToHtml()
+            }
+            binding.editTextQuestion.append("<img src=\"${imageName}\">")
+            if(!binding.switchShowHtml.isChecked){
+                convertFieldsFromHtml()
+            }
         }
     }
     private val startGalleryResultAnswer = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
             val uri = result.data?.data
             //Images are saved at once since the user might delete them from the device before the cards is saved
-            val imageName = storeImage(uri!!)
-            binding.editTextAnswer.append("<img src=\"${imageName}\"/>")
+            val imageName = saveImage(uri!!)
+            if(!binding.switchShowHtml.isChecked){
+                convertFieldsToHtml()
+            }
+            binding.editTextAnswer.append("<img src=\"${imageName}\">")
+            if(!binding.switchShowHtml.isChecked){
+                convertFieldsFromHtml()
+            }
         }
     }
     private val startGalleryResultHint = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
             val uri = result.data?.data
             //Images are saved at once since the user might delete them from the device before the cards is saved
-            val imageName = storeImage(uri!!)
-            binding.editTextHint.append("<img src=\"${imageName}\"/>")
+            val imageName = saveImage(uri!!)
+            if(!binding.switchShowHtml.isChecked){
+                convertFieldsToHtml()
+            }
+            binding.editTextHint.append("<img src=\"${imageName}\">")
+            if(!binding.switchShowHtml.isChecked){
+                convertFieldsFromHtml()
+            }
         }
     }
-    private fun storeImage(uri: Uri): String{
+    private fun saveImage(uri: Uri): String{
         val imageName = cardId.toString() + "_" + UUID.randomUUID().toString()
-        images[imageName] = uri
+        ImageStorage.saveToInternalStorage(context!!, uri, imageName)
         return imageName
     }
-    private fun saveImages(){
+    /*private fun saveImages(){
         for((imageName, uri) in images){
             if(isImageUsed(imageName)){
                 ImageStorage.saveToInternalStorage(context!!, uri, imageName)
@@ -245,7 +272,7 @@ class CardFragment : Fragment() {
             }
         }
         return false
-    }
+    }*/
     private fun removeUnusedImages(){
         val images = findUnusedImages()
         for(image in images){
@@ -257,7 +284,7 @@ class CardFragment : Fragment() {
         val unusedImage = images.toMutableList()
         val texts: Array<String> = arrayOf(card.question, card.answer, card.hint)
         for(image in images){
-            val imageTag = "<img src=\"${image.name}\"/>"
+            val imageTag = "<img src=\"${image.name}\">"
             for(text in texts){
                 if(text.contains(imageTag)){
                     unusedImage.remove(image)
@@ -274,8 +301,8 @@ class CardFragment : Fragment() {
             Log.d(TAG, "unlinked: " + image.path)
             val newName = image.name.replace(idRegex, card.id.toString())
             //Rename references in text
-            val oldImgTag = "<img src=\"${image.name}\"/>"
-            val newImgTag = "<img src=\"${newName}\"/>"
+            val oldImgTag = "<img src=\"${image.name}\">"
+            val newImgTag = "<img src=\"${newName}\">"
             card.question = card.question.replace(oldImgTag, newImgTag)
             card.answer = card.answer.replace(oldImgTag, newImgTag)
             card.hint = card.hint.replace(oldImgTag, newImgTag)
@@ -285,4 +312,44 @@ class CardFragment : Fragment() {
             image.renameTo(newFile)
         }
     }
+
+    private val imageGetter = object: Html.ImageGetter {
+        override fun getDrawable(source: String): Drawable{
+            val drawable = BitmapDrawable(resources, BitmapFactory.decodeFile(File(context?.filesDir, source).path))
+            drawable.setBounds(0,0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+            return drawable
+        }
+    }
+    private fun convertFieldsFromHtml(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            binding.editTextAnswer.setText(Html.fromHtml(binding.editTextAnswer.text.toString(), Html.FROM_HTML_MODE_COMPACT, imageGetter,null))
+            binding.editTextQuestion.setText(Html.fromHtml(binding.editTextQuestion.text.toString(), Html.FROM_HTML_MODE_COMPACT, imageGetter,null))
+            binding.editTextHint.setText(Html.fromHtml(binding.editTextHint.text.toString(), Html.FROM_HTML_MODE_COMPACT, imageGetter,null))
+        }else{
+            binding.editTextAnswer.setText(Html.fromHtml(binding.editTextAnswer.text.toString(), imageGetter,null))
+            binding.editTextQuestion.setText(Html.fromHtml(binding.editTextQuestion.text.toString(), imageGetter,null))
+            binding.editTextHint.setText(Html.fromHtml(binding.editTextHint.text.toString(), imageGetter,null))
+        }
+    }
+    private fun convertFieldsToHtml(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            binding.editTextAnswer.setText(Html.toHtml(binding.editTextAnswer.text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE))
+            binding.editTextQuestion.setText(Html.toHtml(binding.editTextQuestion.text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE))
+            binding.editTextHint.setText(Html.toHtml(binding.editTextHint.text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE))
+        }else{
+            binding.editTextAnswer.setText(Html.toHtml(binding.editTextAnswer.text))
+            binding.editTextQuestion.setText(Html.toHtml(binding.editTextQuestion.text))
+            binding.editTextHint.setText(Html.toHtml(binding.editTextHint.text))
+        }
+        removeTrailingNewLines()
+    }
+    private fun removeTrailingNewLines(){
+        val regex = Regex("(<br>)+$")
+        binding.editTextQuestion.setText(binding.editTextQuestion.text.toString().replace(regex, ""))
+        binding.editTextAnswer.setText(binding.editTextAnswer.text.toString().replace(regex, ""))
+        binding.editTextHint.setText(binding.editTextHint.text.toString().replace(regex, ""))
+
+    }
+
+
 }
