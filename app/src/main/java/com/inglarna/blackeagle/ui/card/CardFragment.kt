@@ -332,6 +332,9 @@ class CardFragment : Fragment() {
         }
     }
     private fun convertFieldsToHtml(){
+        binding.editTextAnswer.clearComposingText()
+        binding.editTextQuestion.clearComposingText()
+        binding.editTextHint.clearComposingText()
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
             binding.editTextAnswer.setText(Html.toHtml(binding.editTextAnswer.text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE))
             binding.editTextQuestion.setText(Html.toHtml(binding.editTextQuestion.text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE))
