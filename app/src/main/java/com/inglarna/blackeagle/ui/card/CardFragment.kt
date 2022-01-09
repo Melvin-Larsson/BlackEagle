@@ -178,9 +178,9 @@ class CardFragment : Fragment() {
             if(!binding.switchShowHtml.isChecked){
                 convertFieldsToHtml()
             }
-            card.question = binding.editTextQuestion.text.toString()
-            card.answer = binding.editTextAnswer.text.toString()
-            card.hint = binding.editTextHint.text.toString()
+            card.question = binding.editTextQuestion.text.toString().trim()
+            card.answer = binding.editTextAnswer.text.toString().trim()
+            card.hint = binding.editTextHint.text.toString().trim()
             removeUnusedImages()
             if(!binding.switchShowHtml.isChecked){
                 convertFieldsFromHtml()
@@ -351,8 +351,5 @@ class CardFragment : Fragment() {
         binding.editTextQuestion.setText(binding.editTextQuestion.text.toString().replace(regex, ""))
         binding.editTextAnswer.setText(binding.editTextAnswer.text.toString().replace(regex, ""))
         binding.editTextHint.setText(binding.editTextHint.text.toString().replace(regex, ""))
-
     }
-
-
 }
