@@ -110,16 +110,24 @@ data class DeckWithCards(
 
                 val deckId = deckRepo.addDeck(deckWithCards.deck)
 
-                val oldCardIds = ArrayList<Long>()
                 for(card in deckWithCards.cards) {
                     card.deckId = deckId
-                    oldCardIds.add(card.id!!)
+                    val oldCardId = card.id!!
                     card.id = null
-                }
-                val newCardIds = cardRepo.addCards(deckWithCards.cards)
+                    cardRepo.addCard(card)
+                    extractImage(imageSource, context.filesDir, oldCardId, card.id!!)
 
-                for(i in newCardIds.indices){
-                   extractImage(imageSource, context.filesDir, oldCardIds[i], newCardIds[i])
+                    //Rename image references in text fields
+                    val imageFiles = PictureUtils.getImageFilesFromId(imageSource, oldCardId)
+                    val idRegex = Regex("^\\d+")
+                    for(image in imageFiles){
+                        val oldImgTag = "<img src=\"${image.name}\"/>"
+                        val newImgTag = "<img src=\"${card.id}${image.name.replace(idRegex, "")}\"/>"
+                        card.question = card.question.replace(oldImgTag, newImgTag)
+                        card.answer = card.answer.replace(oldImgTag, newImgTag)
+                        card.hint = card.hint.replace(oldImgTag, newImgTag)
+                        cardRepo.updateCard(card)
+                    }
                 }
                 deleteDirectory(imageSource)
             }

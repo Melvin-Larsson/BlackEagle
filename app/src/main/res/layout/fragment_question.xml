@@ -1,117 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--frontside of the cards when studying-->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:fillViewport="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/card_shadow"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_show_hint"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp">
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/text_view_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            tools:text="This is a temporary question, or is it?" />
-
-        <TextView
-            android:id="@+id/text_view_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:visibility="visible"
-            tools:text="This is a temporary hint, the answer might be yes" />
-
-        <View
-            android:id="@+id/view"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@color/primaryColor" />
-
-        <TextView
-            android:id="@+id/text_view_answer"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="15dp"
-            android:visibility="visible"
-            tools:text="This is a temporary answer, and the answer is yes" />
-    </LinearLayout>
+            android:background="@drawable/card_shadow"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_show_hint"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="16dp">
+            <!--Question-->
+            <TextView
+                android:id="@+id/text_view_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                tools:text="This is a temporary question, or is it?" />
 
-    <!--show hint button-->
-    <Button
-        android:id="@+id/button_show_hint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/darker_gray"
-        android:text="@string/show_hint"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/button_show_answer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-    <!--show answer-->
-    <Button
-        android:id="@+id/button_show_answer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/show_answer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="invisible"/>
+            <!--Hint-->
+            <TextView
+                android:id="@+id/text_view_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="visible"
+                tools:text="This is a temporary hint, the answer might be yes" />
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/primaryColor" />
 
-    <LinearLayout
-        android:id="@+id/difficulty_buttons_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="visible">
+            <!--Answer-->
+            <TextView
+                android:id="@+id/text_view_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                android:visibility="visible"
+                tools:text="This is a temporary answer, and the answer is yes" />
+        </LinearLayout>
 
+        <!--show hint button-->
         <Button
-            android:id="@+id/button_difficult"
-            android:layout_width="0dp"
+            android:id="@+id/button_show_hint"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/difficultButtonColor"
+            android:backgroundTint="@android:color/darker_gray"
+            android:text="@string/show_hint"
             android:textColor="@android:color/white"
-
-            android:text="@string/hard" />
-
+            app:layout_constraintBottom_toTopOf="@+id/button_show_answer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        <!--show answer-->
         <Button
-            android:id="@+id/button_medium"
-            android:layout_width="0dp"
+            android:id="@+id/button_show_answer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/mediumButtonColor"
-            android:textColor="@android:color/white"
-            android:text="@string/good" />
+            android:text="@string/show_answer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="invisible"/>
 
-        <Button
-            android:id="@+id/button_easy"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/difficulty_buttons_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/easyButtonColor"
-            android:textColor="@android:color/white"
-            android:text="@string/easy" />
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible">
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/button_difficult"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/difficultButtonColor"
+                android:textColor="@android:color/white"
+                android:text="@string/hard" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/button_medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/mediumButtonColor"
+                android:textColor="@android:color/white"
+                android:text="@string/good" />
+
+            <Button
+                android:id="@+id/button_easy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/easyButtonColor"
+                android:textColor="@android:color/white"
+                android:text="@string/easy" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

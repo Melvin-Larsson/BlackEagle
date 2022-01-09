@@ -56,13 +56,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textView6"
             app:srcCompat="@drawable/ic_photo" />
 
-        <ImageView
-            android:id="@+id/imageQuestion"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/guideLine"
-            app:layout_constraintStart_toStartOf="@id/imageGuideLine"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_question" />
 
         <!--Answer-->
         <TextView
@@ -71,7 +64,7 @@
             android:layout_height="wrap_content"
             android:text="@string/answer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageQuestion" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_question" />
 
         <EditText
             android:id="@+id/edit_text_answer"
@@ -91,13 +84,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textView4"
             app:srcCompat="@drawable/ic_photo" />
 
-        <ImageView
-            android:id="@+id/imageAnswer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/guideLine"
-            app:layout_constraintStart_toStartOf="@id/imageGuideLine"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_answer" />
         <!--Hint-->
         <TextView
             android:id="@+id/textView5"
@@ -105,10 +91,10 @@
             android:layout_height="wrap_content"
             android:text="@string/hint"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageAnswer" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_answer" />
 
         <EditText
-            android:id="@+id/editTextHint"
+            android:id="@+id/edit_text_hint"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@+id/guideLine"
@@ -119,19 +105,12 @@
             android:id="@+id/imageButtonHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextHint"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_text_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideLine"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
             app:srcCompat="@drawable/ic_photo" />
 
-        <ImageView
-            android:id="@+id/imageHint"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/guideLine"
-            app:layout_constraintStart_toStartOf="@id/imageGuideLine"
-            app:layout_constraintTop_toBottomOf="@+id/editTextHint" />
         <!--button-->
         <Button
             android:id="@+id/button_add_card"
@@ -140,12 +119,7 @@
             android:text="@string/add_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageHint"/>
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_hint"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="409dp"
-            android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="336dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -86,6 +86,7 @@ class DeckListFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+        menu.clear()
         menuInflater.inflate(R.menu.deck_list_menu, menu)
         deleteButton = menu.findItem((R.id.delete))
         selectAllButton = menu.findItem((R.id.selectAll))

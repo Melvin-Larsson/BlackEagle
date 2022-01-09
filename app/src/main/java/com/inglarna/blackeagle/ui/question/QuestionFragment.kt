@@ -3,10 +3,20 @@ package com.inglarna.blackeagle.ui.question
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.inglarna.blackeagle.databinding.FragmentQuestionBinding
@@ -15,6 +25,7 @@ import com.inglarna.blackeagle.repository.CardRepo
 import com.inglarna.blackeagle.viewmodel.CardViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.ceil
@@ -111,14 +122,28 @@ class QuestionFragment : Fragment() {
         cardRepo = CardRepo(context)
     }
 
+    val imageGetter = object: Html.ImageGetter {
+        override fun getDrawable(source: String): Drawable{
+            val drawable = BitmapDrawable(resources, BitmapFactory.decodeFile(File(context?.filesDir, source).path))
+            drawable.setBounds(0,0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+            return drawable
+        }
+    }
     private fun resetFields(){
         //Set text
         binding.textViewQuestion.text = cards[0].question
-        binding.textViewAnswer.text = cards[0].answer
-        binding.textViewHint.text = cards[0].hint
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            binding.textViewQuestion.text = Html.fromHtml(cards[0].question, Html.FROM_HTML_MODE_COMPACT, imageGetter,null)
+            binding.textViewAnswer.text = Html.fromHtml(cards[0].answer, Html.FROM_HTML_MODE_COMPACT, imageGetter,null)
+            binding.textViewHint.text = Html.fromHtml(cards[0].hint, Html.FROM_HTML_MODE_COMPACT, imageGetter,null)
+        }else{
+            binding.textViewQuestion.text = Html.fromHtml(cards[0].question, imageGetter,null)
+            binding.textViewAnswer.text = Html.fromHtml(cards[0].answer, imageGetter,null)
+            binding.textViewHint.text = Html.fromHtml(cards[0].hint, imageGetter,null)
+        }
         //Reset visibilities
-        binding.textViewHint.visibility = View.INVISIBLE
-        binding.textViewAnswer.visibility = View.INVISIBLE
+        binding.textViewHint.visibility = View.GONE
+        binding.textViewAnswer.visibility = View.GONE
         binding.difficultyButtonsContainer.visibility = View.GONE
         binding.buttonShowAnswer.visibility = View.VISIBLE
         binding.buttonShowHint.visibility = View.VISIBLE
