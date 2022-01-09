@@ -63,6 +63,7 @@ class DeckListRecyclerViewAdapter(val context : Context,
         holder.itemView.setOnLongClickListener {
             if (!select){
                 select = !select
+                selectedDecks.add(decks[position].deck)
                 selectMultipleCallback()
             }
             true

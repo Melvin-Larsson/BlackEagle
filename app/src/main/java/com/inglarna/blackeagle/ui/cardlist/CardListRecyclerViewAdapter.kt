@@ -68,7 +68,6 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         })
         //Click listener
         holder.itemView.setOnClickListener{
-
             if (select){
                 holder.binding.checkBox.isChecked = !holder.binding.checkBox.isChecked
             }else{
@@ -78,7 +77,8 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
         //Long click
         holder.itemView.setOnLongClickListener {
             if (!select){
-                select = !select
+                select = true
+                selectedCards.add(cards[position])
                 selectMultipleCallback()
             }
             true
