@@ -2,10 +2,14 @@ package com.inglarna.blackeagle.ui.card
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.inputmethod.EditorInfoCompat
 import androidx.core.view.inputmethod.InputConnectionCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.inglarna.blackeagle.ImageStorage
@@ -128,7 +133,6 @@ class CardFragment : Fragment() {
         binding.buttonAddCard.setOnClickListener{
             saveCard()
         }
-
         binding.imageButtonQuestion.setOnClickListener{
             startGalleryResultQuestion.launch(gallery)
         }
@@ -137,6 +141,14 @@ class CardFragment : Fragment() {
         }
         binding.imageButtonHint.setOnClickListener{
             startGalleryResultHint.launch(gallery)
+        }
+        val imageGetter = object: Html.ImageGetter {
+            override fun getDrawable(source: String): Drawable {
+                val drawable = BitmapDrawable(resources, BitmapFactory.decodeFile(File(context?.filesDir, source).path))
+                drawable.setBounds(0,0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+                Log.d(TAG, "draww")
+                return drawable
+            }
         }
     }
 
@@ -147,6 +159,7 @@ class CardFragment : Fragment() {
 
             card.deckId = deckId
             card.question = binding.editTextQuestion.text.toString()
+            Log.d(TAG, card.question)
             card.answer = binding.editTextAnswer.text.toString()
             card.hint = binding.editTextHint.text.toString()
             saveImages()
@@ -166,6 +179,7 @@ class CardFragment : Fragment() {
             binding.editTextQuestion.setText("")
             binding.editTextAnswer.setText("")
             binding.editTextHint.setText("")
+            card = Card()
 
             Toast.makeText(requireContext(), "du lade till ett kort", Toast.LENGTH_SHORT).show()
         }else{
