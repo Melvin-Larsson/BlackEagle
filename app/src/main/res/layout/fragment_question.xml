@@ -90,30 +90,30 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:visibility="visible">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_difficult"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/difficultButtonColor"
+                android:background="@color/difficultButtonColor"
                 android:textColor="@android:color/white"
                 android:text="@string/hard" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/mediumButtonColor"
+                android:background="@color/mediumButtonColor"
                 android:textColor="@android:color/white"
                 android:text="@string/good" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_easy"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/easyButtonColor"
+                android:background="@color/easyButtonColor"
                 android:textColor="@android:color/white"
                 android:text="@string/easy" />
 
