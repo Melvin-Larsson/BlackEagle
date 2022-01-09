@@ -1,53 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/primaryColor">
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/exportButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:padding="24dp"
         android:text="@string/export"
+        android:textAlignment="textStart"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/deleteDeckButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:padding="24dp"
         android:text="@string/delete"
+        android:textAlignment="textStart"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exportButton" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addToFolderButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:padding="24dp"
         android:text="@string/add_to_folder"
+        android:textAlignment="textStart"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/deleteDeckButton" />
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addToFavouritesButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:padding="24dp"
         android:text="@string/add_to_favourites"
+        android:textAlignment="textStart"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addToFolderButton" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/editDeckNameButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:padding="24dp"
         android:text="@string/edit_deck_name"
+        android:textAlignment="textStart"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addToFavouritesButton" />
