@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentEditDeckBinding
 import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Deck
@@ -51,13 +52,13 @@ class EditDeckFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         deckId = arguments!!.getLong(DECK_ID, -1)
         deckViewModel.getDeck(deckId).observe(this){
-
             if (it == null){
                 activity?.finish()
             }else{
                 deck = it
                 setFavoriteIcon(it.favorite)
             }
+            activity?.title = context?.getString(R.string.edit_deck_title, deck.name)
         }
         binding.exportButton.setOnClickListener{
             startFileExplorerForResult.launch(deck.name + ".be")
