@@ -30,19 +30,26 @@ import kotlin.math.ceil
 
 class CardListFragment : Fragment() {
     lateinit var binding : FragmentCardListBinding
-    lateinit var onAddCardClicked: (()-> Unit)
     private val cardViewModel by viewModels<CardViewModel>()
     private val deckViewModel by viewModels<DeckViewModel>()
+    lateinit var onAddCardClicked: (()-> Unit)
     private lateinit var adapter : CardListRecyclerViewAdapter
     private var favoriteButton: MenuItem? = null
     private var deleteButton: MenuItem? = null
-    private var startStudyButton: MenuItem? = null
     private var selectAllButton: MenuItem? = null
     private var closeSelectButton: MenuItem? = null
     private var moreButton: MenuItem? = null
-    private var deckId: Long= -1
     private lateinit var deck: Deck
+    private var deckId: Long= -1
     private var deckFinishedToday = false
+    private val startStudyForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
+        if(result.resultCode == Activity.RESULT_OK){
+            val intent = result.data
+            if(intent!!.getBooleanExtra(QuestionFragment.DECK_FINISHED, false)){
+                showConfetti()
+            }
+        }
+    }
 
     companion object{
         private const val TAG = "CardListFragment"
@@ -67,7 +74,6 @@ class CardListFragment : Fragment() {
         inflater.inflate(R.menu.card_list_menu, menu)
         selectAllButton = menu.findItem(R.id.selectAllCards)
         deleteButton = menu.findItem((R.id.delete))
-        startStudyButton = menu.findItem(R.id.startStudy)
         moreButton = menu.findItem(R.id.more)
         closeSelectButton = menu.findItem(R.id.closeSelect)
         deckViewModel.getDecks()?.observe(this,{ decks->
@@ -87,7 +93,6 @@ class CardListFragment : Fragment() {
                 return true
             }
             R.id.delete -> delete()
-            R.id.startStudy -> study()
             R.id.selectAllCards -> adapter.selectAll()
             R.id.more -> startActivity(EditDeckActivity.newIntent(context!!, deck.id))
             R.id.closeSelect -> closeSelect()
@@ -116,6 +121,13 @@ class CardListFragment : Fragment() {
         binding.recyclerViewCard.layoutManager = LinearLayoutManager(requireContext())
         binding.buttonAddCard.setOnClickListener{
             onAddCardClicked()
+        }
+        binding.startStudyButton.setOnClickListener{
+            if(deckFinishedToday){
+                showConfirmExtraStudyDialog()
+            }else{
+                startStudyForResult.launch(QuestionActivity.newIntent(context!!, deckId, false))
+            }
         }
         adapter.onDeleteCardClicked={ card ->
             GlobalScope.launch {
@@ -154,22 +166,14 @@ class CardListFragment : Fragment() {
         }
         touchHelper.attachToRecyclerView(binding.recyclerViewCard)
     }
-
-    private val startStudyForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
-        if(result.resultCode == Activity.RESULT_OK){
-            val intent = result.data
-            if(intent!!.getBooleanExtra(QuestionFragment.DECK_FINISHED, false)){
-                showConfetti()
-            }
-        }
-    }
+    /*
     private fun study(){
         if(deckFinishedToday){
             showConfirmExtraStudyDialog()
         }else{
             startStudyForResult.launch(QuestionActivity.newIntent(context!!, deckId, false))
         }
-    }
+    }*/
 
     private fun showConfirmExtraStudyDialog(){
         AlertDialog.Builder(context)
@@ -188,7 +192,6 @@ class CardListFragment : Fragment() {
         deleteButton?.isVisible = adapter.select
         selectAllButton?.isVisible = adapter.select
         closeSelectButton?.isVisible = adapter.select
-        startStudyButton?.isVisible = !adapter.select
         moreButton?.isVisible = !adapter.select
     }
 
@@ -203,7 +206,6 @@ class CardListFragment : Fragment() {
                 cardViewModel.deleteCard(card)
             }
         }
-
         adapter.select = false
         toolbarVisibility()
     }

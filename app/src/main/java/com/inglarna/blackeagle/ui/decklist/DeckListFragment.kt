@@ -122,6 +122,7 @@ class DeckListFragment : Fragment() {
                 deckViewModel.deleteDeck(deck)
             }
         }
+        adapter.select = false
         toolbarVisibility()
     }
 

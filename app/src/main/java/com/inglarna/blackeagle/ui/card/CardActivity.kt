@@ -36,9 +36,6 @@ class CardActivity : SingleFragmentActivity() {
           cardId = intent.getLongExtra(CARD_ID, -1)
           super.onCreate(savedInstanceState)
           supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
-          val actionbar = supportActionBar
-          actionbar!!.title = getString(R.string.add_card_header)
      }
 
      override fun onOptionsItemSelected(item: MenuItem): Boolean {
