@@ -1,17 +1,12 @@
 package com.inglarna.blackeagle.ui.editnumbers
 
 import android.app.AlertDialog
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import android.view.*
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.SearchView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,10 +24,8 @@ class EditNumbersFragment: Fragment() {
     private lateinit var adapter: EditNumbersListRecyclerViewAdapter
     private val wordNumberViewModel by viewModels<wordNumberViewModel>()
     private var resetButton: MenuItem? = null
-    private var searchButton: MenuItem? = null
+    private var checkBoxButton: MenuItem? = null
     private var selectAllButton: MenuItem? = null
-    private var closeSelectButton: MenuItem? = null
-
 
     companion object{
         fun newInstance() = EditNumbersFragment
@@ -60,45 +53,22 @@ class EditNumbersFragment: Fragment() {
         }
         binding.editNumbersRecyclerview.adapter = adapter
         binding.editNumbersRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-
-        adapter.selectMultipleCallback = {
-            toolbarVisibility()
-        }
     }
 
     //toolbar
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.edit_numbers_menu, menu)
-        //searchButton = menu.findItem(R.id.search)
         resetButton = menu.findItem(R.id.reset)
+        checkBoxButton = menu.findItem(R.id.checkBoxNumbers)
         selectAllButton = menu.findItem(R.id.selectAllNumbers)
-        closeSelectButton = menu.findItem(R.id.closeSelect)
-
-
-
-
-        val searchItem = menu.findItem(R.id.search)
-        val searchView = searchItem?.actionView as SearchView
-
-        searchView.imeOptions = EditorInfo.IME_ACTION_DONE
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                adapter.getFilter().filter(newText)
-                return false
-            }
-        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        when(item.itemId){
             R.id.selectAllNumbers -> selectAll()
             R.id.reset -> resetWordNumber()
-            R.id.closeSelect -> closeSelect()
+            R.id.checkBoxNumbers -> checkBoxVisibility()
+
         }
         return super.onOptionsItemSelected(item)
     }
@@ -119,18 +89,14 @@ class EditNumbersFragment: Fragment() {
         }
         //Unselect
         adapter.select = false
-        toolbarVisibility()
+
     }
 
-    private fun toolbarVisibility() {
+    private fun checkBoxVisibility() {
+        Toast.makeText(context, "checkbox", Toast.LENGTH_SHORT).show()
+        adapter.select = !adapter.select
         resetButton?.isVisible = adapter.select
         selectAllButton?.isVisible = adapter.select
-        closeSelectButton?.isVisible = adapter.select
-        searchButton?.isVisible = !adapter.select
-    }
-    private fun closeSelect() {
-        adapter.select = !adapter.select
-        toolbarVisibility()
     }
 
     private fun showEditNumberWordDialog(wordNumber: WordNumber){

@@ -40,13 +40,11 @@
     <string name="select_multiple_decks">Select Multiple Decks</string>
     <string name="edit">Edit</string>
     <string name="edit_card">Edit Card</string>
-    <string name="edit_deck_title">Edit %1$s</string>
     <string name="title_edit_number_word">What word should be associated with %1$d?</string>
     <string name="update">Update</string>
     <string name="reset">reset</string>
     <string name="good">Good</string>
     <string name="hard">Hard</string>
-    <string name="tutorial_numbers_title">How to convert numbers</string>
     <string name="easy">Easy</string>
     <string name="selectAll">select all</string>
     <string name="select_all_cards">select all cards</string>
@@ -65,5 +63,4 @@
     <string name="edit_deck_name">edit deck name</string>
     <string name="study">study</string>
     <string name="show_html">Show HTML</string>
-    <string name="search">Search</string>
 </resources>
