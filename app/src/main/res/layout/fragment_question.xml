@@ -66,6 +66,7 @@
             android:backgroundTint="@android:color/darker_gray"
             android:text="@string/show_hint"
             android:textColor="@android:color/white"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/button_show_answer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

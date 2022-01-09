@@ -146,7 +146,9 @@ class QuestionFragment : Fragment() {
         binding.textViewAnswer.visibility = View.GONE
         binding.difficultyButtonsContainer.visibility = View.GONE
         binding.buttonShowAnswer.visibility = View.VISIBLE
-        binding.buttonShowHint.visibility = View.VISIBLE
+        if(cards[0].hint.isNotEmpty()){
+            binding.buttonShowHint.visibility = View.VISIBLE
+        }
     }
 
     private fun endActivity(deckFinished: Boolean){
