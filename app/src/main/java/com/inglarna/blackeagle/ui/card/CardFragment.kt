@@ -1,6 +1,7 @@
 package com.inglarna.blackeagle.ui.card
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -27,6 +28,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.inglarna.blackeagle.ImageStorage
 import com.inglarna.blackeagle.PictureUtils
+import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentCardBinding
 import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.viewmodel.CardViewModel
@@ -69,6 +71,9 @@ class CardFragment : Fragment() {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCardBinding.inflate(inflater, container, false)
         val editText = object : AppCompatEditText(context!!) {
@@ -119,6 +124,14 @@ class CardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         deckId = arguments!!.getLong(DECK_ID, -1)
         cardId = arguments!!.getLong(CARD_ID, -1)
+        if (cardId == -1L){
+            Log.d(TAG, "hej")
+            activity?.title = context?.getString(R.string.add_card)
+            binding.buttonAddCard.text = context?.getString(R.string.add_card)
+        }else{
+            activity?.title = context?.getString(R.string.edit_card)
+            binding.buttonAddCard.text = context?.getString(R.string.edit_card)
+        }
         if(cardId != -1L){
            cardViewModel.getCard(cardId).observe(this, {card ->
                this.card = card
