@@ -21,12 +21,13 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/convertTutorial"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="16dp"/>
 
             <ImageButton
                 android:id="@+id/convertNumbersImage"
@@ -35,7 +36,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3"
-                app:srcCompat="@drawable/convert_numbers_table"/>
+                app:srcCompat="@drawable/convert_numbers_table"
+                android:background="#000"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
         <ImageView
             android:id="@+id/expandedConvertNumbersImage"

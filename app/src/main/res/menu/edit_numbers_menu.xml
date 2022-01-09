@@ -15,10 +15,17 @@
         app:showAsAction="ifRoom"
         android:visible="false"/>
     <item
-        android:id="@+id/checkBoxNumbers"
-        android:title="@string/checkbox"
-        android:icon="@drawable/ic_checkbox"
-        app:showAsAction="ifRoom"
-        android:visible="true"/>
+        android:id="@+id/closeSelect"
+        android:title="@string/closeSelect"
+        android:icon="@drawable/ic_close_select"
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/search"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.widget.SearchView"/>
+
 
 </menu>
