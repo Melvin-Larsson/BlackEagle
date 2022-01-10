@@ -25,32 +25,14 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.03"/>
 
-    <!--input for searching among the numbers-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@id/guidelineup">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="search" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
     <!--The recyclerview that comes up after searching-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/editNumbersRecyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

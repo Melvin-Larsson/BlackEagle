@@ -6,10 +6,12 @@ import android.text.InputType
 import android.util.Log
 import android.view.*
 import android.widget.EditText
+import android.widget.Filter
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentEditNumbersBinding
@@ -38,9 +40,6 @@ class EditNumbersFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentEditNumbersBinding.inflate(inflater, container, false)
-        binding.textInputSearch?.addTextChangedListener{
-            adapter.liveData = wordNumberViewModel.getWords(binding.textInputSearch?.text.toString())
-        }
         return binding.root
     }
 
@@ -50,6 +49,19 @@ class EditNumbersFragment: Fragment() {
         adapter = EditNumbersListRecyclerViewAdapter(requireContext(), wordNumberViewModel.getNumberViews(), this)
         adapter.onNumberWordClicked = {
             showEditNumberWordDialog(it)
+        }
+        adapter.filter = object: Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val filteredList = wordNumberViewModel.getWords(constraint.toString())
+                val results = FilterResults()
+                results.values = filteredList
+                return results
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                adapter.liveData = (results?.values as LiveData<List<WordNumber>>)
+            }
+
         }
         binding.editNumbersRecyclerview.adapter = adapter
         binding.editNumbersRecyclerview.layoutManager = LinearLayoutManager(requireContext())
