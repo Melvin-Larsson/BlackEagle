@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BlackEagle</string>
+    <string name="open">Öppna</string>
+    <string name="close">Stäng</string>
+    <string name="question">Fråga</string>
+    <string name="answer">Svar</string>
+    <string name="hint">Ledtråd</string>
+    <string name="dark_mode">Mörkt läge</string>
+    <string name="daily_repetition_goal">Dagligt repetitionsmål</string>
+    <string name="repetition_settings">Repetition</string>
+    <string name="general_settings">Allmännt</string>
+    <string name="show_answer">Visa svar</string>
+    <string name="show_hint">Visa ledtråd</string>
+    <string name="your_decks">Dina kortlekar</string>
+    <string name="convert_numbers">Konvertera siffror</string>
+    <string name="settings">Inställningar</string>
+    <string name="stats">Statistik</string>
+    <string name="about">Om</string>
+    <string name="add_card">Lägg till kort</string>
+</resources>
