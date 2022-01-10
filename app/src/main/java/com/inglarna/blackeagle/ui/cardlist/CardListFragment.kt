@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -77,14 +78,6 @@ class CardListFragment : Fragment() {
         deleteButton = menu.findItem((R.id.delete))
         moreButton = menu.findItem(R.id.more)
         closeSelectButton = menu.findItem(R.id.closeSelect)
-        deckViewModel.getDecks()?.observe(this,{ decks->
-            for(deckWithCards in decks){
-                if (deckWithCards.deck.id == deckId){
-                    setFavoriteIcon(deckWithCards.deck.favorite)
-                }
-            }
-        })
-
     }
     //when clicking in the toolbar
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -167,14 +160,6 @@ class CardListFragment : Fragment() {
         }
         touchHelper.attachToRecyclerView(binding.recyclerViewCard)
     }
-    /*
-    private fun study(){
-        if(deckFinishedToday){
-            showConfirmExtraStudyDialog()
-        }else{
-            startStudyForResult.launch(QuestionActivity.newIntent(context!!, deckId, false))
-        }
-    }*/
 
     private fun showConfirmExtraStudyDialog(){
         AlertDialog.Builder(context)
@@ -211,13 +196,6 @@ class CardListFragment : Fragment() {
         toolbarVisibility()
     }
 
-    private fun setFavoriteIcon(favorite: Boolean){
-        if (favorite){
-            favoriteButton?.setIcon(R.drawable.ic_favorite_study)
-        }else{
-            favoriteButton?.setIcon(R.drawable.ic_favorite_study_border)
-        }
-    }
     private fun showConfetti(){
         binding.viewKonfetti.build()
             .setSpeed(1f, 5f)

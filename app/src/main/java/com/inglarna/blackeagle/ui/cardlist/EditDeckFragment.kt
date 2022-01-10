@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentEditDeckBinding
 import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Deck
@@ -18,6 +19,7 @@ import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+//TODO: lägg till confirm popup när delete trycks
 class EditDeckFragment : Fragment() {
     lateinit var binding: FragmentEditDeckBinding
     private val deckViewModel by viewModels<DeckViewModel>()
@@ -71,10 +73,21 @@ class EditDeckFragment : Fragment() {
         binding.editDeckNameButton.setOnClickListener{
             editDeckName(deck)
         }
+        deckViewModel.getDecks()?.observe(this,{ decks->
+            for(deckWithCards in decks){
+                if (deckWithCards.deck.id == deckId){
+                    setFavoriteIcon(deckWithCards.deck.favorite)
+                }
+            }
+        })
     }
 
-    private fun setFavoriteIcon(favorite: Boolean) {
-        //TODO: ändra hjärtats färg
+    private fun setFavoriteIcon(favorite: Boolean){
+        if (favorite){
+            binding.addToFavouritesButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_favorite_fill, 0, 0, 0)
+        }else{
+            binding.addToFavouritesButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_favorite_border, 0, 0, 0)
+        }
     }
 
     private fun addToFavourites() {

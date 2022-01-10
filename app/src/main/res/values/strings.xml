@@ -17,8 +17,8 @@
     <string name="stats">Stats</string>
     <string name="about">About</string>
     <string name="add_card">Add card</string>
-    <string name="start_study">start study</string>
-    <string name="favorite_study">favorite study</string>
+    <string name="start_study">Start study</string>
+    <string name="favorite_study">Favorite study</string>
     <plurals name="card_count">
         <item quantity="one">%d Card</item>
         <item quantity="other">%d Cards</item>
@@ -36,31 +36,29 @@
     <string name="add_card_header">Add Card</string>
     <string name="edit_convert_numbers_header">Edit numbers</string>
     <string name="convert_numbers_header">Convert Numbers</string>
-    <string name="checkbox">checkbox</string>
+    <string name="checkbox">Checkbox</string>
     <string name="select_multiple_decks">Select Multiple Decks</string>
     <string name="edit">Edit</string>
     <string name="edit_card">Edit Card</string>
     <string name="title_edit_number_word">What word should be associated with %1$d?</string>
     <string name="update">Update</string>
-    <string name="reset">reset</string>
+    <string name="reset">Reset</string>
     <string name="good">Good</string>
-    <string name="hard">Hard</string>
+    <string name="hard">Difficult</string>
     <string name="easy">Easy</string>
-    <string name="selectAll">select all</string>
-    <string name="select_all_cards">select all cards</string>
-    <string name="write_number">write number</string>
-    <string name="todo">TODO</string>
+    <string name="selectAll">Select all</string>
+    <string name="select_all_cards">Select all cards</string>
+    <string name="write_number">Write number</string>
+    <string name="todo" translatable="false">TODO</string>
     <string name="exportDeck">Export</string>
     <string name="importDeck">Import</string>
-    <string name="convertTutorial">Converting numbers is mainly used for remembering a sequence of numbers. Every number from 0–9 can be translated to a sound according to
-        the table below. The sounds can then be used to create different words.</string>
+    <string name="convertTutorial">Converting numbers is mainly used for remembering a sequence of numbers. Every number from 0–9 can be translated to a sound according to         the table below. The sounds can then be used to create different words.</string>
     <string name="closeSelect">Close</string>
-    <string name="export">export</string>
-    <string name="add_to_folder">add to folder</string>
-    <string name="add_to_favourites">add to favourites</string>
-    <string name="cancel">Cancel</string>
+    <string name="add_to_folder">Add to folder</string>
+    <string name="add_to_favourites">Add to favourites</string>
+    <string name="cancel" translatable="false">Cancel</string>
     <string name="more">More</string>
-    <string name="edit_deck_name">edit deck name</string>
-    <string name="study">study</string>
+    <string name="edit_deck_name">Edit deck name</string>
+    <string name="study">Study</string>
     <string name="show_html">Show HTML</string>
 </resources>

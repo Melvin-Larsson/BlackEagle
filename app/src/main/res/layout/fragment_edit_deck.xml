@@ -4,72 +4,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor">
+    android:background="@android:color/white">
 
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/exportButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
+        android:background="@android:color/white"
         android:padding="24dp"
-        android:text="@string/export"
+        android:text="@string/exportDeck"
         android:textAlignment="textStart"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/deleteDeckButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="5dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/deleteDeckButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
+        android:background="@android:color/white"
         android:padding="24dp"
         android:text="@string/delete"
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/ic_delete_dark"
         android:textAlignment="textStart"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/addToFolderButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exportButton" />
+        android:layout_margin="5dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addToFolderButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
+        android:background="@android:color/white"
         android:padding="24dp"
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/ic_add_to_folder"
         android:text="@string/add_to_folder"
         android:textAlignment="textStart"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/deleteDeckButton" />
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="5dp"/>
 
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addToFavouritesButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
+        android:background="@android:color/white"
+        android:drawableLeft="@drawable/ic_favorite_border"
+        android:drawablePadding="8dp"
         android:padding="24dp"
+        android:textColor="@android:color/black"
         android:text="@string/add_to_favourites"
         android:textAlignment="textStart"
-        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addToFolderButton" />
+        app:layout_constraintTop_toBottomOf="@+id/addToFolderButton"
+        android:layout_margin="5dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/editDeckNameButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
+        android:background="@android:color/white"
         android:padding="24dp"
+        android:drawablePadding="8dp"
         android:text="@string/edit_deck_name"
+        android:drawableLeft="@drawable/ic_edit"
         android:textAlignment="textStart"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addToFavouritesButton" />
+        app:layout_constraintTop_toBottomOf="@+id/addToFavouritesButton"
+        android:layout_margin="5dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

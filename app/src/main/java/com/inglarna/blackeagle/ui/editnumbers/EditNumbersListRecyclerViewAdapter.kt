@@ -75,6 +75,11 @@ class EditNumbersListRecyclerViewAdapter(val context : Context, liveData: LiveDa
                         !holder.binding.checkBoxNumbers.isChecked
                 }
             }
+            holder.binding.root.setOnLongClickListener{
+
+
+                true
+            }
             holder.binding.checkBoxNumbers.setOnCheckedChangeListener { checkbox, ischecked ->
                 if (ischecked) {
                     selectedWordNumbers.add(wordNumber[position])

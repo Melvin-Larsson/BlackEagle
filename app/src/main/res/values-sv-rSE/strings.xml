@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BlackEagle</string>
+    <string name="app_name">Svartörn</string>
     <string name="open">Öppna</string>
     <string name="close">Stäng</string>
     <string name="question">Fråga</string>
@@ -18,4 +18,42 @@
     <string name="stats">Statistik</string>
     <string name="about">Om</string>
     <string name="add_card">Lägg till kort</string>
+    <string name="start_study">Studera</string>
+    <string name="favorite_study">Favorit studie</string>
+    <string name="card_answer">Svar: %1$s</string>
+    <string name="card_question">Fråga: %1$s</string>
+    <string name="card_number">%1$d</string>
+    <string name="all">Alla</string>
+    <string name="folders">Mappar</string>
+    <string name="favourites">Favoriter</string>
+    <string name="deck_to_add">Vad är kortlekens namn?</string>
+    <string name="add_deck">Lägg till</string>
+    <string name="delete">Ta bord</string>
+    <string name="deck_header">Kortlekar</string>
+    <string name="add_card_header">Lägg till kort</string>
+    <string name="edit_convert_numbers_header">Redigera siffra</string>
+    <string name="convert_numbers_header">Konvertera siffra</string>
+    <string name="checkbox">Kryssruta</string>
+    <string name="select_multiple_decks">Välj flera kortlekar</string>
+    <string name="edit">Redigera</string>
+    <string name="edit_card">Redigera kort</string>
+    <string name="title_edit_number_word">Vilket ord ska associeras med %1$d?</string>
+    <string name="update">Uppdatera</string>
+    <string name="reset">återställ</string>
+    <string name="good">Bra</string>
+    <string name="hard">Svår</string>
+    <string name="easy">Lätt</string>
+    <string name="selectAll">Välj alla</string>
+    <string name="select_all_cards">Välj alla kort</string>
+    <string name="write_number">Skriv siffra</string>
+    <string name="exportDeck">Exportera</string>
+    <string name="importDeck">Importera</string>
+    <string name="closeSelect">Stäng</string>
+    <string name="add_to_folder">Lägg till i mapp</string>
+    <string name="add_to_favourites">Lägg till i favoriter</string>
+    <string name="more">Mer</string>
+    <string name="edit_deck_name">" Redigera kortlekens namn"</string>
+    <string name="study">Studera</string>
+    <string name="show_html">Visa HTML</string>
+    <string name="convertTutorial">Konvertering av tal används främst för att komma ihåg en talföljd. Varje nummer från 0–9 kan översättas till ett ljud enligt tabellen nedan. Ljuden kan sedan användas för att skapa olika ord.</string>
 </resources>
