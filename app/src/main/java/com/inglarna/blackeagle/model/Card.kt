@@ -15,7 +15,7 @@ import kotlin.math.ln
 
 @Entity
 data class Card(
-    @PrimaryKey(autoGenerate = true) var id:Long? = null,
+    @PrimaryKey(autoGenerate = true) var cardId:Long? = null,
     var deckId: Long? = null,
     var question : String = "",
     var answer : String = "",

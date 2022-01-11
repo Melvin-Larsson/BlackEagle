@@ -187,7 +187,7 @@ class CardFragment : Fragment() {
             }
             GlobalScope.launch {
                 //Add card
-                if(card.id == null){
+                if(card.cardId == null){
                     card.position = cardViewModel.getMaxPosition(deckId) + 1
                     cardViewModel.addCard(card)
                     linkImageToCard(card)
@@ -299,7 +299,7 @@ class CardFragment : Fragment() {
         val idRegex = Regex("^-?\\d+")
         for(image in unlinkedImages){
             Log.d(TAG, "unlinked: " + image.path)
-            val newName = image.name.replace(idRegex, card.id.toString())
+            val newName = image.name.replace(idRegex, card.cardId.toString())
             //Rename references in text
             val oldImgTag = "<img src=\"${image.name}\">"
             val newImgTag = "<img src=\"${newName}\">"

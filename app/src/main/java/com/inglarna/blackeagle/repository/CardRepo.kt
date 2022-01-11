@@ -12,7 +12,7 @@ class CardRepo (context: Context){
 
     fun addCard(card: Card): Long{
         val newId = cardDao.insertCard(card)
-        card.id = newId
+        card.cardId = newId
         return newId
     }
     fun addCards(cards: List<Card>): List<Long>{

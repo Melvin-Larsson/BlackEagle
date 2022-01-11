@@ -13,16 +13,20 @@ interface DeckDao {
     fun loadAll(): LiveData<List<Deck>>
 
     @Transaction
-    @Query("SELECT * FROM Deck WHERE id=:id")
+    @Query("SELECT * FROM Deck WHERE deckId=:id")
     fun getDeck(id: Long) : Deck
 
     @Transaction
-    @Query("SELECT * FROM Deck WHERE id=:id")
+    @Query("SELECT * FROM Deck WHERE deckId=:id")
     fun getDeckWithCards(id:Long): DeckWithCards
+
+    @Transaction
+    @Query("SELECT * FROM Deck WHERE deckId=:id")
+    fun getLiveDeckWithCards(id: Long): LiveData<DeckWithCards>
 
 
     @Transaction
-    @Query ("SELECT * FROM Deck WHERE id= :id")
+    @Query ("SELECT * FROM Deck WHERE deckId= :id")
     fun loadLiveDeck(id: Long) : LiveData<Deck>
 
     @Transaction
@@ -33,7 +37,7 @@ interface DeckDao {
     @Query("SELECT * FROM Deck WHERE favorite=1")
     fun getFavoriteDecks(): LiveData<List<DeckWithCards>>
 
-    @Query("SELECT COUNT(id) FROM Card WHERE deckId=:id")
+    @Query("SELECT COUNT(cardId) FROM Card WHERE deckId=:id")
     fun getDeckSize(id: Long): Int
 
     @Insert(onConflict = IGNORE)

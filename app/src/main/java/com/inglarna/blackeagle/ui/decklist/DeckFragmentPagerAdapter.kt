@@ -7,8 +7,10 @@ class DeckFragmentPagerAdapter (fragment: Fragment): FragmentStateAdapter(fragme
     override fun getItemCount(): Int = 3
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = DeckListFragment.newInstance(position)
-        return fragment
+        if(position == 1){
+            return FolderListFragment.newInstance()
+        }
+        return DeckListFragment.newInstance(position)
     }
     companion object{
         const val ARG_OBJECT = "object"

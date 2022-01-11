@@ -9,19 +9,18 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.inglarna.blackeagle.R
-import com.inglarna.blackeagle.model.Card
-import com.inglarna.blackeagle.model.Deck
-import com.inglarna.blackeagle.model.WordNumber
+import com.inglarna.blackeagle.model.*
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.*
 import kotlin.collections.ArrayList
 
-@Database(entities = arrayOf(Card::class, Deck::class, WordNumber::class), version = 1)
+@Database(entities = arrayOf(Card::class, Deck::class, WordNumber::class, Folder::class, FolderDeckCrossRef::class), version = 1)
 abstract class BlackEagleDatabase :RoomDatabase(){
     abstract fun deckDao(): DeckDao
     abstract fun cardDao(): CardDao
+    abstract fun folderDao(): FolderDao
     abstract  fun wordNumberDao(): WordNumberDao
 
     companion object{
