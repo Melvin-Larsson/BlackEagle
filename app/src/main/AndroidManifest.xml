@@ -63,6 +63,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.cardlist.CardListActivity"/>
         </activity>
+        <activity android:name=".ui.folderpicker.FolderPickerActivity"
+            android:parentActivityName=".ui.cardlist.EditDeckActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.cardlist.EditDeckActivity"/>
+        </activity>
 
     </application>
 

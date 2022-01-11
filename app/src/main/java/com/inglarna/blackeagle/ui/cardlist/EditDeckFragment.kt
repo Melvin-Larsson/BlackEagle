@@ -1,8 +1,11 @@
 package com.inglarna.blackeagle.ui.cardlist
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.app.Instrumentation
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,36 +13,49 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentEditDeckBinding
 import com.inglarna.blackeagle.db.BlackEagleDatabase
+import com.inglarna.blackeagle.ui.folderpicker.FolderPickerActivity
 import com.inglarna.blackeagle.model.Deck
-import com.inglarna.blackeagle.viewmodel.DeckViewModel
+import com.inglarna.blackeagle.ui.folderpicker.FolderPickerFragment
+import com.inglarna.blackeagle.viewmodel.EditDeckViewModel
+import com.inglarna.blackeagle.viewmodel.EditDeckViewModelFactory
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 //TODO: lägg till confirm popup när delete trycks
 class EditDeckFragment : Fragment() {
     lateinit var binding: FragmentEditDeckBinding
-    private val deckViewModel by viewModels<DeckViewModel>()
-    private var deckId: Long= -1
+    private lateinit var editDeckViewModel: EditDeckViewModel
     private lateinit var deck: Deck
     private val startFileExplorerForResult = registerForActivityResult(ActivityResultContracts.CreateDocument()){ uri->
         if(uri != null){
-            GlobalScope.launch {
-                deckViewModel.getDeckWithCards(deckId).export(context!!, uri)
+            editDeckViewModel.deckWithCards.observe(this, {
+                it.export(context!!, uri)
+            })
+
+        }
+    }
+    private val startFolderPickerForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
+        if(result.resultCode == Activity.RESULT_OK){
+            if(result.data != null){
+                val folderId = result.data?.getLongExtra(FolderPickerFragment.FOLDER_ID, -1)
+                if(folderId!! >= 0){
+                    editDeckViewModel.addDeckToFolder(folderId)
+                }
             }
         }
     }
     companion object{
         private const val DECK_ID = "deckID"
         fun newInstance(deckId: Long): EditDeckFragment {
-            val EditDeckFragment = EditDeckFragment()
+            val fragment = EditDeckFragment()
             val bundle = Bundle()
             bundle.putLong(DECK_ID, deckId)
-            EditDeckFragment.arguments = bundle
-            return EditDeckFragment
+            fragment.arguments = bundle
+            return fragment
         }
     }
 
@@ -51,9 +67,9 @@ class EditDeckFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        deckId = arguments!!.getLong(DECK_ID, -1)
-        deckViewModel.getDeck(deckId).observe(this){
-
+        val deckId = arguments!!.getLong(DECK_ID, -1)
+        editDeckViewModel = ViewModelProvider(this, EditDeckViewModelFactory(activity!!.application, deckId)).get(EditDeckViewModel::class.java)
+        editDeckViewModel.deck.observe(this){
             if (it == null){
                 activity?.finish()
             }else{
@@ -67,19 +83,15 @@ class EditDeckFragment : Fragment() {
         binding.deleteDeckButton.setOnClickListener{
             deleteDeck()
         }
+        binding.addToFolderButton.setOnClickListener{
+            startFolderPickerForResult.launch(FolderPickerActivity.newIntent(context!!))
+        }
         binding.addToFavouritesButton.setOnClickListener{
             addToFavourites()
         }
         binding.editDeckNameButton.setOnClickListener{
             editDeckName(deck)
         }
-        deckViewModel.getDecks()?.observe(this,{ decks->
-            for(deckWithCards in decks){
-                if (deckWithCards.deck.id == deckId){
-                    setFavoriteIcon(deckWithCards.deck.favorite)
-                }
-            }
-        })
     }
 
     private fun setFavoriteIcon(favorite: Boolean){
@@ -90,22 +102,17 @@ class EditDeckFragment : Fragment() {
         }
     }
 
-    private fun addToFavourites() {
-        val deckDao = BlackEagleDatabase.getInstance(activity!!).deckDao()
-
-        GlobalScope.launch {
-            val deck = deckDao.getDeck(deckId)
-            deck.favorite = !deck.favorite
-            deckDao.updateDeck(deck)
-        }
-    }
-
     private fun deleteDeck() {
-        GlobalScope.launch {
-            deckViewModel.deleteDeck(deck)
-        }
+        editDeckViewModel.deleteDeck()
         activity?.finish()
     }
+
+    private fun addToFavourites() {
+        editDeckViewModel.updateDeck {
+            it.favorite = !it.favorite
+        }
+    }
+
     private fun editDeckName(deck: Deck) {
         val deckEditText = EditText(requireContext())
         deckEditText.setText(deck.name)
@@ -126,5 +133,6 @@ class EditDeckFragment : Fragment() {
             .create()
             .show()
     }
+
 
 }

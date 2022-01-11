@@ -19,7 +19,7 @@ class CardListViewModel (application: Application, val deckId: Long): AndroidVie
         cardRepo.getFullDeck(deckId)
     }
     val deck: LiveData<Deck> by lazy {
-        deckRepo.getDeck(deckId)
+        deckRepo.getLiveDeck(deckId)
     }
     fun getCardsByNextRepetition(maxDay: Double): LiveData<List<Card>>{
         return cardRepo.getFullDeckByNextRepetition(deckId, maxDay)

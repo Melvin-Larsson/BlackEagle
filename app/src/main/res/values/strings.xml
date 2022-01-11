@@ -61,6 +61,8 @@
     <string name="edit_deck_name">Edit deck name</string>
     <string name="study">Study</string>
     <string name="show_html">Show HTML</string>
+    <string name="add_folder">Add folder</string>
+    <string name="folder_to_add">What is the name of the folder?</string>
     <string name="tutorial" translatable="false">Tutorial</string>
     <string name="top">Top</string>
     <string name="bottom">Bottom</string>

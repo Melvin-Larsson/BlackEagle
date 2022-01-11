@@ -8,7 +8,6 @@ import com.inglarna.blackeagle.db.CardDao
 import com.inglarna.blackeagle.db.DeckDao
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.model.DeckWithCards
-import java.io.File
 
 class DeckRepo(val context: Context) {
     private val db = BlackEagleDatabase.getInstance(context)
@@ -17,11 +16,15 @@ class DeckRepo(val context: Context) {
 
     fun addDeck(deck: Deck): Long{
         val newId = deckDao.insertDeck(deck)
-        deck.id = newId
+        deck.deckId = newId
         return newId
     }
-    fun getDeck(id: Long): LiveData<Deck>{
+    fun getDeck(id: Long): Deck{
+        return deckDao.getDeck(id)
+    }
+    fun getLiveDeck(id: Long): LiveData<Deck>{
         return deckDao.loadLiveDeck(id)
+
     }
     fun getDecks(): LiveData<List<Deck>>{
         return deckDao.loadAll()
@@ -29,14 +32,17 @@ class DeckRepo(val context: Context) {
     fun getDeckWithCards(id: Long): DeckWithCards{
         return  deckDao.getDeckWithCards(id)
     }
+    fun getLiveDeckWithCards(id: Long): LiveData<DeckWithCards>{
+        return deckDao.getLiveDeckWithCards(id)
+    }
     fun getDeckSize(id: Long): Int{
         return deckDao.getDeckSize(id)
     }
 
     fun deleteDeck(deck: Deck) {
-        val deckWithCards = deckDao.getDeckWithCards(deck.id!!)
+        val deckWithCards = deckDao.getDeckWithCards(deck.deckId!!)
         for(card in deckWithCards.cards){
-            val imageFiles = PictureUtils.getImageFilesFromId(context.filesDir, card.id!!)
+            val imageFiles = PictureUtils.getImageFilesFromId(context.filesDir, card.cardId!!)
             for(imageFile in imageFiles){
                 imageFile.delete()
             }
@@ -48,6 +54,9 @@ class DeckRepo(val context: Context) {
         for(deck in decks){
             deleteDeck(deck)
         }
+    }
+    fun updateDeck(deck: Deck){
+        deckDao.updateDeck(deck)
     }
 
     val favoriteDecks: LiveData<List<DeckWithCards>>

@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Deck (
-    @PrimaryKey(autoGenerate = true) var id:Long? = null,
+    @PrimaryKey(autoGenerate = true) var deckId:Long? = null,
     var name: String = "",
     var favorite: Boolean = false
-    ){
+){
 }

@@ -20,7 +20,7 @@ import kotlin.collections.ArrayList
 data class DeckWithCards(
     @Embedded val deck: Deck,
     @Relation(
-        parentColumn = "id",
+        parentColumn = "deckId",
         entityColumn = "deckId"
     )
     val cards: List<Card>
@@ -86,7 +86,7 @@ data class DeckWithCards(
                     break
                 }
                 val card = Card()
-                card.id = row.toLong()
+                card.cardId = row.toLong()
                 card.question = reader.readLine()
                 card.answer = reader.readLine()
                 card.hint = reader.readLine()
@@ -111,17 +111,17 @@ data class DeckWithCards(
 
                 for(card in deckWithCards.cards) {
                     card.deckId = deckId
-                    val oldCardId = card.id!!
-                    card.id = null
+                    val oldCardId = card.cardId!!
+                    card.cardId = null
                     cardRepo.addCard(card)
-                    extractImage(imageSource, context.filesDir, oldCardId, card.id!!)
+                    extractImage(imageSource, context.filesDir, oldCardId, card.cardId!!)
 
                     //Rename image references in text fields
                     val imageFiles = PictureUtils.getImageFilesFromId(imageSource, oldCardId)
                     val idRegex = Regex("^\\d+")
                     for(image in imageFiles){
                         val oldImgTag = "<img src=\"${image.name}\">"
-                        val newImgTag = "<img src=\"${card.id}${image.name.replace(idRegex, "")}\">"
+                        val newImgTag = "<img src=\"${card.cardId}${image.name.replace(idRegex, "")}\">"
                         card.question = card.question.replace(oldImgTag, newImgTag)
                         card.answer = card.answer.replace(oldImgTag, newImgTag)
                         card.hint = card.hint.replace(oldImgTag, newImgTag)
@@ -194,7 +194,7 @@ data class DeckWithCards(
     }
     private fun isCardInDeck(cardId: Long): Boolean{
         for(card in cards){
-            if(card.id == cardId){
+            if(card.cardId == cardId){
                 return true
             }
         }
@@ -206,7 +206,7 @@ data class DeckWithCards(
         outputStreamWriter.write(deck.name + "\n")
         outputStreamWriter.write(writeRepetitionData.toString() + "\n")
         for(card in cards){
-            outputStreamWriter.write(card.id.toString() + "\n")
+            outputStreamWriter.write(card.cardId.toString() + "\n")
             outputStreamWriter.write(card.question + "\n")
             outputStreamWriter.write(card.answer + "\n")
             outputStreamWriter.write(card.hint + "\n")

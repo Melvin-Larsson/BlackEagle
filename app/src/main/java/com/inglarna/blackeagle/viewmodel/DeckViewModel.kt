@@ -32,8 +32,8 @@ class DeckViewModel(application: Application) : AndroidViewModel(application) {
         }
         return favoriteDecks
     }
-    fun getDeck(id: Long): LiveData<Deck>{
-        return deckRepo.getDeck(id)
+    fun getLiveDeck(id: Long): LiveData<Deck>{
+        return deckRepo.getLiveDeck(id)
     }
     fun getDeckWithCards(id: Long): DeckWithCards{
         return deckRepo.getDeckWithCards(id)

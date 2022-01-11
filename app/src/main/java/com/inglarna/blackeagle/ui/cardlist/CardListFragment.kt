@@ -2,20 +2,14 @@ package com.inglarna.blackeagle.ui.cardlist
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentCardListBinding
-import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.ui.question.QuestionActivity
-import com.inglarna.blackeagle.viewmodel.CardViewModel
-import com.inglarna.blackeagle.viewmodel.DeckViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import android.view.View
@@ -23,7 +17,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.ui.card.CardActivity
 import com.inglarna.blackeagle.ui.question.QuestionFragment
 import com.inglarna.blackeagle.viewmodel.CardListViewModel
@@ -98,7 +91,8 @@ class CardListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        cardListViewModel = ViewModelProvider(this, CardListViewModelFactory(activity!!.application, arguments!!.getLong(DECK_ID, -1))).get(CardListViewModel::class.java)
+        val deckId = arguments!!.getLong(DECK_ID, -1)
+        cardListViewModel = ViewModelProvider(this, CardListViewModelFactory(activity!!.application, deckId)).get(CardListViewModel::class.java)
         //creating adapter
         cardListViewModel.deck.observe(this){
             if (it == null){
@@ -124,7 +118,7 @@ class CardListFragment : Fragment() {
             cardListViewModel.deleteCard(card)
         }
         adapter.onEditCardClicked = { card ->
-            startActivity(CardActivity.newIntent(context!!, card.deckId, card.id))
+            startActivity(CardActivity.newIntent(context!!, card.deckId, card.cardId))
         }
         adapter.selectMultipleCallback = {
             toolbarVisibility()

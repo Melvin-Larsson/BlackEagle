@@ -17,7 +17,7 @@ class MainActivity : SingleFragmentNavMenuActivity(), DeckListFragment.DeckSelec
         actionbar!!.title = getString(R.string.deck_header)
     }
     private fun startCardActivity(deck: Deck) {
-        startActivity(CardListActivity.newIntent(this, deck.id))
+        startActivity(CardListActivity.newIntent(this, deck.deckId))
     }
 
     override fun onDeckSelected(deck: Deck) {
