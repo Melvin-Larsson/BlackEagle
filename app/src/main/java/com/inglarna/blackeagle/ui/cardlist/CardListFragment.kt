@@ -21,28 +21,26 @@ import kotlinx.coroutines.launch
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.ui.card.CardActivity
 import com.inglarna.blackeagle.ui.question.QuestionFragment
+import com.inglarna.blackeagle.viewmodel.CardListViewModel
+import com.inglarna.blackeagle.viewmodel.CardListViewModelFactory
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 import java.util.*
 import kotlin.math.ceil
 
 class CardListFragment : Fragment() {
-    lateinit var binding : FragmentCardListBinding
-    private val cardViewModel by viewModels<CardViewModel>()
-    private val deckViewModel by viewModels<DeckViewModel>()
-    lateinit var onAddCardClicked: (()-> Unit)
+    private lateinit var binding : FragmentCardListBinding
+    private lateinit var cardListViewModel : CardListViewModel
     private lateinit var adapter : CardListRecyclerViewAdapter
-    private var favoriteButton: MenuItem? = null
-    private var deleteButton: MenuItem? = null
-    private var selectAllButton: MenuItem? = null
-    private var closeSelectButton: MenuItem? = null
-    private var moreButton: MenuItem? = null
-    private lateinit var deck: Deck
-    private var deckId: Long= -1
+    private lateinit var deleteButton: MenuItem
+    private lateinit var selectAllButton: MenuItem
+    private lateinit var closeSelectButton: MenuItem
+    private lateinit var moreButton: MenuItem
     private var deckFinishedToday = false
     private val startStudyForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
         if(result.resultCode == Activity.RESULT_OK){
@@ -88,7 +86,7 @@ class CardListFragment : Fragment() {
             }
             R.id.delete -> delete()
             R.id.selectAllCards -> adapter.selectAll()
-            R.id.more -> startActivity(EditDeckActivity.newIntent(context!!, deck.id))
+            R.id.more -> startActivity(EditDeckActivity.newIntent(context!!, cardListViewModel.deckId))
             R.id.closeSelect -> closeSelect()
         }
         return true
@@ -100,57 +98,56 @@ class CardListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        cardListViewModel = ViewModelProvider(this, CardListViewModelFactory(activity!!.application, arguments!!.getLong(DECK_ID, -1))).get(CardListViewModel::class.java)
         //creating adapter
-        deckId = arguments!!.getLong(DECK_ID, -1)
-        deckViewModel.getDeck(deckId).observe(this){
+        cardListViewModel.deck.observe(this){
             if (it == null){
                 activity?.finish()
             }else{
-                deck = it
-                activity?.title = deck.name
+                activity?.title = it.name
             }
         }
-        adapter = CardListRecyclerViewAdapter(cardViewModel.getDeckViews(deckId), this, context!!)
+        adapter = CardListRecyclerViewAdapter(context!!)
         binding.recyclerViewCard.adapter = adapter
         binding.recyclerViewCard.layoutManager = LinearLayoutManager(requireContext())
         binding.buttonAddCard.setOnClickListener{
-            onAddCardClicked()
+            startActivity(CardActivity.newIntent(context!!, cardListViewModel.deckId))
         }
         binding.startStudyButton.setOnClickListener{
             if(deckFinishedToday){
                 showConfirmExtraStudyDialog()
             }else{
-                startStudyForResult.launch(QuestionActivity.newIntent(context!!, deckId, false))
+                startStudyForResult.launch(QuestionActivity.newIntent(context!!, cardListViewModel.deckId, false))
             }
         }
         adapter.onDeleteCardClicked={ card ->
-            GlobalScope.launch {
-                cardViewModel.deleteCard(card)
-            }
-
+            cardListViewModel.deleteCard(card)
         }
         adapter.onEditCardClicked = { card ->
             startActivity(CardActivity.newIntent(context!!, card.deckId, card.id))
         }
-
         adapter.selectMultipleCallback = {
             toolbarVisibility()
         }
+        observeData()
         initializeCardMoving()
-        //Actionbar title
-        cardViewModel.getDeckByNextRepetition(deckId, ceil(Date().time / (1000 * 3600 * 24).toDouble())).observe(this, {
+
+        cardListViewModel.getCardsByNextRepetition(ceil(Date().time / (1000 * 3600 * 24).toDouble())).observe(this, {
             deckFinishedToday = it.isEmpty()
         })
 
-
-
+    }
+    private fun observeData(){
+        cardListViewModel.cards.observe(this, {
+            adapter.cards = it
+        })
     }
     private fun initializeCardMoving(){
         val touchHelperCallback = SimpleItemTouchHelperCallback()
         touchHelperCallback.touchHelperAdapter = adapter
         touchHelperCallback.clearViewCallback = SimpleItemTouchHelperCallback.ClearViewCallback{
             GlobalScope.launch {
-                cardViewModel.updateCards(adapter.movedCards)
+                cardListViewModel.updateCards(adapter.movedCards)
                 adapter.movedCards.clear()
             }
         }
@@ -167,7 +164,7 @@ class CardListFragment : Fragment() {
             .setMessage("Do you really want to study?")
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setPositiveButton(android.R.string.yes){dialog, _ ->
-                startStudyForResult.launch(QuestionActivity.newIntent(context!!, deckId, true))
+                startStudyForResult.launch(QuestionActivity.newIntent(context!!, cardListViewModel.deckId, true))
             }
             .setNegativeButton(android.R.string.no, null)
             .show()
@@ -175,10 +172,10 @@ class CardListFragment : Fragment() {
 
     private fun toolbarVisibility(){
         //visibility of toolbar and checkbox
-        deleteButton?.isVisible = adapter.select
-        selectAllButton?.isVisible = adapter.select
-        closeSelectButton?.isVisible = adapter.select
-        moreButton?.isVisible = !adapter.select
+        deleteButton.isVisible = adapter.select
+        selectAllButton.isVisible = adapter.select
+        closeSelectButton.isVisible = adapter.select
+        moreButton.isVisible = !adapter.select
     }
 
     private fun closeSelect() {
@@ -187,11 +184,7 @@ class CardListFragment : Fragment() {
     }
     private fun delete(){
         val selectedCards = adapter.selectedCards.toMutableList()
-        GlobalScope.launch {
-            for(card in selectedCards){
-                cardViewModel.deleteCard(card)
-            }
-        }
+        cardListViewModel.deleteCards(selectedCards)
         adapter.select = false
         toolbarVisibility()
     }
