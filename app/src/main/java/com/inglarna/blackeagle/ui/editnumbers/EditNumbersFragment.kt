@@ -1,10 +1,13 @@
 package com.inglarna.blackeagle.ui.editnumbers
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.InputType
 import android.util.Log
 import android.view.*
+import android.widget.AbsListView
 import android.widget.EditText
 import android.widget.Filter
 import android.widget.Toast
@@ -13,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentEditNumbersBinding
 import com.inglarna.blackeagle.db.BlackEagleDatabase
@@ -28,8 +32,15 @@ class EditNumbersFragment: Fragment() {
     private var resetButton: MenuItem? = null
     private var selectAllButton: MenuItem? = null
     private var closeSelectButton: MenuItem? = null
-
-    companion object{
+    val timer = object: CountDownTimer(2000, 1) {
+        override fun onTick(millisUntilFinished: Long) {}
+        override fun onFinish() {
+            binding.scrollTop.visibility = View.GONE
+            binding.scrollBottom.visibility = View.GONE
+        }
+    }
+    companion object {
+        private const val TAG = "korvMedMos"
         fun newInstance() = EditNumbersFragment
     }
 
@@ -38,7 +49,11 @@ class EditNumbersFragment: Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentEditNumbersBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,14 +61,43 @@ class EditNumbersFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = EditNumbersListRecyclerViewAdapter(requireContext(), wordNumberViewModel.getNumberViews(), this)
+        adapter = EditNumbersListRecyclerViewAdapter(
+            requireContext(),
+            wordNumberViewModel.getNumberViews(),
+            this
+        )
         adapter.onNumberWordClicked = {
             showEditNumberWordDialog(it)
         }
         adapter.selectMultipleCallback = {
             toolbarVisibility()
         }
-        adapter.filter = object: Filter() {
+        binding.scrollBottom.setOnClickListener {
+            binding.editNumbersRecyclerview.scrollToPosition(adapter.itemCount - 1)
+            timer.cancel()
+            timer.start()
+        }
+        binding.scrollTop.setOnClickListener{
+            binding.editNumbersRecyclerview.scrollToPosition(0)
+            timer.cancel()
+            timer.start()
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            binding.editNumbersRecyclerview.setOnScrollChangeListener { view, _, scrollY, _, oldScrollY ->
+                //when starting the activity the scrollChangeListener heard someone talk, therefore we implemented this if that fixes that
+                setScrollButton(oldScrollY - scrollY)
+            }
+        }else{
+            binding.editNumbersRecyclerview.setOnScrollListener(object :
+                RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, scrollY: Int) {
+                    super.onScrolled(recyclerView, dx, scrollY)
+                    setScrollButton(scrollY)
+                }
+            })
+        }
+
+        adapter.filter = object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filteredList = wordNumberViewModel.getWords(constraint.toString())
                 val results = FilterResults()
@@ -68,6 +112,7 @@ class EditNumbersFragment: Fragment() {
         }
         binding.editNumbersRecyclerview.adapter = adapter
         binding.editNumbersRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+
     }
 
     //toolbar
@@ -79,7 +124,7 @@ class EditNumbersFragment: Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.selectAllNumbers -> selectAll()
             R.id.reset -> resetWordNumber()
             R.id.closeSelect -> closeSelect()
@@ -95,7 +140,7 @@ class EditNumbersFragment: Fragment() {
         //Update words
         val selectedNumbers = adapter.selectedWordNumbers.toHashSet()
         val defaultWords = BlackEagleDatabase.loadDefaultNumberWords(context!!)
-        for(selectedNumber in selectedNumbers){
+        for (selectedNumber in selectedNumbers) {
             selectedNumber.word = defaultWords[selectedNumber.number]
         }
         GlobalScope.launch {
@@ -111,19 +156,25 @@ class EditNumbersFragment: Fragment() {
         selectAllButton?.isVisible = adapter.select
         closeSelectButton?.isVisible = adapter.select
     }
+
     private fun closeSelect() {
         adapter.select = !adapter.select
         toolbarVisibility()
     }
 
-    private fun showEditNumberWordDialog(wordNumber: WordNumber){
+    private fun showEditNumberWordDialog(wordNumber: WordNumber) {
         val wordNumberEditText = EditText(context)
         wordNumberEditText.inputType = InputType.TYPE_CLASS_TEXT
 
         AlertDialog.Builder(context)
-            .setTitle(context?.resources?.getString(R.string.title_edit_number_word, wordNumber.number))
+            .setTitle(
+                context?.resources?.getString(
+                    R.string.title_edit_number_word,
+                    wordNumber.number
+                )
+            )
             .setView(wordNumberEditText)
-            .setPositiveButton(R.string.update){ dialog, _ ->
+            .setPositiveButton(R.string.update) { dialog, _ ->
                 GlobalScope.launch {
                     wordNumber.word = wordNumberEditText.text.toString()
                     wordNumberViewModel.updateWord(wordNumber)
@@ -132,5 +183,12 @@ class EditNumbersFragment: Fragment() {
             }
             .create()
             .show()
+    }
+    private fun setScrollButton(scrollY: Int){
+        if (scrollY != 0) {
+            binding.scrollTop.visibility = View.VISIBLE
+            binding.scrollBottom.visibility = View.VISIBLE
+            timer.start()
+        }
     }
 }

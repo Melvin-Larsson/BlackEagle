@@ -6,25 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guidelineRight"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95"/>
-    <androidx.constraintlayout.widget.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guidelineLeft"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05"/>
-    <androidx.constraintlayout.widget.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guidelineup"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.03"/>
-
     <!--The recyclerview that comes up after searching-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/editNumbersRecyclerview"
@@ -35,4 +16,24 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/scrollTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/top"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editNumbersRecyclerview" />
+
+    <Button
+        android:id="@+id/scrollBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bottom"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

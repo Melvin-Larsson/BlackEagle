@@ -15,7 +15,7 @@
         app:showAsAction="ifRoom"
         android:visible="false"/>
     <item
-        android:id="@+id/checkBoxNumbers"
+        android:id="@+id/closeSelect"
         android:title="@string/close"
         android:icon="@drawable/ic_close_select"
         app:showAsAction="ifRoom"

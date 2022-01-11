@@ -62,4 +62,6 @@
     <string name="study">Study</string>
     <string name="show_html">Show HTML</string>
     <string name="tutorial" translatable="false">Tutorial</string>
+    <string name="top">Top</string>
+    <string name="bottom">Bottom</string>
 </resources>
