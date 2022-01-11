@@ -31,8 +31,8 @@
     <string name="delete">Ta bord</string>
     <string name="deck_header">Kortlekar</string>
     <string name="add_card_header">Lägg till kort</string>
-    <string name="edit_convert_numbers_header">Redigera siffra</string>
-    <string name="convert_numbers_header">Konvertera siffra</string>
+    <string name="edit_convert_numbers_header">Redigera siffror</string>
+    <string name="convert_numbers_header">Konvertera siffror</string>
     <string name="checkbox">Kryssruta</string>
     <string name="select_multiple_decks">Välj flera kortlekar</string>
     <string name="edit">Redigera</string>

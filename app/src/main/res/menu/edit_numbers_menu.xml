@@ -16,9 +16,9 @@
         android:visible="false"/>
     <item
         android:id="@+id/checkBoxNumbers"
-        android:title="@string/checkbox"
-        android:icon="@drawable/ic_checkbox"
+        android:title="@string/close"
+        android:icon="@drawable/ic_close_select"
         app:showAsAction="ifRoom"
-        android:visible="true"/>
+        android:visible="false"/>
 
 </menu>

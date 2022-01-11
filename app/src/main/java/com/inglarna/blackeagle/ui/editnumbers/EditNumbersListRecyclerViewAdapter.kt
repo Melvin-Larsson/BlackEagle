@@ -21,6 +21,7 @@ class EditNumbersListRecyclerViewAdapter(val context : Context, liveData: LiveDa
     private var wordNumber: List<WordNumber> = ArrayList()
     var onNumberWordClicked: ((WordNumber) -> Unit) = {}
     val selectedWordNumbers: MutableSet<WordNumber> = HashSet()
+    var selectMultipleCallback: (() -> Unit) = {}
     var filter: Filter? = null
     var select = false
         set(value){
@@ -76,7 +77,11 @@ class EditNumbersListRecyclerViewAdapter(val context : Context, liveData: LiveDa
                 }
             }
             holder.binding.root.setOnLongClickListener{
-
+                if (!select){
+                    select = true
+                    selectedWordNumbers.add(wordNumber[position])
+                    selectMultipleCallback()
+                }
 
                 true
             }

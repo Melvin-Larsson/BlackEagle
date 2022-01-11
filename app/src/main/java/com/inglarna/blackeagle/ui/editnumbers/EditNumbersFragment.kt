@@ -26,8 +26,8 @@ class EditNumbersFragment: Fragment() {
     private lateinit var adapter: EditNumbersListRecyclerViewAdapter
     private val wordNumberViewModel by viewModels<wordNumberViewModel>()
     private var resetButton: MenuItem? = null
-    private var checkBoxButton: MenuItem? = null
     private var selectAllButton: MenuItem? = null
+    private var closeSelectButton: MenuItem? = null
 
     companion object{
         fun newInstance() = EditNumbersFragment
@@ -50,6 +50,9 @@ class EditNumbersFragment: Fragment() {
         adapter.onNumberWordClicked = {
             showEditNumberWordDialog(it)
         }
+        adapter.selectMultipleCallback = {
+            toolbarVisibility()
+        }
         adapter.filter = object: Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filteredList = wordNumberViewModel.getWords(constraint.toString())
@@ -71,7 +74,7 @@ class EditNumbersFragment: Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.edit_numbers_menu, menu)
         resetButton = menu.findItem(R.id.reset)
-        checkBoxButton = menu.findItem(R.id.checkBoxNumbers)
+        closeSelectButton = menu.findItem(R.id.closeSelect)
         selectAllButton = menu.findItem(R.id.selectAllNumbers)
     }
 
@@ -79,8 +82,7 @@ class EditNumbersFragment: Fragment() {
         when(item.itemId){
             R.id.selectAllNumbers -> selectAll()
             R.id.reset -> resetWordNumber()
-            R.id.checkBoxNumbers -> checkBoxVisibility()
-
+            R.id.closeSelect -> closeSelect()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -101,14 +103,17 @@ class EditNumbersFragment: Fragment() {
         }
         //Unselect
         adapter.select = false
-
+        toolbarVisibility()
     }
 
-    private fun checkBoxVisibility() {
-        Toast.makeText(context, "checkbox", Toast.LENGTH_SHORT).show()
-        adapter.select = !adapter.select
+    private fun toolbarVisibility() {
         resetButton?.isVisible = adapter.select
         selectAllButton?.isVisible = adapter.select
+        closeSelectButton?.isVisible = adapter.select
+    }
+    private fun closeSelect() {
+        adapter.select = !adapter.select
+        toolbarVisibility()
     }
 
     private fun showEditNumberWordDialog(wordNumber: WordNumber){
