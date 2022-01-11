@@ -23,6 +23,9 @@ class DeckRepo(val context: Context) {
     fun getDeck(id: Long): LiveData<Deck>{
         return deckDao.loadLiveDeck(id)
     }
+    fun getDecks(): LiveData<List<Deck>>{
+        return deckDao.loadAll()
+    }
     fun getDeckWithCards(id: Long): DeckWithCards{
         return  deckDao.getDeckWithCards(id)
     }
@@ -40,6 +43,11 @@ class DeckRepo(val context: Context) {
         }
         deckDao.deleteDeck(deck)
         cardDao.deleteCards(deckWithCards.cards)
+    }
+    fun deleteDecks(decks: List<Deck>){
+        for(deck in decks){
+            deleteDeck(deck)
+        }
     }
 
     val favoriteDecks: LiveData<List<DeckWithCards>>

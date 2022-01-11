@@ -12,14 +12,12 @@ import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckListBinding
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.model.DeckWithCards
-import com.inglarna.blackeagle.viewmodel.DeckViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.inglarna.blackeagle.viewmodel.DeckListViewModel
 
 class DeckListFragment : Fragment() {
     private lateinit var binding : FragmentDeckListBinding
     lateinit var deckSelectedCallback: DeckSelectedCallback
-    private val deckViewModel by viewModels<DeckViewModel>()
+    private val deckListViewModel by viewModels<DeckListViewModel>()
     private lateinit var adapter: DeckListRecyclerViewAdapter
     private var deleteButton: MenuItem? = null
     private var selectAllButton: MenuItem? = null
@@ -61,29 +59,34 @@ class DeckListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         pageId = arguments!!.getInt(PAGE_ID, -1)
-        //Favorites
-        val data : LiveData<List<DeckWithCards>>? = if(pageId == 2){
-            deckViewModel.getFavoriteDecks()
-        }
-        //Other
-        else{
-            deckViewModel.getDecks()
-        }
-        adapter = DeckListRecyclerViewAdapter(requireActivity(), data, requireActivity())
+
+        adapter = DeckListRecyclerViewAdapter(requireActivity())
         binding.deckRecyclerView.adapter = adapter
         binding.deckRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         adapter.onDeckClicked = {
-                deckSelectedCallback.onDeckSelected(it)
+            deckSelectedCallback.onDeckSelected(it)
         }
         adapter.onDeleteDeckClicked={ deck ->
-            GlobalScope.launch {
-                deckViewModel.deleteDeck(deck)
-            }
+            deckListViewModel.deleteDeck(deck)
         }
-        adapter.selectMultipleCallback = {
-            toolbarVisibility()
+        adapter.onSelectionStarted = {
+            setToolbarVisibility()
         }
+        observeData()
+    }
+    private fun observeData(){
+        //Favorites
+        val data : LiveData<List<DeckWithCards>> = if(pageId == 2){
+            deckListViewModel.favoriteDecks
+        }
+        //Other
+        else{
+            deckListViewModel.decks
+        }
+        data.observe(this, {
+            adapter.decks = it
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -105,10 +108,10 @@ class DeckListFragment : Fragment() {
         return true
     }
     private fun closeSelect() {
-        adapter.select = !adapter.select
-        toolbarVisibility()
+        adapter.select = false
+        setToolbarVisibility()
     }
-    private fun toolbarVisibility(){
+    private fun setToolbarVisibility(){
         deleteButton?.isVisible = adapter.select
         selectAllButton?.isVisible = adapter.select
         closeButton?.isVisible = adapter.select
@@ -116,14 +119,10 @@ class DeckListFragment : Fragment() {
     }
 
     private fun delete(){
-        val selectedDecks = adapter.selectedDecks.toMutableList()
-        GlobalScope.launch {
-            for (deck in selectedDecks){
-                deckViewModel.deleteDeck(deck)
-            }
-        }
+        val selectedDecks = adapter.selectedDecks.toList()
+        deckListViewModel.deleteDecks(selectedDecks)
         adapter.select = false
-        toolbarVisibility()
+        setToolbarVisibility()
     }
 
     private fun selectAll() {

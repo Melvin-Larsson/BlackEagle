@@ -1,7 +1,5 @@
 package com.inglarna.blackeagle.ui.cardlist
 
-import android.util.Log
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -14,22 +12,12 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.inglarna.blackeagle.databinding.ListItemCardBinding
 import com.inglarna.blackeagle.model.Card
-
-import android.widget.LinearLayout
-import android.util.TypedValue
 import android.view.*
-import android.widget.FrameLayout
-import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
-import androidx.recyclerview.widget.ItemTouchHelper
-import com.inglarna.blackeagle.R
 import java.util.*
 import kotlin.collections.ArrayList
 import android.view.MotionEvent
-import androidx.constraintlayout.widget.ConstraintSet
 import java.io.File
 import kotlin.collections.HashSet
-import kotlin.math.absoluteValue
 
 
 class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner: LifecycleOwner,private val context: Context):
@@ -118,9 +106,9 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
                 selectedCards.remove(cards[position])
             }
         }
+
         val params = holder.binding.aroundQuestionAnswer.layoutParams as ConstraintLayout.LayoutParams
         val checkboxView = holder.binding.checkBox
-
         if(select){
             checkboxView.visibility = View.VISIBLE
             checkboxView.isChecked = selectedCards.contains(cards[position])
@@ -148,7 +136,7 @@ class CardListRecyclerViewAdapter(liveData: LiveData<List<Card>>?,lifecycleOwner
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
-        var step = if (fromPosition < toPosition) {
+        val step = if (fromPosition < toPosition) {
             1
         } else {
             -1
