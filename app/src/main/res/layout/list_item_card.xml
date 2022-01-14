@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<!--the questioncards in the deck-->
+<!--The question cards in the deck-->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -11,89 +11,94 @@
             name="card"
             type="com.inglarna.blackeagle.model.Card" />
     </data>
-    
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:layout_height="wrap_content">
 
         <!--checkbox-->
         <CheckBox
             android:id="@+id/checkBox"
-            android:layout_width="48dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/aroundQuestionAnswer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_shadow"
-            android:padding="15dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:padding="16dp"
+            app:cardElevation="2dp"
+            app:cardPreventCornerOverlap="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/checkBox"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <!--number-->
-            <TextView
-                android:id="@+id/cardNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="@{String.valueOf(card.position)}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/drag_handle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_drag_handle" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cardNumber"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <!--question-->
-                <TextView
-                    android:id="@+id/textViewQuestion"
+                <!--number-->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/cardNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:text="@{card.getImageFreeQuestionFromHtml(context)}"
-                    app:layout_constraintStart_toEndOf="@+id/checkBox"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@{@string/card_position(card.position)}"
+                    android:textAppearance="?attr/textAppearanceListItemSecondary"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Question" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"/>
+                    tools:text="1" />
 
-                <!--answer-->
-                <TextView
-                    android:id="@+id/textViewAnswer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:text="@{card.getImageFreeAnswerFromHtml(context)}"
+                <ImageView
+                    android:id="@+id/drag_handle"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/checkBox"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewQuestion"
-                    tools:text="Answer"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_drag_handle" />
 
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--question-->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textViewQuestion"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@{card.getImageFreeQuestionFromHtml(context)}"
+                    android:textAlignment="textStart"
+                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    app:layout_constraintEnd_toStartOf="@+id/drag_handle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardNumber"
+                    tools:text="Question" />
+
+                    <!--answer-->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textViewAnswer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@{card.getImageFreeAnswerFromHtml(context)}"
+                    android:textAlignment="textStart"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    app:layout_constraintEnd_toStartOf="@+id/drag_handle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewQuestion"
+                    tools:text="Answer" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
