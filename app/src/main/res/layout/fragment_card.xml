@@ -11,13 +11,13 @@
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:id="@+id/Layout">
+        android:padding="8dp">
 
-        <androidx.appcompat.widget.SwitchCompat
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switch_show_html"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,109 +25,102 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideLine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.8" />
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/imageGuideLine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.2" />
         <!--Question-->
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/question"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch_show_html" />
-
-        <EditText
-            android:id="@+id/edit_text_question"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_text_layout_question"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/guideLine"
+            android:layout_marginEnd="8dp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toStartOf="@+id/imageButtonQuestion"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/switch_show_html">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/question"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
             android:id="@+id/imageButtonQuestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_text_question"
+            android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideLine"
-            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintTop_toTopOf="@+id/edit_text_layout_question"
             app:srcCompat="@drawable/ic_photo" />
 
-
         <!--Answer-->
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/answer"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_question" />
-
-        <EditText
-            android:id="@+id/edit_text_answer"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_answer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/guideLine"
+            android:layout_marginEnd="8dp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toStartOf="@+id/imageButtonAnswer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_layout_question">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/answer"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
             android:id="@+id/imageButtonAnswer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_text_answer"
+            android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideLine"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="@+id/text_input_layout_answer"
             app:srcCompat="@drawable/ic_photo" />
 
         <!--Hint-->
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hint"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_answer" />
-
-        <EditText
-            android:id="@+id/edit_text_hint"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_hint"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/guideLine"
+            android:layout_marginEnd="8dp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toStartOf="@+id/imageButtonAnswer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_answer">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
             android:id="@+id/imageButtonHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_text_hint"
+            android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideLine"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:layout_constraintTop_toTopOf="@+id/text_input_layout_hint"
             app:srcCompat="@drawable/ic_photo" />
 
-        <!--button-->
-        <Button
+        <!--Add card button-->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_add_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/add_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_hint"/>
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_hint" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

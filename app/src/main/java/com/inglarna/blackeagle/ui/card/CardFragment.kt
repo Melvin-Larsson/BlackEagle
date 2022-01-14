@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.widget.Toast
@@ -141,8 +142,8 @@ class CardFragment : Fragment() {
         }
 
         binding.buttonAddCard.setOnClickListener{
-            saveCard()
-            if(!isEditingCard){
+            val successful = saveCard()
+            if(successful && !isEditingCard){
                 reset()
             }
         }
@@ -169,38 +170,49 @@ class CardFragment : Fragment() {
         removeUnusedImages()
     }
 
-    private fun saveCard(){
+    private fun saveCard(): Boolean{
+        //Make sure fields are not empty
         val regexPattern = Regex("^\\s*$")
-        if (!regexPattern.matches(binding.editTextAnswer.text.toString()) &&
-            !regexPattern.matches(binding.editTextQuestion.text.toString())) {
-
-            card.deckId = deckId
-            if(!binding.switchShowHtml.isChecked){
-                convertFieldsToHtml()
+        var errors = false
+        var fields = arrayOf(binding.editTextAnswer, binding.editTextQuestion)
+        for(field in fields){
+            if(field.text!!.isEmpty()){
+                errors = true
+                field.error = getString(R.string.error_field_empty)
+            }else{
+                field.error = null
             }
-            card.question = binding.editTextQuestion.text.toString().trim()
-            card.answer = binding.editTextAnswer.text.toString().trim()
-            card.hint = binding.editTextHint.text.toString().trim()
-            removeUnusedImages()
-            if(!binding.switchShowHtml.isChecked){
-                convertFieldsFromHtml()
-            }
-            GlobalScope.launch {
-                //Add card
-                if(card.cardId == null){
-                    card.position = cardViewModel.getMaxPosition(deckId) + 1
-                    cardViewModel.addCard(card)
-                    linkImageToCard(card)
-                }
-                //Update card
-                else{
-                    cardViewModel.updateCard(card)
-                }
-            }
-            Toast.makeText(requireContext(), "du lade till ett kort", Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(requireContext(), "du din fuling, fyll i fälten", Toast.LENGTH_SHORT).show()
         }
+        if(errors){
+            return false
+        }
+
+        //Save card
+        card.deckId = deckId
+        if(!binding.switchShowHtml.isChecked){
+            convertFieldsToHtml()
+        }
+        card.question = binding.editTextQuestion.text.toString().trim()
+        card.answer = binding.editTextAnswer.text.toString().trim()
+        card.hint = binding.editTextHint.text.toString().trim()
+        removeUnusedImages()
+        if(!binding.switchShowHtml.isChecked){
+            convertFieldsFromHtml()
+        }
+        GlobalScope.launch {
+            //Add card
+            if(card.cardId == null){
+                card.position = cardViewModel.getMaxPosition(deckId) + 1
+                cardViewModel.addCard(card)
+                linkImageToCard(card)
+            }
+            //Update card
+            else{
+                cardViewModel.updateCard(card)
+            }
+        }
+        Toast.makeText(requireContext(), "du lade till ett kort", Toast.LENGTH_SHORT).show()
+        return true
     }
     private fun reset(){
         binding.editTextQuestion.setText("")
