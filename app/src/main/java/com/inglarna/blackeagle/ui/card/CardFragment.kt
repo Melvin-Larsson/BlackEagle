@@ -174,7 +174,7 @@ class CardFragment : Fragment() {
         //Make sure fields are not empty
         val regexPattern = Regex("^\\s*$")
         var errors = false
-        var fields = arrayOf(binding.editTextAnswer, binding.editTextQuestion)
+        val fields = arrayOf(binding.editTextAnswer, binding.editTextQuestion)
         for(field in fields){
             if(field.text!!.isEmpty()){
                 errors = true
@@ -192,9 +192,9 @@ class CardFragment : Fragment() {
         if(!binding.switchShowHtml.isChecked){
             convertFieldsToHtml()
         }
-        card.question = binding.editTextQuestion.text.toString().trim()
-        card.answer = binding.editTextAnswer.text.toString().trim()
-        card.hint = binding.editTextHint.text.toString().trim()
+        card.question = binding.editTextQuestion.text.toString().replace("\n", " ")
+        card.answer = binding.editTextAnswer.text.toString().replace("\n", " ")
+        card.hint = binding.editTextHint.text.toString().replace("\n", " ")
         removeUnusedImages()
         if(!binding.switchShowHtml.isChecked){
             convertFieldsFromHtml()
@@ -356,12 +356,5 @@ class CardFragment : Fragment() {
             binding.editTextQuestion.setText(Html.toHtml(binding.editTextQuestion.text).trim())
             binding.editTextHint.setText(Html.toHtml(binding.editTextHint.text).trim())
         }
-        removeTrailingNewLines()
-    }
-    private fun removeTrailingNewLines(){
-        val regex = Regex("(<br>)+$")
-        binding.editTextQuestion.setText(binding.editTextQuestion.text.toString().replace(regex, ""))
-        binding.editTextAnswer.setText(binding.editTextAnswer.text.toString().replace(regex, ""))
-        binding.editTextHint.setText(binding.editTextHint.text.toString().replace(regex, ""))
     }
 }
