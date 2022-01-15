@@ -15,14 +15,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <me.relex.circleindicator.CircleIndicator
+        <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/indicator"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="10dp"
+            app:ci_drawable="@drawable/circle_indicator"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="15dp"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"

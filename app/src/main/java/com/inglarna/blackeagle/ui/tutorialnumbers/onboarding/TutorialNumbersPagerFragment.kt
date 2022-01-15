@@ -9,6 +9,9 @@ import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentTutorialNumbesPagerBinding
 import com.inglarna.blackeagle.ui.tutorialnumbers.onboarding.screens.FirstScreen
 import com.jovanovic.stefan.mytestapp.onboarding.screens.SecondScreen
+import me.relex.circleindicator.CircleIndicator
+import me.relex.circleindicator.CircleIndicator3
+
 
 class TutorialNumbersPagerFragment : Fragment() {
     lateinit var binding: FragmentTutorialNumbesPagerBinding
@@ -31,6 +34,14 @@ class TutorialNumbersPagerFragment : Fragment() {
            lifecycle
         )
         binding.viewPager.adapter = adapter
+
+        val indicator = binding.indicator
+        indicator.setViewPager(binding.viewPager)
+
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 }
