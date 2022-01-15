@@ -1,4 +1,4 @@
-package com.inglarna.blackeagle.ui.tutorialnumbers
+package com.inglarna.blackeagle.ui.tutorialnumbers.onboarding.screens
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -15,25 +15,27 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.R
-import com.inglarna.blackeagle.databinding.FragmentTutorialNumbesBinding
+import com.inglarna.blackeagle.databinding.FragmentTutorialNumbers1Binding
 
-class TutorialNumbersFragment: Fragment() {
-    lateinit var binding: FragmentTutorialNumbesBinding
+class FirstScreen: Fragment() {
+    lateinit var binding: FragmentTutorialNumbers1Binding
     private var currentAnimator: Animator? = null
     private var shortAnimationDuration: Int = 0
 
-    companion object{
-        fun newInstance() = TutorialNumbersFragment()
-    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentTutorialNumbesBinding.inflate(inflater, container, false)
+        binding = FragmentTutorialNumbers1Binding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //empty title
+
+
+        //on image clicked
         val thumb1View: View = binding.convertNumbersImage
         thumb1View.setOnClickListener{
             zoomImageFromThumb(thumb1View, R.drawable.convert_numbers_table)

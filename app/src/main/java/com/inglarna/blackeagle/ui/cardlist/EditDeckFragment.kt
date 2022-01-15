@@ -74,6 +74,7 @@ class EditDeckFragment : Fragment() {
                 activity?.finish()
             }else{
                 deck = it
+                activity?.title = getString(R.string.edit_deck, deck.name)
                 setFavoriteIcon(it.favorite)
             }
         }
