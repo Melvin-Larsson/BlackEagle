@@ -1,123 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.inglarna.blackeagle.intervalAlgorithm.AbstractIntervalAlgorithm"/>
+        <import type="com.inglarna.blackeagle.HtmlUtils"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+        <variable
+            name="viewmodel"
+            type="com.inglarna.blackeagle.viewmodel.QuestionViewModel" />
+    </data>
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:fillViewport="true">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_shadow"
-            android:orientation="vertical"
-            android:padding="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/button_show_hint"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="16dp">
-            <!--Question-->
-            <TextView
-                android:id="@+id/text_view_question"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                tools:text="This is a temporary question, or is it?" />
+            android:padding="16dp">
 
-            <!--Hint-->
-            <TextView
-                android:id="@+id/text_view_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:visibility="visible"
-                tools:text="This is a temporary hint, the answer might be yes" />
-            <View
-                android:id="@+id/view"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/primaryColor" />
-
-            <!--Answer-->
-            <TextView
-                android:id="@+id/text_view_answer"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textSize="15sp"
-                android:visibility="visible"
-                tools:text="This is a temporary answer, and the answer is yes" />
-        </LinearLayout>
+                android:background="@drawable/card_shadow"
+                android:orientation="vertical"
+                android:padding="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/button_show_hint"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="16dp">
+                <!--Question-->
+                <TextView
+                    android:id="@+id/text_view_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:text="@{HtmlUtils.fromHtmlWithoutImages(context, viewmodel.question)}"
+                    tools:text="This is a temporary question, or is it?" />
 
-        <!--show hint button-->
-        <Button
-            android:id="@+id/button_show_hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/darker_gray"
-            android:text="@string/show_hint"
-            android:textColor="@android:color/white"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/button_show_answer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-        <!--show answer-->
-        <Button
-            android:id="@+id/button_show_answer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/show_answer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="invisible"/>
+                <!--Hint-->
+                <TextView
+                    android:id="@+id/text_view_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:visibility="@{viewmodel.isHintShowing ? View.VISIBLE : View.INVISIBLE}"
+                    android:text="@{HtmlUtils.fromHtmlWithoutImages(context, viewmodel.hint)}"
+                    tools:text="This is a temporary hint, the answer might be yes" />
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/primaryColor" />
 
-        <LinearLayout
-            android:id="@+id/difficulty_buttons_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="visible">
+                <!--Answer-->
+                <TextView
+                    android:id="@+id/text_view_answer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:visibility="@{viewmodel.isAnswerShowing ? View.VISIBLE : View.INVISIBLE}"
+                    android:text="@{HtmlUtils.fromHtmlWithoutImages(context, viewmodel.answer)}"
+                    tools:text="This is a temporary answer, and the answer is yes" />
+            </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_difficult"
-                android:layout_width="0dp"
+            <!--show hint button-->
+            <Button
+                android:id="@+id/button_show_hint"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/difficultButtonColor"
+                android:backgroundTint="@android:color/darker_gray"
+                android:text="@string/show_hint"
                 android:textColor="@android:color/white"
-                android:text="@string/hard" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_medium"
-                android:layout_width="0dp"
+                android:visibility='@{viewmodel.hint.equals("") || viewmodel.isAnswerShowing ? View.INVISIBLE : View.VISIBLE}'
+                android:onClick="@{() -> viewmodel.showHint()}"
+                app:layout_constraintBottom_toTopOf="@+id/button_show_answer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+            <!--show answer-->
+            <Button
+                android:id="@+id/button_show_answer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/mediumButtonColor"
-                android:textColor="@android:color/white"
-                android:text="@string/good" />
+                android:text="@string/show_answer"
+                android:onClick="@{() -> viewmodel.showAnswer()}"
+                android:visibility="@{viewmodel.isAnswerShowing ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="invisible"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_easy"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/difficulty_buttons_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/easyButtonColor"
-                android:textColor="@android:color/white"
-                android:text="@string/easy" />
+                android:orientation="horizontal"
+                android:visibility="@{viewmodel.isAnswerShowing ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible">
 
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_difficult"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/difficultButtonColor"
+                    android:textColor="@android:color/white"
+                    android:onClick="@{() -> viewmodel.setRetrievability(AbstractIntervalAlgorithm.DIFFICULT)}"
+                    android:text="@string/hard" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/mediumButtonColor"
+                    android:textColor="@android:color/white"
+                    android:onClick="@{() -> viewmodel.setRetrievability(AbstractIntervalAlgorithm.MEDIUM)}"
+                    android:text="@string/good" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_easy"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/easyButtonColor"
+                    android:textColor="@android:color/white"
+                    android:onClick="@{() -> viewmodel.setRetrievability(AbstractIntervalAlgorithm.EASY)}"
+                    android:text="@string/easy">
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

@@ -21,6 +21,7 @@ import com.inglarna.blackeagle.ui.card.CardActivity
 import com.inglarna.blackeagle.ui.question.QuestionFragment
 import com.inglarna.blackeagle.viewmodel.CardListViewModel
 import com.inglarna.blackeagle.viewmodel.CardListViewModelFactory
+import getCurrentDay
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 import java.util.*
@@ -126,7 +127,7 @@ class CardListFragment : Fragment() {
         observeData()
         initializeCardMoving()
 
-        cardListViewModel.getCardsByNextRepetition(ceil(Date().time / (1000 * 3600 * 24).toDouble())).observe(this, {
+        cardListViewModel.getCardsByNextRepetition(getCurrentDay().toDouble() + 1).observe(this, {
             deckFinishedToday = it.isEmpty()
         })
 

@@ -1,10 +1,15 @@
 package com.inglarna.blackeagle.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.LiveDataScope
+import androidx.room.Query
 import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.db.CardDao
 import com.inglarna.blackeagle.model.Card
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class CardRepo (context: Context){
     private val db = BlackEagleDatabase.getInstance(context)
@@ -38,6 +43,12 @@ class CardRepo (context: Context){
     }
     fun getFullDeckByNextRepetition(deckId: Long, maxDay: Double): LiveData<List<Card>>{
         return cardDao.loadFullDeckByNextRepetition(deckId, maxDay)
+    }
+    suspend fun getOldCardsByNextRepetition(deckId: Long, cardCount: Int): List<Card> = withContext(Dispatchers.IO){
+        cardDao.getOldCardsByNextRepetition(deckId, cardCount)
+    }
+    suspend fun getNewCardsByNextRepetition(deckId: Long, cardCount: Int): List<Card> = withContext(Dispatchers.IO){
+        cardDao.getNewCardsByNextRepetition(deckId, cardCount)
     }
     fun getDeckSize(deckId: Long) : LiveData<Int>{
         return cardDao.loadDeckSize(deckId)

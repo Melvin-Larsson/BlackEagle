@@ -25,6 +25,12 @@ interface CardDao {
     @Query("SELECT MAX(position) FROM Card WHERE deckId = :deckId")
     fun getMaxPosition(deckId: Long) : Int
 
+    @Query("SELECT * FROM Card WHERE deckId = :deckId AND lastRepetition IS NOT NULL ORDER BY nextRepetition ASC LIMIT :cardCount")
+    fun getOldCardsByNextRepetition(deckId: Long, cardCount: Int): List<Card>
+
+    @Query("SELECT * FROM Card WHERE deckId = :deckId AND lastRepetition IS NULL LIMIT :cardCount")
+        fun getNewCardsByNextRepetition(deckId: Long, cardCount: Int): List<Card>
+
     @Insert(onConflict = IGNORE)
     fun insertCard(card: Card): Long
 

@@ -92,9 +92,10 @@ data class DeckWithCards(
                 card.hint = reader.readLine()
                 card.position = reader.readLine().toInt()
                 if(repetitionDataWritten){
-                    card.firstRepetition = reader.readLine().toDouble()
+                    card.lastRepetition = reader.readLine().toDouble()
                     card.nextRepetition = reader.readLine().toDouble()
-                    card.k = reader.readLine().toDouble()
+                    card.repetitions = reader.readLine().toInt()
+                    card.easinessFactor = reader.readLine().toDouble()
                 }
                 cards.add(card)
             }
@@ -212,9 +213,11 @@ data class DeckWithCards(
             outputStreamWriter.write(card.hint + "\n")
             outputStreamWriter.write(card.position.toString() + "\n")
             if(writeRepetitionData){
-                outputStreamWriter.write(card.firstRepetition.toString() + "\n")
+                outputStreamWriter.write(card.lastRepetition.toString() + "\n")
                 outputStreamWriter.write(card.nextRepetition.toString() + "\n")
-                outputStreamWriter.write(card.k.toString())
+                outputStreamWriter.write(card.repetitions.toString() + "\n")
+                outputStreamWriter.write(card.easinessFactor.toString())
+
             }
         }
         outputStreamWriter.close()
