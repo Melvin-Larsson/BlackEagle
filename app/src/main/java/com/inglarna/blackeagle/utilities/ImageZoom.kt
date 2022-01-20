@@ -1,4 +1,4 @@
-package com.inglarna.blackeagle.ui.tutorialnumbers.onboarding.screens
+package com.inglarna.blackeagle.utilities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -7,49 +7,27 @@ import android.animation.ObjectAnimator
 import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.RectF
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
+import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.fragment.app.Fragment
-import com.inglarna.blackeagle.R
-import com.inglarna.blackeagle.databinding.FragmentTutorialNumbers1Binding
 
-class FirstScreen: Fragment() {
-    lateinit var binding: FragmentTutorialNumbers1Binding
+class ImageZoom {
+
+    //TODO am I allowed to do this
+
     private var currentAnimator: Animator? = null
-    private var shortAnimationDuration: Int = 0
-
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentTutorialNumbers1Binding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        //empty title
-
-
-        //on image clicked
-        val thumb1View: View = binding.convertNumbersImage
-        thumb1View.setOnClickListener{
-            zoomImageFromThumb(thumb1View, R.drawable.convert_numbers_table)
-        }
-        shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
-    }
-
-    private fun zoomImageFromThumb(thumbView: View, imageResId: Int) {
+    var shortAnimationDuration: Int = 0
+    fun zoomImageFromThumb(thumbView: View,
+                           imageResId: Int,
+                           expandedImage: ImageView,
+                           container: FrameLayout) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
         currentAnimator?.cancel()
 
         // Load the high-resolution "zoomed-in" image.
-        val expandedImageView: ImageView = binding.expandedConvertNumbersImage
+        val expandedImageView: ImageView = expandedImage
         expandedImageView.setImageResource(imageResId)
 
         // Calculate the starting and ending bounds for the zoomed-in image.
@@ -64,7 +42,7 @@ class FirstScreen: Fragment() {
         // bounds, since that's the origin for the positioning animation
         // properties (X, Y).
         thumbView.getGlobalVisibleRect(startBoundsInt)
-        binding.container
+        container
             .getGlobalVisibleRect(finalBoundsInt, globalOffset)
         startBoundsInt.offset(-globalOffset.x, -globalOffset.y)
         finalBoundsInt.offset(-globalOffset.x, -globalOffset.y)
@@ -110,10 +88,10 @@ class FirstScreen: Fragment() {
         currentAnimator = AnimatorSet().apply {
             play(
                 ObjectAnimator.ofFloat(
-                expandedImageView,
-                View.X,
-                startBounds.left,
-                finalBounds.left)
+                    expandedImageView,
+                    View.X,
+                    startBounds.left,
+                    finalBounds.left)
             ).apply {
                 with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.top, finalBounds.top))
                 with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_X, startScale, 1f))

@@ -1,4 +1,4 @@
-package com.inglarna.blackeagle.ui.tutorialnumbers.onboarding
+package com.inglarna.blackeagle.ui.tutorialnumbers.viewPager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

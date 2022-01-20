@@ -16,6 +16,7 @@
         <item name="colorOnBackground">@color/primaryColor</item>
         <item name="colorSurface">@color/surfaceColor</item>
         <item name="colorOnSurface">@android:color/black</item>
+        <item name="android:colorBackground">@color/backgroundColor</item>
 
     </style>
 </resources>

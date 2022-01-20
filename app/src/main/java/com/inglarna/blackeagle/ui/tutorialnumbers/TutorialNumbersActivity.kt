@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.ui.SingleFragmentActivity
-import com.inglarna.blackeagle.ui.tutorialnumbers.onboarding.TutorialNumbersPagerFragment
+import com.inglarna.blackeagle.ui.tutorialnumbers.viewPager.TutorialNumbersPagerFragment
 
 class TutorialNumbersActivity: SingleFragmentActivity() {
     override fun createFragment(): Fragment = TutorialNumbersPagerFragment.newInstance()

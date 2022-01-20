@@ -1,16 +1,13 @@
-package com.inglarna.blackeagle.ui.tutorialnumbers.onboarding
+package com.inglarna.blackeagle.ui.tutorialnumbers.viewPager
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentTutorialNumbesPagerBinding
-import com.inglarna.blackeagle.ui.tutorialnumbers.onboarding.screens.FirstScreen
+import com.inglarna.blackeagle.ui.tutorialnumbers.viewPager.screens.FirstScreen
 import com.jovanovic.stefan.mytestapp.onboarding.screens.SecondScreen
-import me.relex.circleindicator.CircleIndicator
-import me.relex.circleindicator.CircleIndicator3
 
 
 class TutorialNumbersPagerFragment : Fragment() {
@@ -41,7 +38,5 @@ class TutorialNumbersPagerFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
+
 }
