@@ -25,6 +25,7 @@
     </plurals>
     <string name="card_answer">Answer: %1$s</string>
     <string name="card_question">Question: %1$s</string>
+    <string name="edit_deck">Edit %1$s</string>
     <string name="card_number">%1$d</string>
     <string name="all">All</string>
     <string name="folders">Folders</string>
@@ -52,7 +53,12 @@
     <string name="todo" translatable="false">TODO</string>
     <string name="exportDeck">Export</string>
     <string name="importDeck">Import</string>
-    <string name="convertTutorial">Converting numbers is mainly used for remembering a sequence of numbers. Every number from 0–9 can be translated to a sound according to         the table below. The sounds can then be used to create different words.</string>
+    <string name="convertTutorial1">Converting numbers is mainly used for remembering a sequence of numbers.
+        Every number from 0–9 can be translated to a sound according to the table below.The sounds can then be used to create different words.</string>
+    <string name="convertTutorial2Text1">When conversion of the number 123456789 takes place, the number is divided into numbers with 3 digits as in the picture below.
+        Then the numbers are translated into a word sequence, in this case ().</string>
+    <string name="convertTutorial2Text2">
+        But if the length of the number is not divisible by 3, zeros will be added at the beginning of the number until it is divisible by 3.</string>
     <string name="closeSelect">Close</string>
     <string name="add_to_folder">Add to folder</string>
     <string name="add_to_favourites">Add to favourites</string>
@@ -66,4 +72,6 @@
     <string name="tutorial" translatable="false">Tutorial</string>
     <string name="card_position" translatable="false">#%d</string>
     <string name="error_field_empty">Field can not be empty</string>
+    <string name="top">Top</string>
+    <string name="bottom">Bottom</string>
 </resources>

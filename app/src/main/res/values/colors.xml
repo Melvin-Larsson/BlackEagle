@@ -13,6 +13,6 @@
     <color name="difficultButtonColor">#ff0000</color>
     <color name="mediumButtonColor">#005cb2</color>
     <color name="easyButtonColor">#2bff00</color>
-    <color name="backgroundColor">#eeeeee</color>
+    <color name="backgroundColor">#eaebef</color>
     <color name="surfaceColor">#ffffff</color>
 </resources>
