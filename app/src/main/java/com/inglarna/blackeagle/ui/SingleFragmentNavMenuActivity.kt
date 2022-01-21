@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.inglarna.blackeagle.R
-import com.inglarna.blackeagle.ui.about.AboutActivity
 import com.inglarna.blackeagle.ui.convertnumber.NumbersActivity
 import com.inglarna.blackeagle.ui.decklist.MainActivity
 import com.inglarna.blackeagle.ui.settings.SettingsActivity
+import com.inglarna.blackeagle.ui.stats.StatsActivity
+
 //Test
 abstract class SingleFragmentNavMenuActivity: SingleFragmentActivity() {
     lateinit var toggle: ActionBarDrawerToggle
@@ -27,7 +28,6 @@ abstract class SingleFragmentNavMenuActivity: SingleFragmentActivity() {
                 R.id.convertNumbers -> startConvertNumbers()
                 R.id.settings -> startSettings()
                 R.id.stats -> startStats()
-                R.id.about -> startAbout()
             }
             true
         }
@@ -49,9 +49,6 @@ abstract class SingleFragmentNavMenuActivity: SingleFragmentActivity() {
         startActivity(Intent(this, SettingsActivity::class.java))
     }
     private fun startStats(){
-        //startActivity(Intent(this, StatsActivity::class.java))
-    }
-    private fun startAbout(){
-        startActivity(Intent(this, AboutActivity::class.java))
+        startActivity(Intent(this, StatsActivity::class.java))
     }
 }

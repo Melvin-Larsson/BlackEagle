@@ -1,17 +1,15 @@
-package com.inglarna.blackeagle.ui.about
+package com.inglarna.blackeagle.ui.stats
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.ui.SingleFragmentNavMenuActivity
 
-//aboutActivity
-class AboutActivity: SingleFragmentNavMenuActivity() {
-    override fun createFragment(): Fragment = AboutFragment.newInstance()
+class StatsActivity: SingleFragmentNavMenuActivity() {
+    override fun createFragment(): Fragment = StatsFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val actionbar = supportActionBar
-        actionbar!!.title = getString(R.string.about)
     }
 }
