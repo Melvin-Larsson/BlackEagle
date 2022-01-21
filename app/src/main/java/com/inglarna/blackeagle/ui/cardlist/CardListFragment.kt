@@ -19,23 +19,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.inglarna.blackeagle.ui.card.CardActivity
 import com.inglarna.blackeagle.ui.question.QuestionFragment
-import com.inglarna.blackeagle.viewmodel.CardListViewModel
-import com.inglarna.blackeagle.viewmodel.CardListViewModelFactory
-import getCurrentDay
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
-import java.util.*
-import kotlin.math.ceil
 
 class CardListFragment : Fragment() {
     private lateinit var binding : FragmentCardListBinding
     private lateinit var cardListViewModel : CardListViewModel
     private lateinit var adapter : CardListRecyclerViewAdapter
+    //Toolbar buttons
     private lateinit var deleteButton: MenuItem
     private lateinit var selectAllButton: MenuItem
     private lateinit var closeSelectButton: MenuItem
     private lateinit var moreButton: MenuItem
-    private var deckFinishedToday = false
+
     private val startStudyForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
         if(result.resultCode == Activity.RESULT_OK){
             val intent = result.data
@@ -59,7 +55,6 @@ class CardListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //toolbar
         setHasOptionsMenu(true)
     }
 
@@ -70,6 +65,13 @@ class CardListFragment : Fragment() {
         deleteButton = menu.findItem((R.id.delete))
         moreButton = menu.findItem(R.id.more)
         closeSelectButton = menu.findItem(R.id.closeSelect)
+
+        /*Must observe select after menu has been created,
+          otherwise the visibility of menuOptions will be toggled before they reference anything
+          causing an exception*/
+        cardListViewModel.select.observe(viewLifecycleOwner){ isSelecting ->
+            setToolbarVisibility(isSelecting)
+        }
     }
     //when clicking in the toolbar
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -78,10 +80,10 @@ class CardListFragment : Fragment() {
                 activity!!.finish()
                 return true
             }
-            R.id.delete -> delete()
-            R.id.selectAllCards -> adapter.selectAll()
+            R.id.delete -> cardListViewModel.deleteSelectedCards()
+            R.id.selectAllCards -> cardListViewModel.selectAll()
             R.id.more -> startActivity(EditDeckActivity.newIntent(context!!, cardListViewModel.deckId))
-            R.id.closeSelect -> closeSelect()
+            R.id.closeSelect -> cardListViewModel.setSelect(false)
         }
         return true
     }
@@ -92,52 +94,50 @@ class CardListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //Retrieve ViewModel
         val deckId = arguments!!.getLong(DECK_ID, -1)
-        cardListViewModel = ViewModelProvider(this, CardListViewModelFactory(activity!!.application, deckId)).get(CardListViewModel::class.java)
-        //creating adapter
-        cardListViewModel.deck.observe(this){
-            if (it == null){
+        cardListViewModel = ViewModelProvider(this, CardListViewModelFactory(activity!!.application, deckId))[CardListViewModel::class.java]
+
+        //End activity if no deck can be found, set the toolbar title otherwise
+        cardListViewModel.deck.observe(this){ deck ->
+            if (deck == null){
                 activity?.finish()
             }else{
-                activity?.title = it.name
+                activity?.title = deck.name
             }
         }
-        adapter = CardListRecyclerViewAdapter(context!!)
-        binding.recyclerViewCard.adapter = adapter
-        binding.recyclerViewCard.layoutManager = LinearLayoutManager(requireContext())
+
+        //Recyclerview
+        initializeRecyclerView()
+
+        //Add card button
         binding.buttonAddCard.setOnClickListener{
             startActivity(CardActivity.newIntent(context!!, cardListViewModel.deckId))
         }
-        binding.startStudyButton.setOnClickListener{
-            if(deckFinishedToday){
-                showConfirmExtraStudyDialog()
-            }else{
-                startStudyForResult.launch(QuestionActivity.newIntent(context!!, cardListViewModel.deckId, false))
+
+        //Start study button
+        cardListViewModel.deckFinished.observe(viewLifecycleOwner){ deckFinished ->
+            binding.startStudyButton.setOnClickListener{
+                if(deckFinished){
+                    showConfirmExtraStudyDialog()
+                }else{
+                    startStudyForResult.launch(QuestionActivity.newIntent(context!!, cardListViewModel.deckId, false))
+                }
             }
         }
-        adapter.onDeleteCardClicked={ card ->
-            cardListViewModel.deleteCard(card)
-        }
-        adapter.onEditCardClicked = { card ->
-            startActivity(CardActivity.newIntent(context!!, card.deckId, card.cardId))
-        }
-        adapter.selectMultipleCallback = {
-            toolbarVisibility()
-        }
-        observeData()
-        initializeCardMoving()
-
-        cardListViewModel.getCardsByNextRepetition(getCurrentDay().toDouble() + 1).observe(this, {
-            deckFinishedToday = it.isEmpty()
-        })
-
     }
-    private fun observeData(){
-        cardListViewModel.cards.observe(this, {
+    private fun initializeRecyclerView(){
+        //Setup adapter
+        adapter = CardListRecyclerViewAdapter(cardListViewModel, viewLifecycleOwner)
+        binding.recyclerViewCard.adapter = adapter
+        binding.recyclerViewCard.layoutManager = LinearLayoutManager(requireContext())
+
+        //Observer cards
+        cardListViewModel.cards.observe(viewLifecycleOwner, {
             adapter.cards = it
         })
-    }
-    private fun initializeCardMoving(){
+
+        //Initialize moving of cards
         val touchHelperCallback = SimpleItemTouchHelperCallback()
         touchHelperCallback.touchHelperAdapter = adapter
         touchHelperCallback.clearViewCallback = SimpleItemTouchHelperCallback.ClearViewCallback{
@@ -155,33 +155,22 @@ class CardListFragment : Fragment() {
 
     private fun showConfirmExtraStudyDialog(){
         AlertDialog.Builder(context)
-            .setTitle("Confirm")
-            .setMessage("Do you really want to study?")
+            .setTitle(getString(R.string.confirm))
+            .setMessage(getString(R.string.study_beforehand_question))
             .setIcon(android.R.drawable.ic_dialog_alert)
-            .setPositiveButton(android.R.string.yes){dialog, _ ->
+            .setPositiveButton(android.R.string.ok){_, _ ->
                 startStudyForResult.launch(QuestionActivity.newIntent(context!!, cardListViewModel.deckId, true))
             }
-            .setNegativeButton(android.R.string.no, null)
+            .setNegativeButton(android.R.string.cancel, null)
             .show()
     }
 
-    private fun toolbarVisibility(){
+    private fun setToolbarVisibility(showSelect: Boolean){
         //visibility of toolbar and checkbox
-        deleteButton.isVisible = adapter.select
-        selectAllButton.isVisible = adapter.select
-        closeSelectButton.isVisible = adapter.select
-        moreButton.isVisible = !adapter.select
-    }
-
-    private fun closeSelect() {
-        adapter.select = !adapter.select
-        toolbarVisibility()
-    }
-    private fun delete(){
-        val selectedCards = adapter.selectedCards.toMutableList()
-        cardListViewModel.deleteCards(selectedCards)
-        adapter.select = false
-        toolbarVisibility()
+        deleteButton.isVisible = showSelect
+        selectAllButton.isVisible = showSelect
+        closeSelectButton.isVisible = showSelect
+        moreButton.isVisible = !showSelect
     }
 
     private fun showConfetti(){

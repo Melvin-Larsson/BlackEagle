@@ -1,4 +1,4 @@
-package com.inglarna.blackeagle.viewmodel
+package com.inglarna.blackeagle.ui.cardlist
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

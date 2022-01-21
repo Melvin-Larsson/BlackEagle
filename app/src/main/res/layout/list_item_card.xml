@@ -7,6 +7,12 @@
     xmlns:tools="http://schemas.android.com/tools">
     
     <data>
+        
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.inglarna.blackeagle.ui.cardlist.CardListViewModel" />
+
         <variable
             name="card"
             type="com.inglarna.blackeagle.model.Card" />
@@ -14,14 +20,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> checkBox.setChecked(!checkBox.isChecked())}"
+        android:onLongClick="@{() -> viewModel.onCardLongClicked(card)}">
 
         <!--checkbox-->
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
+            android:checked="@{viewModel.selectedCards.contains(card)}"
+            android:onCheckedChanged="@{() -> viewModel.setSelectionState(card, checkBox.isChecked())}"
+            android:visibility="@{viewModel.select ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +47,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBox"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,11 +73,11 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginEnd="8dp"
-                    app:tint="?attr/colorOnSurface"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_drag_handle" />
+                    app:srcCompat="@drawable/ic_drag_handle"
+                    app:tint="?attr/colorOnSurface" />
 
 
                 <!--question-->

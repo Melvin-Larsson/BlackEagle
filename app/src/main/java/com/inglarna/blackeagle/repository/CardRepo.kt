@@ -29,6 +29,9 @@ class CardRepo (context: Context){
     fun deleteCards(cards: List<Card>){
         cardDao.deleteCards(cards)
     }
+    fun deleteCards(cards: Set<Card>){
+        cardDao.deleteCards(cards)
+    }
     fun updateCard(card: Card){
         cardDao.updateCard(card)
     }

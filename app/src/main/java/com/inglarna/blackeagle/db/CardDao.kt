@@ -29,7 +29,7 @@ interface CardDao {
     fun getOldCardsByNextRepetition(deckId: Long, cardCount: Int): List<Card>
 
     @Query("SELECT * FROM Card WHERE deckId = :deckId AND lastRepetition IS NULL LIMIT :cardCount")
-        fun getNewCardsByNextRepetition(deckId: Long, cardCount: Int): List<Card>
+    fun getNewCardsByNextRepetition(deckId: Long, cardCount: Int): List<Card>
 
     @Insert(onConflict = IGNORE)
     fun insertCard(card: Card): Long
@@ -48,4 +48,7 @@ interface CardDao {
 
     @Delete
     fun deleteCards(cards: List<Card>)
+
+    @Delete
+    fun deleteCards(cards: Set<Card>)
 }
