@@ -17,9 +17,6 @@ import com.anychart.charts.LinearGauge.instantiate
 import com.anychart.core.cartesian.series.Line;
 import com.anychart.data.Mapping;
 import com.anychart.data.Set;
-import com.anychart.enums.Anchor;
-import com.anychart.enums.MarkerType;
-import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -28,18 +25,19 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.inglarna.blackeagle.databinding.FragmentSettingsBinding
 import com.inglarna.blackeagle.databinding.FragmentStatsBinding
 
-import java.util.ArrayList;
-
-
-
-
+import android.R
+import android.os.Build
+import android.util.Log
+import com.anychart.core.cartesian.series.Column
+import com.anychart.enums.*
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class StatsFragment : Fragment() {
         lateinit var binding : FragmentStatsBinding
-        lateinit var barList:ArrayList<BarEntry>
-        lateinit var barDataSet: BarDataSet
-        lateinit var barData: BarData
 
         companion object {
             fun newInstance() = StatsFragment()
@@ -52,42 +50,55 @@ class StatsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        barList = ArrayList()
-        barList.add(BarEntry(10f, 200f))
-        barList.add(BarEntry(10f, 300f))
-        barList.add(BarEntry(10f, 400f))
-        barList.add(BarEntry(10f, 500f))
-        barList.add(BarEntry(10f, 600f))
-        barList.add(BarEntry(10f, 700f))
-        barList.add(BarEntry(10f, 800f))
-        val barDataSet = BarDataSet(barList, "")
-        barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
 
-        val data = BarData(barDataSet)
-        binding.barChart.data = data
+        val anyChartView: AnyChartView = binding.barChart
 
+        val cartesian = AnyChart.column()
 
-        //hide grid lines
-        binding.barChart.axisLeft.setDrawGridLines(false)
-        binding.barChart.xAxis.setDrawGridLines(false)
-        binding.barChart.xAxis.setDrawAxisLine(false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val current = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("MM-dd")
+            var answer: String =  current.format(formatter)
+            Log.d("answer",answer)
+        } else {
+            var date = Date()
+            val formatter = SimpleDateFormat("MM-dd")
+            val answer: String = formatter.format(date)
+            Log.d("answer",answer)
+        }
 
-        //remove right y-axis
-        binding.barChart.axisRight.isEnabled = false
+        val data: MutableList<DataEntry> = ArrayList()
+        data.add(ValueDataEntry("hej", 80540))
+        data.add(ValueDataEntry("01-22", 94190))
+        data.add(ValueDataEntry("day 3", 102610))
+        data.add(ValueDataEntry("gj", 110430))
+        data.add(ValueDataEntry("Lip", 128000))
+        data.add(ValueDataEntry("Nail", 143760))
+        data.add(ValueDataEntry("Eyeb", 170670))
 
-        //remove legend
-        binding.barChart.legend.isEnabled = false
+        val column: Column = cartesian.column(data)
 
+        column.tooltip()
+            .titleFormat("{%X}")
+            .position(Position.CENTER_BOTTOM)
+            .anchor(Anchor.CENTER_BOTTOM)
+            .offsetX(0.0)
+            .offsetY(5.0)
+            .format("\${%Value}{groupsSeparator: }")
 
-        //remove description label
-        binding.barChart.description.isEnabled = false
+        cartesian.animation(true)
+        cartesian.title("studies during the week")
 
+        cartesian.yScale().minimum(0.0)
 
-        //add animation
-        binding.barChart.animateY(3000)
+        cartesian.yAxis(0).labels().format("\${%Value}{groupsSeparator: }")
 
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
+        cartesian.interactivity().hoverMode(HoverMode.BY_X)
 
-        //draw chart
-        binding.barChart.invalidate()
+        cartesian.xAxis(0).title("Product")
+        cartesian.yAxis(0).title("Revenue")
+
+        anyChartView.setChart(cartesian)
     }
 }
