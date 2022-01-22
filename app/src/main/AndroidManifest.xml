@@ -70,6 +70,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.cardlist.EditDeckActivity"/>
         </activity>
+        <activity android:name=".ui.folder.FolderActivity">
+            android:parentActivityName=".ui.decklist.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.decklist.MainActivity"/>
+        </activity>
+        <activity android:name=".ui.deckPicker.DeckPickerActivity">
+            android:parentActivityName=".ui.folder.FolderActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.folder.FolderActivity"/>
+        </activity>
 
     </application>
 

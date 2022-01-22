@@ -28,18 +28,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Folder" />
 
-        <ImageView
-            android:id="@+id/arrow_image_drop_down"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_drop_down_arrow"
-            android:visibility="@{folderWithDecks.decks.size() > 0 ? View.VISIBLE : View.GONE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/darker_gray" />
-
         <LinearLayout
             android:id="@+id/deck_container"
             android:layout_width="match_parent"

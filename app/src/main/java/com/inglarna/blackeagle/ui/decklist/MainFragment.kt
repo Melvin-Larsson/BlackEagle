@@ -1,14 +1,13 @@
 package com.inglarna.blackeagle.ui.decklist
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckPagerBinding
@@ -20,6 +19,9 @@ import kotlinx.coroutines.launch
 class MainFragment : Fragment() {
 
     lateinit var binding : FragmentDeckPagerBinding
+    private val viewModel by viewModels<DeckListViewModel>()
+
+    private var isFabExpanded = false
 
     companion object{
         fun newInstance() = MainFragment()
@@ -42,12 +44,43 @@ class MainFragment : Fragment() {
                 else -> ""
             }
         }.attach()
-        binding.addDeckButton.setOnClickListener{
-            showCreateDeckDialog()
+        //Expand fab menu button
+        binding.expandFab.setOnClickListener{
+            if(isFabExpanded) {
+                collapseFabMenu()
+            }else{
+                expandFabMenu()
+            }
+        }
+        binding.addDeckFab.setOnClickListener{
+            addDeck()
+            collapseFabMenu()
+        }
+        binding.addFolderFab.setOnClickListener{
+            addFolder()
+            collapseFabMenu()
         }
     }
+    private fun expandFabMenu(){
+        isFabExpanded = true
+        //Add deck button
+        binding.addDeckFab.animate().translationY(-180f)
+        binding.addDeckActionText.animate().translationY(-180f).alpha(1f)
+        //Add folder button
+        binding.addFolderFab.animate().translationY(-340f)
+        binding.addFolderActionText.animate().translationY(-340f).alpha(1f)
+    }
+    private fun collapseFabMenu(){
+        isFabExpanded = false
+        //Add deck button
+        binding.addDeckFab.animate().translationY(0f)
+        binding.addDeckActionText.animate().translationY(0f).alpha(0f)
+        //Add folder button
+        binding.addFolderFab.animate().translationY(0f)
+        binding.addFolderActionText.animate().translationY(0f).alpha(0f)
+    }
 
-    private fun showCreateDeckDialog(){
+    private fun addDeck(){
         val deckEditText = EditText(requireContext())
         deckEditText.inputType = InputType.TYPE_CLASS_TEXT
 
@@ -62,7 +95,20 @@ class MainFragment : Fragment() {
                 GlobalScope.launch{
                     deckDao.insertDeck(deck)
                 }
-                Toast.makeText(requireContext(), "Added $deck", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+    private fun addFolder(){
+        val folderEditText = EditText(requireContext())
+        folderEditText.inputType = InputType.TYPE_CLASS_TEXT
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.folder_to_add))
+            .setView(folderEditText)
+            .setPositiveButton(R.string.add_folder){dialog, _ ->
+                viewModel.addFolder(folderEditText.text.toString())
                 dialog.dismiss()
             }
             .create()

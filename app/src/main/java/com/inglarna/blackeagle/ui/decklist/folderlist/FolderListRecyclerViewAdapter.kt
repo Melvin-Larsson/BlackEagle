@@ -1,27 +1,19 @@
-package com.inglarna.blackeagle.ui.decklist
+package com.inglarna.blackeagle.ui.decklist.folderlist
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.ListItemFolderBinding
 import com.inglarna.blackeagle.model.Deck
+import com.inglarna.blackeagle.model.Folder
 import com.inglarna.blackeagle.model.FolderWithDecks
 
 class FolderListRecyclerViewAdapter(val context: Context): RecyclerView.Adapter<FolderListViewHolder>() {
-    var onDeckClicked : ((Deck) -> Unit) = {}
+    var onFolderSelected: (Folder) -> Unit = {}
     var folders : List<FolderWithDecks> = ArrayList()
-    set(value){
-        field = value
-        notifyDataSetChanged()
-    }
-    private var expandedFolders = ArrayList<FolderWithDecks>()
     set(value){
         field = value
         notifyDataSetChanged()
@@ -38,7 +30,10 @@ class FolderListRecyclerViewAdapter(val context: Context): RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: FolderListViewHolder, position: Int) {
         holder.binding.folderWithDecks = folders[position]
-        if(expandedFolders.contains(folders[position])){
+        holder.itemView.setOnClickListener{
+            onFolderSelected(folders[position].folder)
+        }
+        /*if(expandedFolders.contains(folders[position])){
             holder.binding.deckContainer.removeAllViews()
             val inflater = LayoutInflater.from(context)
             for(deck in folders[position].decks){
@@ -65,7 +60,7 @@ class FolderListRecyclerViewAdapter(val context: Context): RecyclerView.Adapter<
 
             }
             notifyItemChanged(position)
-        }
+        }*/
     }
 
     override fun getItemCount(): Int = folders.size

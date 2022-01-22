@@ -4,6 +4,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,19 +17,70 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!--where the decks are displayed-->
+
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/deck_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/deck_tab_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/deck_tab_layout"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" >
 
-    <!--button for adding a deck-->
+    </androidx.viewpager2.widget.ViewPager2>
+
+    <!--Floating action button for adding deck-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_deck_button"
+        android:id="@+id/add_deck_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:src="@drawable/ic_add"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="@+id/expand_fab"
+        app:layout_constraintEnd_toEndOf="@+id/expand_fab"
+        app:layout_constraintStart_toStartOf="@+id/expand_fab"
+        app:layout_constraintTop_toTopOf="@+id/expand_fab" />
+
+    <TextView
+        android:id="@+id/add_deck_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/add_deck"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="@+id/add_deck_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_deck_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_deck_fab" />
+
+    <!--Floating action button for adding folder-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_folder_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_to_folder"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="@+id/expand_fab"
+        app:layout_constraintEnd_toEndOf="@+id/expand_fab"
+        app:layout_constraintStart_toStartOf="@+id/expand_fab"
+        app:layout_constraintTop_toTopOf="@+id/expand_fab" />
+
+    <TextView
+        android:id="@+id/add_folder_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/add_folder"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="@+id/add_folder_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_folder_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_folder_fab" />
+
+    <!--Parent floating action button-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/expand_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_menu_add"
         app:layout_constraintBottom_toBottomOf="parent"

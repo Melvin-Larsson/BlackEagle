@@ -3,10 +3,7 @@ package com.inglarna.blackeagle.db
 import android.icu.text.CaseMap
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.inglarna.blackeagle.model.DeckWithFolders
-import com.inglarna.blackeagle.model.Folder
-import com.inglarna.blackeagle.model.FolderDeckCrossRef
-import com.inglarna.blackeagle.model.FolderWithDecks
+import com.inglarna.blackeagle.model.*
 
 @Dao
 interface FolderDao {
@@ -34,6 +31,9 @@ interface FolderDao {
     @Transaction
     @Query("SELECT * FROM Deck")
     fun getAllDecksWithFolders(): LiveData<List<DeckWithFolders>>
+
+    @Query("SELECT * FROM Deck WHERE deckId NOT IN (SELECT deckId FROM FolderDeckCrossRef WHERE folderId=:folderId)")
+    fun getDecksOutsideOfFolder(folderId: Long): LiveData<List<Deck>>
 
     @Insert
     fun addFolder(folder: Folder): Long

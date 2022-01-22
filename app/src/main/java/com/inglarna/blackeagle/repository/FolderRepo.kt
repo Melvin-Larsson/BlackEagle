@@ -30,6 +30,9 @@ class FolderRepo(context: Context) {
     fun getAllDecksWithFolders(): LiveData<List<DeckWithFolders>>{
         return folderDao.getAllDecksWithFolders()
     }
+    fun getDecksOutsideOfFolder(folderId: Long): LiveData<List<Deck>>{
+        return folderDao.getDecksOutsideOfFolder(folderId)
+    }
     fun addFolder(folder: Folder): Long{
         return folderDao.addFolder(folder)
     }

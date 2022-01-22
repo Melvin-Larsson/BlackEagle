@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/delete"
+        android:title="@string/delete"
+        android:icon="@drawable/ic_delete"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
+    <item
+        android:id="@+id/selectAllDecks"
+        android:title="@string/select_all_cards"
+        android:icon="@drawable/ic_select_all"
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/closeSelect"
+        android:title="@string/closeSelect"
+        android:icon="@drawable/ic_close_select"
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/addDeck"
+        android:title="@string/add_deck"
+        android:icon="@drawable/ic_add"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+</menu>

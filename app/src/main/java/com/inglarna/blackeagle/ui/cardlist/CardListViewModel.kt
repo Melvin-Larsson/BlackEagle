@@ -56,7 +56,7 @@ class CardListViewModel (application: Application, val deckId: Long): AndroidVie
         return true //if method is called in onLongClick (in list_item_card.xml for example), a boolean return value is required
     }
 
-    fun setSelect(select: Boolean): Boolean{
+    fun setSelect(select: Boolean): Boolean{ //TODO: is it necessary to return true here?
         _select.value = select
         selectedCardsSet.clear()
         return true

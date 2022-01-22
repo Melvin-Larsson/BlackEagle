@@ -27,7 +27,7 @@
     <string name="folders">Mappar</string>
     <string name="favourites">Favoriter</string>
     <string name="deck_to_add">Vad är kortlekens namn?</string>
-    <string name="add_deck">Lägg till</string>
+    <string name="add_deck">Lägg till kortlek</string>
     <string name="delete">Ta bord</string>
     <string name="deck_header">Kortlekar</string>
     <string name="add_card_header">Lägg till kort</string>

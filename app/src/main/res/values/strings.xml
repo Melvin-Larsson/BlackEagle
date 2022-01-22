@@ -31,7 +31,7 @@
     <string name="folders">Folders</string>
     <string name="favourites">Favourites</string>
     <string name="deck_to_add">What is the name of the deck?</string>
-    <string name="add_deck">Add</string>
+    <string name="add_deck">Add deck</string>
     <string name="delete">Delete</string>
     <string name="deck_header">Decks</string>
     <string name="add_card_header">Add Card</string>
