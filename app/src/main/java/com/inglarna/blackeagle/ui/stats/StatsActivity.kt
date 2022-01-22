@@ -11,5 +11,6 @@ class StatsActivity: SingleFragmentNavMenuActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val actionbar = supportActionBar
+        actionbar!!.title = getString(R.string.stats)
     }
 }
