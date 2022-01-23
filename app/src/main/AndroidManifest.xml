@@ -82,6 +82,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.folder.FolderActivity"/>
         </activity>
+        <activity android:name=".ui.folder.EditFolderActivity">
+            android:parentActivityName=".ui.folder.FolderActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.folder.FolderActivity"/>
+        </activity>
 
     </application>
 

@@ -76,4 +76,7 @@
     <string name="bottom">Bottom</string>
     <string name="confirm">Confirm</string>
     <string name="study_beforehand_question">Do you really want to study?</string>
+    <string name="rename_folder">Rename folder</string>
+    <string name="rename_folder_dialog_title">What is the new folder name?</string>
+    <string name="edit_folder">Edit folder</string>
 </resources>

@@ -48,5 +48,8 @@ class FolderRepo(context: Context) {
     fun removeDeckFromFolder(folderId: Long, deckId: Long){
         folderDao.removeFolderDeckCrossRef(folderId, deckId)
     }
+    fun deleteFolder(folder: Folder){
+        folderDao.deleteFolder(folder)
+    }
 
 }

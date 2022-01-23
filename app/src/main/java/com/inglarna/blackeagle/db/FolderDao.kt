@@ -46,4 +46,7 @@ interface FolderDao {
 
     @Update
     fun updateFolder(folder: Folder)
+
+    @Delete
+    fun deleteFolder(folder: Folder)
 }

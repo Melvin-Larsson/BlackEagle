@@ -26,6 +26,7 @@ class FolderFragment : Fragment() {
     private lateinit var selectAllButton: MenuItem
     private lateinit var closeSelectButton: MenuItem
     private lateinit var addDeckButton: MenuItem
+    private lateinit var editFolderButton: MenuItem
 
     private val startDeckPickerForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
         if(result.resultCode == Activity.RESULT_OK){
@@ -60,6 +61,7 @@ class FolderFragment : Fragment() {
         selectAllButton = menu.findItem(R.id.selectAllDecks)
         closeSelectButton = menu.findItem(R.id.closeSelect)
         addDeckButton = menu.findItem(R.id.addDeck)
+        editFolderButton = menu.findItem(R.id.more)
 
         /*Must observe select after menu has been created,
           otherwise the visibility of menuOptions will be toggled before they reference anything
@@ -73,6 +75,7 @@ class FolderFragment : Fragment() {
         selectAllButton.isVisible = showSelect
         closeSelectButton.isVisible = showSelect
         addDeckButton.isVisible = !showSelect
+        editFolderButton.isVisible = !showSelect
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -87,6 +90,7 @@ class FolderFragment : Fragment() {
             R.id.selectAllDecks -> viewModel.toggleSelectAll()
             R.id.closeSelect -> viewModel.setSelect(false)
             R.id.addDeck -> startDeckPickerForResult.launch(DeckPickerActivity.newIntent(context!!, viewModel.folderId))
+            R.id.more -> startActivity(EditFolderActivity.newIntent(requireContext(), viewModel.folderId))
 
         }
         return true
@@ -106,15 +110,17 @@ class FolderFragment : Fragment() {
         adapter.onDeckSelected = { deck ->
             startActivity(CardListActivity.newIntent(context!!, deck.deckId))
         }
+
         binding.recyclerViewDeck.adapter = adapter
         binding.recyclerViewDeck.layoutManager = LinearLayoutManager(context)
-        viewModel.decks.observe(viewLifecycleOwner){decks ->
-            adapter.submitList(decks)
-        }
+        viewModel.folderWithDeck.observe(viewLifecycleOwner){ folderWithDecks ->
+            if(folderWithDecks == null){
+                requireActivity().finish()
+            }else{
+                adapter.submitList(folderWithDecks.decks)
+                requireActivity().title = folderWithDecks.folder.name
 
-        //Title
-        viewModel.folder.observe(viewLifecycleOwner){ folder ->
-            activity!!.title = folder.name
+            }
         }
     }
 }

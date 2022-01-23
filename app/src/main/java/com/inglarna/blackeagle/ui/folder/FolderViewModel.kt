@@ -18,14 +18,7 @@ class FolderViewModel(application: Application, val folderId: Long): AndroidView
     val select: LiveData<Boolean>
         get() = _select
 
-    private val folderWithDeck = folderRepo.getFolderWithDecks(folderId)
-
-    val decks: LiveData<List<Deck>> = folderWithDeck.map { folderWithDecks ->
-        folderWithDecks.decks
-    }
-    val folder: LiveData<Folder> =folderWithDeck.map { folderWithDecks ->  
-        folderWithDecks.folder
-    }
+    val folderWithDeck = folderRepo.getFolderWithDecks(folderId)
 
     //TODO: This correct? correct solution?
     //Livedata observers are only notified when the livedata gets a new value, i.e.
@@ -68,7 +61,7 @@ class FolderViewModel(application: Application, val folderId: Long): AndroidView
     }
     fun toggleSelectAll(){
         selectedDecksSet = if(selectedDecksSet.isEmpty()){
-            decks.value!!.toMutableSet() //Select all
+            folderWithDeck.value!!.decks.toMutableSet() //Select all
         }else{
             mutableSetOf() //Deselect all
         }

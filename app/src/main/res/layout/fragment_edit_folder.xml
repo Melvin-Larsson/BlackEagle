@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.inglarna.blackeagle.ui.folder.EditFolderViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:onClick="@{() -> viewModel.deleteFolder()}"
+                android:backgroundTint="?attr/colorSurface"
+                android:padding="24dp"
+                android:text="@string/delete"
+                android:textAlignment="textStart"
+                android:textColor="?attr/colorOnSurface"
+                android:drawablePadding="8dp"
+                android:drawableLeft="@drawable/ic_delete_dark" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/rename_folder_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:backgroundTint="?attr/colorSurface"
+                android:padding="24dp"
+                android:text="@string/rename_folder"
+                android:textAlignment="textStart"
+                android:drawablePadding="8dp"
+                android:textColor="?attr/colorOnSurface"
+                android:drawableLeft="@drawable/ic_edit"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
