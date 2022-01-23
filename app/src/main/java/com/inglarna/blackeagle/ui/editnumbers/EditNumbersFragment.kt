@@ -161,6 +161,7 @@ class EditNumbersFragment: Fragment() {
 
     private fun showEditNumberWordDialog(wordNumber: WordNumber) {
         val wordNumberEditText = EditText(context)
+        wordNumberEditText.setText(wordNumber.word)
         wordNumberEditText.inputType = InputType.TYPE_CLASS_TEXT
 
         AlertDialog.Builder(context)
