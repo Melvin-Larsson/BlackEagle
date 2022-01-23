@@ -97,6 +97,8 @@ class CardListFragment : Fragment() {
         //Retrieve ViewModel
         val deckId = arguments!!.getLong(DECK_ID, -1)
         cardListViewModel = ViewModelProvider(this, CardListViewModelFactory(activity!!.application, deckId))[CardListViewModel::class.java]
+        binding.viewModel = cardListViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         //End activity if no deck can be found, set the toolbar title otherwise
         cardListViewModel.deck.observe(this){ deck ->
