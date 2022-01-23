@@ -60,10 +60,10 @@ class FolderViewModel(application: Application, val folderId: Long): AndroidView
         selectedDecksSet.clear()
     }
     fun toggleSelectAll(){
-        selectedDecksSet = if(selectedDecksSet.isEmpty()){
-            folderWithDeck.value!!.decks.toMutableSet() //Select all
-        }else{
+        selectedDecksSet = if(selectedDecksSet.size == folderWithDeck.value!!.decks.size){
             mutableSetOf() //Deselect all
+        }else{
+            folderWithDeck.value!!.decks.toMutableSet() //Select all
         }
         _selectedDecks.value = selectedDecksSet
     }

@@ -58,6 +58,8 @@ class DeckPickerFragment : Fragment() {
         //view model
         val folderId = arguments!!.getLong(FOLDER_ID, -1)
         viewModel.setExcludedFolder(folderId)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         //Setup recyclerview
         adapter = DeckPickerRecyclerViewAdapter(viewModel, viewLifecycleOwner)

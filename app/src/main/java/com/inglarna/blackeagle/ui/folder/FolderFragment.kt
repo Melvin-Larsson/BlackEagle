@@ -105,6 +105,9 @@ class FolderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val folderId = arguments!!.getLong(FOLDER_ID, -1)
         viewModel = ViewModelProvider(this, FolderViewModelFactory(activity!!.application, folderId))[FolderViewModel::class.java]
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
 
         adapter = FolderDeckRecyclerViewAdapter(viewModel, viewLifecycleOwner)
         adapter.onDeckSelected = { deck ->
