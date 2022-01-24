@@ -11,7 +11,7 @@ import kotlin.math.ln
 interface CardDao {
 
     @Query("SELECT * FROM Card Where cardId = :cardId")
-    fun loadCard(cardId: Long): LiveData<Card>
+    fun loadCard(cardId: Long): LiveData<Card?>
 
     @Query("SELECT * FROM Card WHERE deckId = :deckId ORDER BY position ASC")
     fun loadFullDeck(deckId: Long): LiveData<List<Card>>

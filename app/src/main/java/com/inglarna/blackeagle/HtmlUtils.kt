@@ -5,6 +5,9 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.text.Html
+import android.text.Spanned
+import android.text.SpannedString
+import androidx.core.text.toSpanned
 import java.io.File
 
 class HtmlUtils {
@@ -26,6 +29,16 @@ class HtmlUtils {
                 return Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT, imageGetter,null).trim()
             }
             return Html.fromHtml(html,imageGetter,null).trim()
+        }
+        @JvmStatic
+        fun toHtml(html: Spanned?): String{
+            if(html == null){
+                return ""
+            }
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                return Html.toHtml(html, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE).trim()
+            }
+            return Html.toHtml(html).trim()
         }
         @JvmStatic
         fun replaceImages(string: String?): String{

@@ -1,126 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--edit card-->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp"
-    android:fillViewport="true">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/Layout"
+    <data>
+        
+        <variable
+            name="viewModel"
+            type="com.inglarna.blackeagle.ui.card.CardViewModel" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        android:fillViewport="true">
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switch_show_html"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/show_html"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!--Question-->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_text_layout_question"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            app:errorEnabled="true"
-            app:layout_constraintEnd_toStartOf="@+id/imageButtonQuestion"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch_show_html">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_question"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/question"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageButton
-            android:id="@+id/imageButtonQuestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edit_text_layout_question"
-            app:srcCompat="@drawable/ic_photo" />
-
-        <!--Answer-->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_layout_answer"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            app:errorEnabled="true"
-            app:layout_constraintEnd_toStartOf="@+id/imageButtonAnswer"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_layout_question">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_answer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/answer"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageButton
-            android:id="@+id/imageButtonAnswer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_input_layout_answer"
-            app:srcCompat="@drawable/ic_photo" />
-
-        <!--Hint-->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_layout_hint"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            app:errorEnabled="true"
-            app:layout_constraintEnd_toStartOf="@+id/imageButtonAnswer"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_answer">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageButton
-            android:id="@+id/imageButtonHint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_input_layout_hint"
-            app:srcCompat="@drawable/ic_photo" />
-
-        <!--Add card button-->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_add_card"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_card"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_hint" />
+            android:orientation="vertical"
+            android:padding="8dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_show_html"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_html"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--Question-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_question"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toStartOf="@+id/imageButtonQuestion"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switch_show_html">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.question}"
+                    android:hint="@string/question" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/imageButtonQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_input_layout_question"
+                app:srcCompat="@drawable/ic_photo" />
+
+            <!--Answer-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_answer"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toStartOf="@+id/imageButtonAnswer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_question">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.answer}"
+                    android:hint="@string/answer" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/imageButtonAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_input_layout_answer"
+                app:srcCompat="@drawable/ic_photo" />
+
+            <!--Hint-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_hint"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toStartOf="@+id/imageButtonAnswer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_answer">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.hint}"
+                    android:hint="@string/hint" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/imageButtonHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_input_layout_hint"
+                app:srcCompat="@drawable/ic_photo" />
+
+            <!--Add card button-->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_add_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.isEditingCard ? @string/edit_card : @string/add_card}"
+                android:onClick="@{() -> viewModel.save()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_hint"
+                tools:text="Edit card"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

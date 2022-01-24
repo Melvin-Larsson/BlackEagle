@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
-                    android:text="@{HtmlUtils.fromHtmlWithoutImages(context, viewmodel.question)}"
+                    android:text="@{HtmlUtils.fromHtml(context, viewmodel.question)}"
                     tools:text="This is a temporary question, or is it?" />
 
                 <!--Hint-->
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:visibility="@{viewmodel.isHintShowing ? View.VISIBLE : View.INVISIBLE}"
-                    android:text="@{HtmlUtils.fromHtmlWithoutImages(context, viewmodel.hint)}"
+                    android:text="@{HtmlUtils.fromHtml(context, viewmodel.hint)}"
                     tools:text="This is a temporary hint, the answer might be yes" />
                 <View
                     android:id="@+id/view"
@@ -67,7 +67,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="15sp"
                     android:visibility="@{viewmodel.isAnswerShowing ? View.VISIBLE : View.INVISIBLE}"
-                    android:text="@{HtmlUtils.fromHtmlWithoutImages(context, viewmodel.answer)}"
+                    android:text="@{HtmlUtils.fromHtml(context, viewmodel.answer)}"
                     tools:text="This is a temporary answer, and the answer is yes" />
             </LinearLayout>
 

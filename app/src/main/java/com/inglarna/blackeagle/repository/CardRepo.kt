@@ -16,6 +16,8 @@ class CardRepo (context: Context){
     private val cardDao: CardDao = db.cardDao()
 
     fun addCard(card: Card): Long{
+        val position = cardDao.getMaxPosition(card.deckId!!) + 1
+        card.position = position
         val newId = cardDao.insertCard(card)
         card.cardId = newId
         return newId
@@ -38,7 +40,7 @@ class CardRepo (context: Context){
     fun updateCards(cards: Set<Card>){
         cardDao.updateCards(cards)
     }
-    fun getCard(cardId: Long): LiveData<Card>{
+    fun getCard(cardId: Long): LiveData<Card?>{
         return cardDao.loadCard(cardId)
     }
     fun getFullDeck(deckId: Long): LiveData<List<Card>>{

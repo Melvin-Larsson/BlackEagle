@@ -53,16 +53,19 @@
         <entry key="app/src/main/res/drawable-anydpi/ic_delete.xml" value="0.24322916666666666" />
         <entry key="app/src/main/res/drawable/card_shadow.xml" value="0.3177083333333333" />
         <entry key="app/src/main/res/drawable/square_button.xml" value="0.3177083333333333" />
+        <entry key="app/src/main/res/layout-sw600dp/list_item_number_search.xml" value="0.2637065637065637" />
         <entry key="app/src/main/res/layout/activity_fragment.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/fragment_card.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_card_list.xml" value="0.16666666666666666" />
+        <entry key="app/src/main/res/layout/fragment_card_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_deck_list.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/fragment_deck_pager.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/layout/fragment_deck_picker.xml" value="0.35025641025641024" />
         <entry key="app/src/main/res/layout/fragment_edit_card.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_edit_deck.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_edit_folder.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_edit_numbers.xml" value="0.259375" />
+        <entry key="app/src/main/res/layout/fragment_folder.xml" value="0.35025641025641024" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_numbers.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_question.xml" value="0.33" />
@@ -71,6 +74,7 @@
         <entry key="app/src/main/res/layout/list_item_card.xml" value="0.67" />
         <entry key="app/src/main/res/layout/list_item_deck.xml" value="0.27239583333333334" />
         <entry key="app/src/main/res/layout/list_item_number.xml" value="0.27239583333333334" />
+        <entry key="app/src/main/res/layout/list_item_number_search.xml" value="0.35025641025641024" />
         <entry key="app/src/main/res/menu/card_list_menu.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/menu/deck_list_menu.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/menu/folder_menu.xml" value="0.34010416666666665" />
