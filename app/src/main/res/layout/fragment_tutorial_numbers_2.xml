@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="16dp"/>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/convertNumbersImage1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,7 +48,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/convertNumbersImage1" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/convertNumbersImage2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,13 +63,6 @@
 
             app:srcCompat="@drawable/convert_numbers_guide_swedish2"
             />
-
-        <ImageView
-            android:id="@+id/expandedConvertNumbersImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</ScrollView>
