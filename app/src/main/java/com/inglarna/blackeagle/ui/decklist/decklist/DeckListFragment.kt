@@ -1,4 +1,4 @@
-package com.inglarna.blackeagle.ui.decklist
+package com.inglarna.blackeagle.ui.decklist.decklist
 
 import android.content.Context
 import android.os.Bundle
@@ -12,6 +12,7 @@ import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckListBinding
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.model.DeckWithCards
+import com.inglarna.blackeagle.ui.decklist.EditableListActivity
 import com.inglarna.blackeagle.viewmodel.DeckListViewModel
 
 class DeckListFragment : Fragment() {
@@ -28,7 +29,7 @@ class DeckListFragment : Fragment() {
     companion object{
         private const val TAG = "DeckListFragment"
         private const val PAGE_ID = "pageId"
-        fun newInstance(deckPage: Int): DeckListFragment{
+        fun newInstance(deckPage: Int): DeckListFragment {
             val fragment = DeckListFragment()
             val bundle = Bundle()
             bundle.putInt(PAGE_ID, deckPage)
@@ -71,7 +72,7 @@ class DeckListFragment : Fragment() {
             deckListViewModel.deleteDeck(deck)
         }
         adapter.onSelectionStarted = {
-            setToolbarVisibility()
+            (requireActivity() as EditableListActivity).setSelectVisibility(adapter.select)
         }
         observeData()
     }
@@ -89,40 +90,25 @@ class DeckListFragment : Fragment() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
-        menu.clear()
-        menuInflater.inflate(R.menu.deck_list_menu, menu)
-        deleteButton = menu.findItem((R.id.delete))
-        selectAllButton = menu.findItem((R.id.selectAll))
-        closeButton = menu.findItem((R.id.closeSelect))
-        importButton = menu.findItem((R.id.importDeck))
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.delete -> delete()
             R.id.selectAll -> selectAll()
-            R.id.importDeck -> import()
+            //R.id.importDeck -> import()
             R.id.closeSelect -> closeSelect()
         }
         return true
     }
     private fun closeSelect() {
         adapter.select = false
-        setToolbarVisibility()
-    }
-    private fun setToolbarVisibility(){
-        deleteButton?.isVisible = adapter.select
-        selectAllButton?.isVisible = adapter.select
-        closeButton?.isVisible = adapter.select
-        importButton?.isVisible = !adapter.select
+        (requireActivity() as EditableListActivity).setSelectVisibility(false)
     }
 
     private fun delete(){
         val selectedDecks = adapter.selectedDecks.toList()
         deckListViewModel.deleteDecks(selectedDecks)
         adapter.select = false
-        setToolbarVisibility()
+        (requireActivity() as EditableListActivity).setSelectVisibility(false)
     }
 
     private fun selectAll() {

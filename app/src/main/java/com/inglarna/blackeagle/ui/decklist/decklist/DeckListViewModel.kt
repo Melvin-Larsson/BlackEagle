@@ -1,4 +1,4 @@
-package com.inglarna.blackeagle.ui.decklist
+package com.inglarna.blackeagle.ui.decklist.decklist
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

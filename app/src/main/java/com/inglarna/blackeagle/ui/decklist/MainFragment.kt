@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.*
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
@@ -13,6 +12,7 @@ import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentDeckPagerBinding
 import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.model.Deck
+import com.inglarna.blackeagle.ui.decklist.decklist.DeckListViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
