@@ -81,7 +81,7 @@ class CardListFragment : Fragment() {
                 return true
             }
             R.id.delete -> cardListViewModel.deleteSelectedCards()
-            R.id.selectAllCards -> cardListViewModel.selectAll()
+            R.id.selectAllCards -> cardListViewModel.toggleSelectAll()
             R.id.more -> startActivity(EditDeckActivity.newIntent(context!!, cardListViewModel.deckId))
             R.id.closeSelect -> cardListViewModel.setSelect(false)
         }
@@ -153,6 +153,18 @@ class CardListFragment : Fragment() {
             touchHelper.startDrag(viewHolder)
         }
         touchHelper.attachToRecyclerView(binding.recyclerViewCard)
+        //Card selected listener
+        cardListViewModel.select.observe(viewLifecycleOwner){ select ->
+            adapter.onCardSelected = { card, isSelected ->
+                if(select){
+                    cardListViewModel.setSelectionState(card, !isSelected)
+                }else{
+                    startActivity(CardActivity.newIntent(requireContext(), card.deckId, card.cardId))
+                }
+            }
+
+
+        }
     }
 
     private fun showConfirmExtraStudyDialog(){

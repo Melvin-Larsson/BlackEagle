@@ -32,6 +32,8 @@ class CardViewModel (val app: Application, val deckId: Long, val cardId: Long) :
             question.value = card.question
             answer.value = card.answer
             hint.value = card.hint
+            showHtml(false)
+
         }
         card != null
     }
@@ -56,6 +58,9 @@ class CardViewModel (val app: Application, val deckId: Long, val cardId: Long) :
         const val HINT = 2
     }
 
+    /**
+     * Saves the contents of the fields: question, hint and answer to a new card or updates an old card if such exists
+     */
     fun save(){
         var errors = false
         //Check if question field is filled
@@ -130,8 +135,10 @@ class CardViewModel (val app: Application, val deckId: Long, val cardId: Long) :
         }
     }
 
-    /**Appends the html to the field
-     * @param field is either QUESTION, ANSWER or HINT
+    /**Appends html to the specified field. If the field is in display format (not html) it is converted to html before the string is appended.
+     * Then it is converted back to its original format.
+     * @param field the field to append to, is either QUESTION, ANSWER or HINT
+     * @param html the html to append
      */
     fun appendHtml(field: Int, html: String){
         val subject = getSubject(field) ?: return
@@ -143,7 +150,7 @@ class CardViewModel (val app: Application, val deckId: Long, val cardId: Long) :
             subject.value = HtmlUtils.fromHtml(getApplication(), newHtml)
         }
     }
-    fun getHtml(field: Int): String{
+    private fun getHtml(field: Int): String{
         val subject = getSubject(field) ?: return ""
         return if(isHtmlShowing){
             subject.value.toString()
@@ -179,6 +186,11 @@ class CardViewModel (val app: Application, val deckId: Long, val cardId: Long) :
             image.delete()
         }
     }
+
+    /**
+     * Returns a list with image files in internal storage that has the id of the current card but are not referenced
+     * in any image tag in the question, answer or hint.
+     */
     private fun findUnusedImages(): List<File>{
         val images = PictureUtils.getImageFilesFromId(app.filesDir, cardId)
         val unusedImage = images.toMutableList()

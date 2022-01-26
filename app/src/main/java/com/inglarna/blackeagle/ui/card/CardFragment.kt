@@ -154,30 +154,36 @@ class CardFragment : Fragment() {
 
     private val startGalleryResultQuestion = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
-            //Images are saved at once since the user might delete them from the device before the cards is saved
+            //Images are saved at once since the user might delete them from the device before the card is saved
             val uri = result.data?.data!!
             addImage(CardViewModel.QUESTION, uri)
         }
     }
     private val startGalleryResultAnswer = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
-            //Images are saved at once since the user might delete them from the device before the cards is saved
+            //Images are saved at once since the user might delete them from the device before the card is saved
             val uri = result.data?.data!!
             addImage(CardViewModel.ANSWER, uri)
         }
     }
     private val startGalleryResultHint = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
-            //Images are saved at once since the user might delete them from the device before the cards is saved
+            //Images are saved at once since the user might delete them from the device before the card is saved
             val uri = result.data?.data!!
             addImage(CardViewModel.HINT, uri)
         }
     }
+
+    /**
+     * Adds an image tag to the specified field and saves the image in local storage
+     * @param field the field to append the image tag to. Either CardViewModel.QUESTION, CardViewModel.ANSWER or CardViewModel.HINT
+     * @param uri the Uri of the image that is to be saved
+     */
     private fun addImage(field: Int, uri: Uri){
         val size = Point()
         requireActivity().windowManager.defaultDisplay.getSize(size)
 
-        val imageName = cardViewModel.saveImage(uri, size.x, size.y)
+        val imageName = cardViewModel.saveImage(uri, size.x/2, size.y)
         cardViewModel.appendHtml(field, "<img src=\"${imageName}\">")
     }
 
