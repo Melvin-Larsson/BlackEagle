@@ -12,6 +12,7 @@ import kotlin.collections.HashSet
 
 class CardListRecyclerViewAdapter(private val viewModel: CardListViewModel, private val lifecycleOwner: LifecycleOwner):
     RecyclerView.Adapter<CardListViewHolder>(), SimpleItemTouchHelperCallback.ItemTouchHelperAdapter {
+    var onCardSelected: (Card, Boolean) -> Unit = {_,_ -> }
     var cards: List<Card> = listOf()
         set(value){
             field = value
@@ -40,6 +41,9 @@ class CardListRecyclerViewAdapter(private val viewModel: CardListViewModel, priv
                 return false
             }
         })
+        holder.itemView.setOnClickListener {
+            onCardSelected(cards[position], holder.binding.checkBox.isChecked)
+        }
     }
     override fun getItemCount(): Int = cards.size
 

@@ -77,8 +77,12 @@ class CardListViewModel (application: Application, val deckId: Long): AndroidVie
         }
     }
 
-    fun selectAll(){
-        selectedCardsSet = cards.value!!.toMutableSet()
+    fun toggleSelectAll(){
+        selectedCardsSet = if(selectedCardsSet.size == cards.value!!.size){
+            mutableSetOf()
+        }else{
+           cards.value!!.toMutableSet()
+        }
         _selectedCards.value = selectedCardsSet
     }
 }
