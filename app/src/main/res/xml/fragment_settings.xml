@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--settings-->
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        app:key="general_category"
+        app:title="@string/general_settings">
+
+        <SwitchPreferenceCompat
+            app:key="darkMode"
+            app:title="@string/dark_mode" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:key="repetition_settings"
+        app:title="@string/repetition_settings">
+
+        <EditTextPreference
+            app:key="dailyRepetitionGoal"
+            app:title="@string/daily_repetition_goal"
+            android:inputType="number" />
+
+    </PreferenceCategory>
+</PreferenceScreen>
