@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:visibility="@{viewmodel.isHintShowing ? View.VISIBLE : View.INVISIBLE}"
+                    android:visibility="@{viewmodel.isHintShowing ? View.VISIBLE : View.GONE}"
                     android:text="@{HtmlUtils.fromHtml(context, viewmodel.hint)}"
                     tools:text="This is a temporary hint, the answer might be yes" />
                 <View
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
                     android:textSize="15sp"
-                    android:visibility="@{viewmodel.isAnswerShowing ? View.VISIBLE : View.INVISIBLE}"
+                    android:visibility="@{viewmodel.isAnswerShowing ? View.VISIBLE : View.GONE}"
                     android:text="@{HtmlUtils.fromHtml(context, viewmodel.answer)}"
                     tools:text="This is a temporary answer, and the answer is yes" />
             </LinearLayout>
@@ -84,17 +84,17 @@
                 app:layout_constraintBottom_toTopOf="@+id/button_show_answer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-            <!--show answer-->
+            <!--show answer button-->
             <Button
                 android:id="@+id/button_show_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/show_answer"
                 android:onClick="@{() -> viewmodel.showAnswer()}"
+                android:text="@string/show_answer"
                 android:visibility="@{viewmodel.isAnswerShowing ? View.INVISIBLE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:visibility="invisible"/>
+                tools:visibility="invisible" />
 
             <LinearLayout
                 android:id="@+id/difficulty_buttons_container"

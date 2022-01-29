@@ -7,23 +7,14 @@ import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.ui.editnumbers.EditNumbersActivity
 import com.inglarna.blackeagle.ui.SingleFragmentNavMenuActivity
 
-class NumbersActivity: SingleFragmentNavMenuActivity(), NumbersFragment.Callbacks {
+class NumbersActivity: SingleFragmentNavMenuActivity() {
 
-    override fun createFragment(): Fragment {
-        val fragment = NumbersFragment.newInstance()
-        fragment.callbacks = this
-        return fragment
-    }
+    override fun createFragment(): Fragment = NumbersFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val actionbar = supportActionBar
         actionbar!!.title = getString(R.string.convert_numbers_header)
-    }
-    //when clicking edit button
-    override fun onEditButtonPressed() {
-        val intentConvertNumbers = Intent(this, EditNumbersActivity::class.java)
-        startActivity(intentConvertNumbers)
     }
 
 }

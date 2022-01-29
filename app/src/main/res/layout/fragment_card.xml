@@ -129,12 +129,20 @@
                 android:id="@+id/button_add_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.isEditingCard ? @string/edit_card : @string/add_card}"
                 android:onClick="@{() -> viewModel.save()}"
+                android:text="@{viewModel.isEditingCard ? @string/edit_card : @string/add_card}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_hint"
-                tools:text="Edit card"/>
+                app:layout_constraintTop_toBottomOf="@+id/convert_number_button"
+                tools:text="Edit card" />
+
+            <Button
+                android:id="@+id/convert_number_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Convert number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_hint" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
