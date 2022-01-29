@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.ListItemFolderBinding
@@ -11,9 +12,9 @@ import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.model.Folder
 import com.inglarna.blackeagle.model.FolderWithDecks
 
-class FolderListRecyclerViewAdapter(val context: Context): RecyclerView.Adapter<FolderListViewHolder>() {
+class FolderListRecyclerViewAdapter(val context: Context, val viewModel: FolderListViewModel, val lifecycleOwner: LifecycleOwner): RecyclerView.Adapter<FolderListViewHolder>() {
     var onFolderSelected: (Folder) -> Unit = {}
-    var folders : List<FolderWithDecks> = ArrayList()
+    var folders : List<Folder> = ArrayList()
     set(value){
         field = value
         notifyDataSetChanged()
@@ -29,10 +30,13 @@ class FolderListRecyclerViewAdapter(val context: Context): RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: FolderListViewHolder, position: Int) {
-        holder.binding.folderWithDecks = folders[position]
+        holder.binding.folder = folders[position]
+        holder.binding.viewModel = viewModel
+        holder.binding.lifecycleOwner = lifecycleOwner
         holder.itemView.setOnClickListener{
-            onFolderSelected(folders[position].folder)
+            onFolderSelected(folders[position])
         }
+
         /*if(expandedFolders.contains(folders[position])){
             holder.binding.deckContainer.removeAllViews()
             val inflater = LayoutInflater.from(context)
