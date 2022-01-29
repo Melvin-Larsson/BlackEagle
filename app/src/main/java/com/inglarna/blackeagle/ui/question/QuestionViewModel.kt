@@ -1,16 +1,17 @@
-package com.inglarna.blackeagle.viewmodel
+package com.inglarna.blackeagle.ui.question
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.repository.CardRepo
-import com.inglarna.blackeagle.ui.question.DefaultCardScrambler
+import com.inglarna.blackeagle.repository.StatRepo
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class QuestionViewModel(application: Application, val deckId: Long) : AndroidViewModel(application){
-    private var cardRepo = CardRepo(getApplication())
+    private val cardRepo = CardRepo(getApplication())
+    private val statRepo = StatRepo(getApplication())
 
     private var cardScrambler = DefaultCardScrambler()
 
@@ -84,6 +85,7 @@ class QuestionViewModel(application: Application, val deckId: Long) : AndroidVie
             _card.value!!.repeated(retrievability)
             GlobalScope.launch {
                 cardRepo.updateCard(_card.value!!)
+                statRepo.incrementCurrentStat()
             }
             //Card is to be repeated again today
             if(_card.value!!.isNextRepetitionToday()){

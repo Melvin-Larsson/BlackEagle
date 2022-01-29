@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.inglarna.blackeagle.viewmodel.QuestionViewModel" />
+            type="com.inglarna.blackeagle.ui.question.QuestionViewModel" />
     </data>
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"

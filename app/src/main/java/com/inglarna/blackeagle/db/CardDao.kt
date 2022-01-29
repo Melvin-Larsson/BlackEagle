@@ -10,7 +10,7 @@ import kotlin.math.ln
 @Dao
 interface CardDao {
 
-    @Query("SELECT * FROM Card Where cardId = :cardId")
+    @Query("SELECT * FROM Card WHERE cardId = :cardId")
     fun loadCard(cardId: Long): LiveData<Card?>
 
     @Query("SELECT * FROM Card WHERE deckId = :deckId ORDER BY position ASC")

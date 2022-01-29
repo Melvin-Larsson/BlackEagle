@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.inglarna.blackeagle.databinding.FragmentQuestionBinding
-import com.inglarna.blackeagle.viewmodel.*
 
 class QuestionFragment : Fragment() {
     private lateinit var binding: FragmentQuestionBinding
@@ -38,7 +37,8 @@ class QuestionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val deckId = arguments!!.getLong(DECK_ID, -1)
         val forceStudy = arguments!!.getBoolean(FORCE_STUDY, false)
-        questionViewModel = ViewModelProvider(this, QuestionViewModelFactory(activity!!.application, deckId)).get(QuestionViewModel::class.java)
+        questionViewModel = ViewModelProvider(this, QuestionViewModelFactory(activity!!.application, deckId)).get(
+            QuestionViewModel::class.java)
 
         binding.viewmodel = questionViewModel
         binding.lifecycleOwner = viewLifecycleOwner

@@ -16,12 +16,13 @@ import java.io.InputStreamReader
 import java.util.*
 import kotlin.collections.ArrayList
 
-@Database(entities = arrayOf(Card::class, Deck::class, WordNumber::class, Folder::class, FolderDeckCrossRef::class), version = 1)
+@Database(entities = arrayOf(Card::class, Deck::class, WordNumber::class, Folder::class, FolderDeckCrossRef::class, Stat::class), version = 1)
 abstract class BlackEagleDatabase :RoomDatabase(){
     abstract fun deckDao(): DeckDao
     abstract fun cardDao(): CardDao
     abstract fun folderDao(): FolderDao
     abstract  fun wordNumberDao(): WordNumberDao
+    abstract fun statDao(): StatDao
 
     companion object{
         private var instance: BlackEagleDatabase? = null
