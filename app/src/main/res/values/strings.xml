@@ -75,12 +75,12 @@
     <string name="top">Top</string>
     <string name="bottom">Bottom</string>
     <string name="confirm">Confirm</string>
-    <string name="study_beforehand_question">Do you really want to study?</string>
+    <string name="study_beforehand_question">There are no more cards scheduled for today. Do you still want to study?</string>
     <string name="rename_folder">Rename folder</string>
     <string name="rename_folder_dialog_title">What is the new folder name?</string>
     <string name="edit_folder">Edit folder</string>
     <string name="no_cards_in_deck">There are currently no cards in this deck</string>
-    <string name="folder_is_empty">This folder is currently empty</string>
+    <string name="folder_is_empty">Folder is currently empty</string>
     <string name="no_decks_outside_folder">There are no decks outside of this folder</string>
     <string name="reviews_last_7">Reviews the last seven days</string>
     <string name="date">Date</string>

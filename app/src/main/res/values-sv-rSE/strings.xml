@@ -66,4 +66,18 @@
     <string name="add_folder">Lägg till mapp</string>
     <string name="top">Upp</string>
     <string name="bottom">Ner</string>
+    <string name="confirm">Bekräfta</string>
+    <string name="study_beforehand_question">Det finns inga fler kort planerade för idag. Vill du studera ändå?</string>
+    <string name="rename_folder">Döp om mapp</string>
+    <string name="rename_folder_dialog_title">Vad ska mappen heta?</string>
+    <string name="edit_folder">Redigera mapp</string>
+    <string name="no_cards_in_deck">Det finns inga kort i kortleken just nu</string>
+    <string name="folder_is_empty">Mappen är tom just nu</string>
+    <string name="no_decks_outside_folder">Det finns inga kortlekar utanför den här mappen</string>
+    <string name="date">Datum</string>
+    <string name="insert_word">Infoga ord</string>
+    <string name="insert_number">Infoga siffror</string>
+    <string name="reviews">Repetitioner</string>
+    <string name="reviews_last_7">Repetitioner de senaste sju dagarna</string>
+    <string name="error_field_empty">Fältet får inte vara tomt</string>
 </resources>
