@@ -52,7 +52,7 @@ class QuestionFragment : Fragment() {
         if(forceStudy){
             questionViewModel.loadCards(QuestionViewModel.ALL_CARDS)
         }else{
-            questionViewModel.loadCards(QuestionViewModel.NEW_CARDS)
+            questionViewModel.loadCards(QuestionViewModel.ALL_CARDS)
         }
     }
 
