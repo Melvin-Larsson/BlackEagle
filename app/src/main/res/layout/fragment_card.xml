@@ -140,7 +140,8 @@
                 android:id="@+id/convert_number_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Convert number"
+                android:text="@string/insert_number"
+                android:enabled="@{viewModel.isFieldBeingEdited()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_input_layout_hint" />
 

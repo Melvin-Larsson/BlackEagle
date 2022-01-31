@@ -86,4 +86,5 @@
     <string name="date">Date</string>
     <string name="reviews">Reviews</string>
     <string name="insert_word">Insert words</string>
+    <string name="insert_number">Insert number</string>
 </resources>

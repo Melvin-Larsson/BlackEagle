@@ -52,10 +52,18 @@ class CardViewModel (val app: Application, val deckId: Long, val cardId: Long) :
 
     private var isHtmlShowing = false
 
+    private val _isFieldBeingEdited = MutableLiveData(false)
+    val isFieldBeingEdited: LiveData<Boolean>
+        get() = _isFieldBeingEdited
+
     companion object{
         const val QUESTION = 0
         const val ANSWER = 1
         const val HINT = 2
+    }
+
+    fun setIsFieldBeingEdited(isFieldBeingEdited: Boolean){
+        _isFieldBeingEdited.value = isFieldBeingEdited
     }
 
     /**

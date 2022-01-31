@@ -142,9 +142,11 @@ class CardFragment : Fragment() {
                 binding.textInputLayoutAnswer.error = getString(error)
             }
         }
+
+        //Convert numbers to words
         binding.convertNumberButton.setOnClickListener{
             val dialog = NumberConverterFragment.newInstance()
-            dialog.show(parentFragmentManager, "t")
+            dialog.show(parentFragmentManager, "dialog")//FIXME: what is tag
         }
         setFragmentResultListener(NumberConverterFragment.REQUEST_WORDS){ _, bundle ->
             bundle.getString(NumberConverterFragment.EXTRA_WORDS)?.let { words ->
@@ -158,6 +160,22 @@ class CardFragment : Fragment() {
 
             }
         }
+        //Disable convert number button when no field is being edited
+        //FIXME: Temporary fix, don't forget code in viewModel
+        val textFieldFocusListener = View.OnFocusChangeListener { _, _ ->
+            val editTexts = arrayOf(binding.editTextQuestion, binding.editTextAnswer, binding.editTextHint)
+            var isFieldBeingEdited = false
+            for(editText in editTexts){
+                if(editText.hasFocus()){
+                    isFieldBeingEdited = true
+                    break
+                }
+            }
+            cardViewModel.setIsFieldBeingEdited(isFieldBeingEdited)
+        }
+        binding.editTextQuestion.onFocusChangeListener = textFieldFocusListener
+        binding.editTextAnswer.onFocusChangeListener = textFieldFocusListener
+        binding.editTextHint.onFocusChangeListener = textFieldFocusListener
     }
 
     override fun onDestroy() {
