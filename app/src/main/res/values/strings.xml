@@ -74,7 +74,7 @@
     <string name="error_field_empty">Field can not be empty</string>
     <string name="top">Top</string>
     <string name="bottom">Bottom</string>
-    <string name="confirm">Confirm</string>
+    <string name="confirm_extra_study_title">Study extra</string>
     <string name="study_beforehand_question">There are no more cards scheduled for today. Do you still want to study?</string>
     <string name="rename_folder">Rename folder</string>
     <string name="rename_folder_dialog_title">What is the new folder name?</string>

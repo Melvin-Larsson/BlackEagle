@@ -169,9 +169,8 @@ class CardListFragment : Fragment() {
 
     private fun showConfirmExtraStudyDialog(){
         AlertDialog.Builder(context)
-            .setTitle(getString(R.string.confirm))
+            .setTitle(getString(R.string.confirm_extra_study_title))
             .setMessage(getString(R.string.study_beforehand_question))
-            .setIcon(android.R.drawable.ic_dialog_alert)
             .setPositiveButton(android.R.string.ok){_, _ ->
                 startStudyForResult.launch(QuestionActivity.newIntent(context!!, cardListViewModel.deckId, true))
             }
