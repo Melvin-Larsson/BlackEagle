@@ -13,14 +13,11 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
-import com.inglarna.blackeagle.ImageStorage
-import com.inglarna.blackeagle.PictureUtils
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.FragmentCardBinding
-import com.inglarna.blackeagle.model.Card
-import java.io.File
-import java.util.*
+import com.inglarna.blackeagle.ui.convertnumber.NumberConverterFragment
 
 class CardFragment : Fragment() {
     lateinit var binding : FragmentCardBinding
@@ -97,8 +94,8 @@ class CardFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val deckId = arguments!!.getLong(DECK_ID, -1)
-        val cardId = arguments!!.getLong(CARD_ID, -1)
+        val deckId = requireArguments().getLong(DECK_ID, -1)
+        val cardId = requireArguments().getLong(CARD_ID, -1)
         cardViewModel = ViewModelProvider(this, CardViewModelFactory(requireActivity().application, deckId, cardId))[CardViewModel::class.java]
         binding.viewModel = cardViewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -143,6 +140,22 @@ class CardFragment : Fragment() {
                 binding.textInputLayoutAnswer.error = null
             }else{
                 binding.textInputLayoutAnswer.error = getString(error)
+            }
+        }
+        binding.convertNumberButton.setOnClickListener{
+            val dialog = NumberConverterFragment.newInstance()
+            dialog.show(parentFragmentManager, "t")
+        }
+        setFragmentResultListener(NumberConverterFragment.REQUEST_WORDS){ _, bundle ->
+            bundle.getString(NumberConverterFragment.EXTRA_WORDS)?.let { words ->
+                val editTexts = arrayOf(binding.editTextQuestion, binding.editTextAnswer, binding.editTextHint)
+                for (editText in editTexts){
+                    //If the cursor is places in an edit text, inset the words
+                    if(editText.hasFocus()){
+                        editText.text?.insert(editText.selectionStart, words)
+                    }
+                }
+
             }
         }
     }
