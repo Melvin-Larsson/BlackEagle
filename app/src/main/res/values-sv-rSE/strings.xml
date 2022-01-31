@@ -58,10 +58,10 @@
     <string name="edit_deck">Redigera %1$s</string>
     <string name="convertTutorial1">Konvertering av tal används främst för att komma ihåg en talföljd.
         Varje nummer från 0–9 kan översättas till ett ljud enligt tabellen nedan.
-        Ljuden kan sedan användas för att skapa olika ord.
-        När konvertering av talet 123456789 sker, delas talet upp sig till tal med 3 siffror som på bilden nedan.
-        Sedan översätts talen till en ordsekvens, i detta fallet (dynamit, ruljans, Kviberg).
-        Men om talets längd inte är delbart med 3 kommer nollor att läggas till i början av talet tills det är delbart med 3.</string>
+        Ljuden kan sedan användas för att skapa olika ord.</string>
+    <string name="convertTutorial2Text1">När konvertering av talet 123456789 sker, delas talet upp sig till tal med 3 siffror som på bilden nedan.
+        Sedan översätts talen till en ordsekvens, i detta fallet (dynamit, ruljans, Kviberg).</string>
+    <string name="convertTutorial2Text2">Men om talets längd inte är delbart med 3 kommer nollor att läggas till i början av talet tills det är delbart med 3.</string>
     <string name="folder_to_add">Vad är mappens namn?</string>
     <string name="add_folder">Lägg till mapp</string>
     <string name="top">Upp</string>
