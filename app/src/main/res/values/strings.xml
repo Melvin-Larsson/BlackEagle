@@ -56,7 +56,7 @@
     <string name="convertTutorial1">Converting numbers is mainly used for remembering a sequence of numbers.
         Every number from 0–9 can be translated to a sound according to the table below.The sounds can then be used to create different words.</string>
     <string name="convertTutorial2Text1">When conversion of the number 123456789 takes place, the number is divided into numbers with 3 digits as in the picture below.
-        Then the numbers are translated into a word sequence, in this case ().</string>
+        Then the numbers are translated into a word sequence, in this case (Dynamo, Relish, Fabulous gaston).</string>
     <string name="convertTutorial2Text2">
         But if the length of the number is not divisible by 3, zeros will be added at the beginning of the number until it is divisible by 3.</string>
     <string name="closeSelect">Close</string>
