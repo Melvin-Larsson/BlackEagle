@@ -86,5 +86,7 @@
     <string name="date">Date</string>
     <string name="reviews">Reviews</string>
     <string name="insert_word">Insert words</string>
-    <string name="insert_number">Insert number</string>
+    <string name="insert_number">Insert number words</string>
+    <string name="number_converter_dialog_title">Number converter</string>
+    <string name="save_card">Save card</string>
 </resources>

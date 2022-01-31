@@ -28,7 +28,7 @@
     <string name="favourites">Favoriter</string>
     <string name="deck_to_add">Vad är kortlekens namn?</string>
     <string name="add_deck">Lägg till kortlek</string>
-    <string name="delete">Ta bord</string>
+    <string name="delete">Ta bort</string>
     <string name="deck_header">Kortlekar</string>
     <string name="add_card_header">Lägg till kort</string>
     <string name="edit_convert_numbers_header">Redigera siffror</string>
@@ -68,7 +68,7 @@
     <string name="bottom">Ner</string>
     <string name="confirm_extra_study_title">Studera extra</string>
     <string name="study_beforehand_question">Det finns inga fler kort inplanerade  idag. Vill du studera ändå?</string>
-    <string name="rename_folder">Döp om mapp</string>
+    <string name="rename_folder">Byt namn på mapp</string>
     <string name="rename_folder_dialog_title">Vad ska mappen heta?</string>
     <string name="edit_folder">Redigera mapp</string>
     <string name="no_cards_in_deck">Det finns inga kort i kortleken just nu</string>
@@ -76,8 +76,10 @@
     <string name="no_decks_outside_folder">Det finns inga kortlekar utanför den här mappen</string>
     <string name="date">Datum</string>
     <string name="insert_word">Infoga ord</string>
-    <string name="insert_number">Infoga siffror</string>
+    <string name="insert_number">Infoga sifferord</string>
     <string name="reviews">Repetitioner</string>
     <string name="reviews_last_7">Repetitioner de senaste sju dagarna</string>
     <string name="error_field_empty">Fältet får inte vara tomt</string>
+    <string name="number_converter_dialog_title">Sifferkonverterare</string>
+    <string name="save_card">Spara kort</string>
 </resources>

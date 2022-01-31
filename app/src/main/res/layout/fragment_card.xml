@@ -130,7 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewModel.save()}"
-                android:text="@{viewModel.isEditingCard ? @string/edit_card : @string/add_card}"
+                android:text="@string/save_card"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/convert_number_button"

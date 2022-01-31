@@ -30,7 +30,7 @@ class NumberConverterFragment : DialogFragment() {
 
         return AlertDialog.Builder(requireActivity())
             .setView(binding.root)
-            .setTitle("Number converter")
+            .setTitle(getString(R.string.number_converter_dialog_title))
             .setPositiveButton(R.string.insert_word){_,_ ->
                 val result = Bundle()
                 result.putString(EXTRA_WORDS, viewModel.words.value)
