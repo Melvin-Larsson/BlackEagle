@@ -51,10 +51,12 @@
                     android:visibility="@{viewmodel.isHintShowing ? View.VISIBLE : View.GONE}"
                     android:text="@{HtmlUtils.fromHtml(context, viewmodel.hint)}"
                     tools:text="This is a temporary hint, the answer might be yes" />
+                <!--Divider line-->
                 <View
                     android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:visibility="@{viewmodel.isAnswerShowing() ? View.VISIBLE : View.GONE}"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:background="@color/primaryColor" />
