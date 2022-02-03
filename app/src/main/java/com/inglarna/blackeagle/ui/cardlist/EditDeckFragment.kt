@@ -2,10 +2,8 @@ package com.inglarna.blackeagle.ui.cardlist
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Instrumentation
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +18,6 @@ import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.ui.folderpicker.FolderPickerActivity
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.ui.folderpicker.FolderPickerFragment
-import com.inglarna.blackeagle.viewmodel.EditDeckViewModel
 import com.inglarna.blackeagle.viewmodel.EditDeckViewModelFactory
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -28,14 +25,11 @@ import kotlinx.coroutines.launch
 //TODO: lägg till confirm popup när delete trycks
 class EditDeckFragment : Fragment() {
     lateinit var binding: FragmentEditDeckBinding
-    private lateinit var editDeckViewModel: EditDeckViewModel
+    private lateinit var viewModel: EditDeckViewModel
     private lateinit var deck: Deck
     private val startFileExplorerForResult = registerForActivityResult(ActivityResultContracts.CreateDocument()){ uri->
         if(uri != null){
-            editDeckViewModel.deckWithCards.observe(this, {
-                it.export(context!!, uri)
-            })
-
+            viewModel.export(uri)
         }
     }
     private val startFolderPickerForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
@@ -43,7 +37,7 @@ class EditDeckFragment : Fragment() {
             if(result.data != null){
                 val folderId = result.data?.getLongExtra(FolderPickerFragment.FOLDER_ID, -1)
                 if(folderId!! >= 0){
-                    editDeckViewModel.addDeckToFolder(folderId)
+                    viewModel.addDeckToFolder(folderId)
                 }
             }
         }
@@ -68,8 +62,9 @@ class EditDeckFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val deckId = arguments!!.getLong(DECK_ID, -1)
-        editDeckViewModel = ViewModelProvider(this, EditDeckViewModelFactory(activity!!.application, deckId)).get(EditDeckViewModel::class.java)
-        editDeckViewModel.deck.observe(this){
+        viewModel = ViewModelProvider(this, EditDeckViewModelFactory(activity!!.application, deckId)).get(
+            EditDeckViewModel::class.java)
+        viewModel.deck.observe(this){
             if (it == null){
                 activity?.finish()
             }else{
@@ -104,12 +99,12 @@ class EditDeckFragment : Fragment() {
     }
 
     private fun deleteDeck() {
-        editDeckViewModel.deleteDeck()
+        viewModel.deleteDeck()
         activity?.finish()
     }
 
     private fun addToFavourites() {
-        editDeckViewModel.updateDeck {
+        viewModel.updateDeck {
             it.favorite = !it.favorite
         }
     }

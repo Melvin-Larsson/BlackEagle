@@ -1,6 +1,7 @@
-package com.inglarna.blackeagle.viewmodel
+package com.inglarna.blackeagle.ui.cardlist
 
 import android.app.Application
+import android.net.Uri
 import androidx.arch.core.util.Function
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -29,6 +30,7 @@ class EditDeckViewModel(application: Application, val deckId: Long): AndroidView
             deckRepo.deleteDeck(deck)
         }
     }
+
     fun updateDeck(deckUpdater: ((Deck) -> Unit)){
         GlobalScope.launch {
             val deck = deckRepo.getDeck(deckId)
@@ -36,10 +38,17 @@ class EditDeckViewModel(application: Application, val deckId: Long): AndroidView
             deckRepo.updateDeck(deck)
         }
     }
+
     fun addDeckToFolder(folderId: Long){
         GlobalScope.launch {
             folderRepo.addDeckToFolder(deckId, folderId)
         }
     }
 
+    fun export(destination: Uri){
+        GlobalScope.launch {
+            val deck = deckRepo.getDeckWithCards(deckId)
+            deck.export(getApplication(), destination)
+        }
+    }
 }
