@@ -10,6 +10,13 @@
         <SwitchPreferenceCompat
             app:key="darkMode"
             app:title="@string/dark_mode" />
+
+        <ListPreference
+            app:key="numberWordLanguage"
+            app:title="@string/number_word_language"
+            app:entries="@array/number_word_languages_entries"
+            app:entryValues="@array/number_word_languages_entry_values"/>
+
     </PreferenceCategory>
     <PreferenceCategory
         app:key="repetition_settings"
@@ -18,6 +25,7 @@
         <EditTextPreference
             app:key="dailyRepetitionGoal"
             app:title="@string/daily_repetition_goal"
+            app:defaultValue="20"
             android:inputType="number" />
 
     </PreferenceCategory>

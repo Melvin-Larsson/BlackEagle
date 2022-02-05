@@ -89,4 +89,7 @@
     <string name="insert_number">Insert number words</string>
     <string name="number_converter_dialog_title">Number converter</string>
     <string name="save_card">Save card</string>
+    <string name="number_word_language">Language of number words</string>
+    <string name="english">English</string>
+    <string name="swedish">Swedish</string>
 </resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="number_word_languages_entries">
+        <item>@string/english</item>
+        <item>@string/swedish</item>
+    </string-array>
+    <string-array name="number_word_languages_entry_values">
+        <item>en</item>
+        <item>sv</item>
+    </string-array>
+</resources>

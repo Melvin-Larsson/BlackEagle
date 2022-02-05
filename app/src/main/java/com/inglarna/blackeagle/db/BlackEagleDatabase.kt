@@ -8,6 +8,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.inglarna.blackeagle.QueryPreferences
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.model.*
 import java.io.BufferedReader
@@ -52,7 +53,7 @@ abstract class BlackEagleDatabase :RoomDatabase(){
             val inputStream = context.resources.openRawResource(id)
             val reader = BufferedReader(InputStreamReader(inputStream))
             var word: String?
-            var words = ArrayList<String>()
+            val words = ArrayList<String>()
             while(true){
                 try {
                     word = reader.readLine()
@@ -68,14 +69,15 @@ abstract class BlackEagleDatabase :RoomDatabase(){
             return words
         }
         fun loadDefaultNumberWords(context: Context) : List<String>{
-            val numberWordFileId = when(Locale.getDefault().language){
-                "sv"->R.raw.number_words_swedish
-                "en"->R.raw.number_words_english
+            return loadDefaultNumberWordsFromFile(getWordNumberResource(context), context)
+        }
+        private fun getWordNumberResource(context: Context) : Int{
+            return when(QueryPreferences.getNumberWordsLanguage(context)) {
+                "sv" -> R.raw.number_words_swedish
+                "en" -> R.raw.number_words_english
                 else -> R.raw.number_words_english
             }
-            return loadDefaultNumberWordsFromFile(numberWordFileId, context)
         }
-
     }
 
 }
