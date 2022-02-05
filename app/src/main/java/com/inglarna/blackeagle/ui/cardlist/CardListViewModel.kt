@@ -2,6 +2,7 @@ package com.inglarna.blackeagle.ui.cardlist
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.inglarna.blackeagle.QueryPreferences
 import com.inglarna.blackeagle.model.Card
 import com.inglarna.blackeagle.model.Deck
 import com.inglarna.blackeagle.repository.CardRepo
@@ -9,6 +10,8 @@ import com.inglarna.blackeagle.repository.DeckRepo
 import getCurrentDay
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.math.max
+import kotlin.math.min
 
 class CardListViewModel (application: Application, val deckId: Long): AndroidViewModel(application){
     private var cardRepo: CardRepo = CardRepo(getApplication())
@@ -33,9 +36,30 @@ class CardListViewModel (application: Application, val deckId: Long): AndroidVie
 
     val deck: LiveData<Deck> = deckRepo.getLiveDeck(deckId)
 
-    //getCurrentDay() + 1.0 because getCurrentDay() returns the lowest possible value a card that should be studied today can have
-    val deckFinished = cardRepo.getFullDeckByNextRepetition(deckId, getCurrentDay() + 1.0).map { cards ->
-        cards.isEmpty()
+    private val deckByNextRepetition = cardRepo.getFullDeckByNextRepetition(deckId, getCurrentDay() + 1.0)
+    private val repeatedCardCount = cardRepo.getLiveRepeatedCardCount(deckId, getCurrentDay())
+    val cardsToStudy = MediatorLiveData<Int>()
+    val studiesFinished = cardsToStudy.map { cardsToStudy ->
+        cardsToStudy <= 0
+    }
+
+    init {
+        //FIXME: this code...
+        //Add sources to cardsToStudy
+        cardsToStudy.addSource(deckByNextRepetition){ cards ->
+            if(repeatedCardCount.value != null){
+                cardsToStudy.value = min(QueryPreferences.getDailyRepetitionGoal(application) - repeatedCardCount.value!!, cards.size)
+            }else{
+                cardsToStudy.value = cards.size
+            }
+        }
+        cardsToStudy.addSource(repeatedCardCount){ reviewCount ->
+            if(deckByNextRepetition.value != null){
+                cardsToStudy.value = min(deckByNextRepetition.value!!.size, QueryPreferences.getDailyRepetitionGoal(application) - reviewCount)
+            }else{
+                cardsToStudy.value = QueryPreferences.getDailyRepetitionGoal(application) - reviewCount
+            }
+        }
     }
 
     fun deleteSelectedCards(){

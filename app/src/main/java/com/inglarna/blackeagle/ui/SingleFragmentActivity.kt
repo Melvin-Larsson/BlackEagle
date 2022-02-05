@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import com.inglarna.blackeagle.QueryPreferences
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.databinding.ActivityFragmentBinding
 
@@ -38,9 +39,7 @@ abstract class SingleFragmentActivity : AppCompatActivity(){
     }
 
     fun refreshTheme(){
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val darkMode = sharedPreferences.getBoolean("darkMode", false)
-        if(darkMode){
+        if(QueryPreferences.isDarkTheme(this)){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }else{
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

@@ -31,6 +31,13 @@ interface CardDao {
     @Query("SELECT * FROM Card WHERE deckId = :deckId AND lastRepetition IS NULL LIMIT :cardCount")
     fun getNewCardsByNextRepetition(deckId: Long, cardCount: Int): List<Card>
 
+    @Query("SELECT COUNT(cardId) FROM Card WHERE deckId = :deckId AND lastRepetition = :day")
+    fun getRepeatedCardCount(deckId: Long, day: Long): Int
+
+    @Query("SELECT COUNT(cardId) FROM Card WHERE deckId = :deckId AND lastRepetition = :day")
+    fun getLiveRepeatedCardCount(deckId: Long, day: Long): LiveData<Int>
+
+
     @Insert(onConflict = IGNORE)
     fun insertCard(card: Card): Long
 

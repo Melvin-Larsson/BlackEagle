@@ -16,13 +16,13 @@ class QuestionFragment : Fragment() {
     companion object{
         const val DECK_FINISHED = "deckFinished"
         private const val DECK_ID = "deckId"
-        private const val FORCE_STUDY = "forceStudy"
+        private const val CARDS_TO_REVIEW = "cardsToReview"
         private const val TAG = "Question"
 
-        fun newInstance(deckId: Long, forceStudy: Boolean = false): QuestionFragment {
+        fun newInstance(deckId: Long, cardsToReview : Int = -1): QuestionFragment {
             val bundle = Bundle()
             bundle.putLong(DECK_ID, deckId)
-            bundle.putBoolean(FORCE_STUDY, forceStudy)
+            bundle.putInt(CARDS_TO_REVIEW, cardsToReview)
             val fragment = QuestionFragment()
             fragment.arguments = bundle
             return fragment
@@ -35,9 +35,8 @@ class QuestionFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val deckId = arguments!!.getLong(DECK_ID, -1)
-        val forceStudy = arguments!!.getBoolean(FORCE_STUDY, false)
-        questionViewModel = ViewModelProvider(this, QuestionViewModelFactory(activity!!.application, deckId)).get(
+        val deckId = requireArguments().getLong(DECK_ID, -1)
+        questionViewModel = ViewModelProvider(this, QuestionViewModelFactory(requireActivity().application, deckId)).get(
             QuestionViewModel::class.java)
 
         binding.viewmodel = questionViewModel
@@ -49,17 +48,14 @@ class QuestionFragment : Fragment() {
             }
         }
 
-        if(forceStudy){
-            questionViewModel.loadCards(QuestionViewModel.ALL_CARDS)
-        }else{
-            questionViewModel.loadCards(QuestionViewModel.ALL_CARDS)
-        }
+        val cardsToRepeat = requireArguments().getInt(CARDS_TO_REVIEW, -1)
+        questionViewModel.loadCards(cardsToRepeat)
     }
 
     private fun endActivity(){
         val result = Intent()
         result.putExtra(DECK_FINISHED, true)
-        activity!!.setResult(Activity.RESULT_OK, result)
-        activity!!.finish()
+        requireActivity().setResult(Activity.RESULT_OK, result)
+        requireActivity().finish()
     }
 }

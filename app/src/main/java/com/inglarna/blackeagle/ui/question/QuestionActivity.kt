@@ -8,24 +8,24 @@ import com.inglarna.blackeagle.ui.SingleFragmentActivity
 
 class QuestionActivity : SingleFragmentActivity() {
     private var deckId : Long = -1
-    private var forceStudy = false
+    private var cardsToRepeat : Int = -1
 
     companion object{
         private const val DECK_ID = "deckId"
-        private const val FORCE_STUDY = "forceStudy"
-        fun newIntent(context: Context, deckId: Long?, forceStudy : Boolean = false) : Intent {
+        private const val CARDS_TO_REPEAT = "forceStudy"
+        fun newIntent(context: Context, deckId: Long?, cardsToRepeat: Int = -1) : Intent {
             val intent = Intent(context, QuestionActivity::class.java)
             intent.putExtra(DECK_ID, deckId)
-            intent.putExtra(FORCE_STUDY, forceStudy)
+            intent.putExtra(CARDS_TO_REPEAT, cardsToRepeat)
             return  intent
         }
     }
 
-    override fun createFragment() =  QuestionFragment.newInstance(deckId, forceStudy)
+    override fun createFragment() =  QuestionFragment.newInstance(deckId, cardsToRepeat)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         deckId = intent.getLongExtra(DECK_ID, -1)
-        forceStudy = intent.getBooleanExtra(FORCE_STUDY, false)
+        cardsToRepeat = intent.getIntExtra(CARDS_TO_REPEAT, -1)
         super.onCreate(savedInstanceState)
     }
 

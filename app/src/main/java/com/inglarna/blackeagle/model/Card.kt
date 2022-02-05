@@ -20,7 +20,7 @@ data class Card(
     var answer : String = "",
     var hint : String = "",
     var position : Int = 0,
-    var lastRepetition : Double? = null,
+    var lastRepetition : Long? = null,
     var nextRepetition : Double = getCurrentDay().toDouble(),
     var repetitions : Int = 0,
     var easinessFactor : Double = 2.5,

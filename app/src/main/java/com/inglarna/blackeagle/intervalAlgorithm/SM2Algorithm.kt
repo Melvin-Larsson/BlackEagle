@@ -44,6 +44,6 @@ class SM2Algorithm : AbstractIntervalAlgorithm() {
             }
         }
         card.nextRepetition = currentDate + interval
-        card.lastRepetition = currentDate.toDouble()
+        card.lastRepetition = currentDate
     }
 }

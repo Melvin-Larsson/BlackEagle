@@ -1,10 +1,7 @@
 package com.inglarna.blackeagle.repository
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataScope
-import androidx.room.Query
 import com.inglarna.blackeagle.db.BlackEagleDatabase
 import com.inglarna.blackeagle.db.CardDao
 import com.inglarna.blackeagle.model.Card
@@ -49,11 +46,18 @@ class CardRepo (context: Context){
     fun getFullDeckByNextRepetition(deckId: Long, maxDay: Double): LiveData<List<Card>>{
         return cardDao.loadFullDeckByNextRepetition(deckId, maxDay)
     }
+    //FIXME: not sure what withContext does
     suspend fun getOldCardsByNextRepetition(deckId: Long, cardCount: Int): List<Card> = withContext(Dispatchers.IO){
         cardDao.getOldCardsByNextRepetition(deckId, cardCount)
     }
     suspend fun getNewCardsByNextRepetition(deckId: Long, cardCount: Int): List<Card> = withContext(Dispatchers.IO){
         cardDao.getNewCardsByNextRepetition(deckId, cardCount)
+    }
+    suspend fun getRepeatedCardCount(deckId: Long, day: Long): Int = withContext(Dispatchers.IO){
+        cardDao.getRepeatedCardCount(deckId, day)
+    }
+    fun getLiveRepeatedCardCount(deckId: Long, day: Long): LiveData<Int>{
+        return cardDao.getLiveRepeatedCardCount(deckId, day)
     }
     fun getDeckSize(deckId: Long) : LiveData<Int>{
         return cardDao.loadDeckSize(deckId)

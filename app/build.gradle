@@ -52,10 +52,13 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.4.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
-    implementation 'androidx.preference:preference-ktx:1.1.1'
     kapt 'androidx.room:room-compiler:2.2.6'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+
+    //Preferences
+    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'com.takisoft.preferencex:preferencex:1.1.0'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'

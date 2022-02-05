@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.text.InputType
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +15,7 @@ import com.inglarna.blackeagle.ui.question.QuestionActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import android.view.View
+import android.widget.EditText
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
@@ -77,12 +80,12 @@ class CardListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home ->{
-                activity!!.finish()
+                requireActivity().finish()
                 return true
             }
             R.id.delete -> cardListViewModel.deleteSelectedCards()
             R.id.selectAllCards -> cardListViewModel.toggleSelectAll()
-            R.id.more -> startActivity(EditDeckActivity.newIntent(context!!, cardListViewModel.deckId))
+            R.id.more -> startActivity(EditDeckActivity.newIntent(requireContext(), cardListViewModel.deckId))
             R.id.closeSelect -> cardListViewModel.setSelect(false)
         }
         return true
@@ -95,13 +98,13 @@ class CardListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //Retrieve ViewModel
-        val deckId = arguments!!.getLong(DECK_ID, -1)
-        cardListViewModel = ViewModelProvider(this, CardListViewModelFactory(activity!!.application, deckId))[CardListViewModel::class.java]
+        val deckId = requireArguments().getLong(DECK_ID, -1)
+        cardListViewModel = ViewModelProvider(this, CardListViewModelFactory(requireActivity().application, deckId))[CardListViewModel::class.java]
         binding.viewModel = cardListViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         //End activity if no deck can be found, set the toolbar title otherwise
-        cardListViewModel.deck.observe(this){ deck ->
+        cardListViewModel.deck.observe(viewLifecycleOwner){ deck ->
             if (deck == null){
                 activity?.finish()
             }else{
@@ -114,16 +117,19 @@ class CardListFragment : Fragment() {
 
         //Add card button
         binding.buttonAddCard.setOnClickListener{
-            startActivity(CardActivity.newIntent(context!!, cardListViewModel.deckId))
+            startActivity(CardActivity.newIntent(requireContext(), cardListViewModel.deckId))
         }
 
         //Start study button
-        cardListViewModel.deckFinished.observe(viewLifecycleOwner){ deckFinished ->
-            binding.startStudyButton.setOnClickListener{
-                if(deckFinished){
+        cardListViewModel.studiesFinished.observe(viewLifecycleOwner){ studiesFinished ->
+            if(studiesFinished){
+                binding.startStudyButton.setOnClickListener{
                     showConfirmExtraStudyDialog()
-                }else{
-                    startStudyForResult.launch(QuestionActivity.newIntent(context!!, cardListViewModel.deckId, false))
+                }
+            }else{
+                binding.startStudyButton.setOnClickListener{
+                    Log.d(TAG, "Cards to study " + cardListViewModel.cardsToStudy.value!!)
+                    startStudyForResult.launch(QuestionActivity.newIntent(requireContext(), cardListViewModel.deckId, cardListViewModel.cardsToStudy.value!!))
                 }
             }
         }
@@ -135,9 +141,9 @@ class CardListFragment : Fragment() {
         binding.recyclerViewCard.layoutManager = LinearLayoutManager(requireContext())
 
         //Observer cards
-        cardListViewModel.cards.observe(viewLifecycleOwner, {
+        cardListViewModel.cards.observe(viewLifecycleOwner) {
             adapter.cards = it
-        })
+        }
 
         //Initialize moving of cards
         val touchHelperCallback = SimpleItemTouchHelperCallback()
@@ -168,11 +174,17 @@ class CardListFragment : Fragment() {
     }
 
     private fun showConfirmExtraStudyDialog(){
+        val cardsToRepeatEditText = EditText(requireContext())
+        cardsToRepeatEditText.inputType = InputType.TYPE_CLASS_NUMBER
+
         AlertDialog.Builder(context)
             .setTitle(getString(R.string.confirm_extra_study_title))
+            .setView(cardsToRepeatEditText)
             .setMessage(getString(R.string.study_beforehand_question))
             .setPositiveButton(android.R.string.ok){_, _ ->
-                startStudyForResult.launch(QuestionActivity.newIntent(context!!, cardListViewModel.deckId, true))
+                val cardsToRepeat = cardsToRepeatEditText.text.toString().toInt()
+                startStudyForResult.launch(QuestionActivity.newIntent(
+                    requireContext(), cardListViewModel.deckId, cardsToRepeat))
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()

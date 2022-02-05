@@ -67,7 +67,7 @@
     <string name="top">Upp</string>
     <string name="bottom">Ner</string>
     <string name="confirm_extra_study_title">Studera extra</string>
-    <string name="study_beforehand_question">Det finns inga fler kort inplanerade  idag. Vill du studera ändå?</string>
+    <string name="study_beforehand_question">Det finns inga fler kort inplanerade  idag. Hur många kort vill du studera i förväg?</string>
     <string name="rename_folder">Byt namn på mapp</string>
     <string name="rename_folder_dialog_title">Vad ska mappen heta?</string>
     <string name="edit_folder">Redigera mapp</string>

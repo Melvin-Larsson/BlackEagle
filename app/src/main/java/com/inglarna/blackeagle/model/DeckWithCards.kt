@@ -92,7 +92,7 @@ data class DeckWithCards(
                 card.hint = reader.readLine()
                 card.position = reader.readLine().toInt()
                 if(repetitionDataWritten){
-                    card.lastRepetition = reader.readLine().toDouble()
+                    card.lastRepetition = reader.readLine().toLong()
                     card.nextRepetition = reader.readLine().toDouble()
                     card.repetitions = reader.readLine().toInt()
                     card.easinessFactor = reader.readLine().toDouble()

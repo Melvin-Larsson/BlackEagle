@@ -2,10 +2,10 @@ package com.inglarna.blackeagle.ui.settings
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.inglarna.blackeagle.R
 import com.inglarna.blackeagle.ui.SingleFragmentActivity
+import com.takisoft.preferencex.PreferenceFragmentCompat
 
 class SettingsFragment: PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
@@ -14,7 +14,7 @@ class SettingsFragment: PreferenceFragmentCompat(),
         fun newInstance() = SettingsFragment()
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.fragment_settings, rootKey)
     }
 
