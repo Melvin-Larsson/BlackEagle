@@ -1,8 +1,8 @@
 package com.inglarna.blackeagle.db
 
-import android.icu.text.CaseMap
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import androidx.room.OnConflictStrategy.REPLACE
 import com.inglarna.blackeagle.model.*
 
 @Dao
@@ -38,7 +38,7 @@ interface FolderDao {
     @Insert
     fun addFolder(folder: Folder): Long
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     fun addFolderDeckCrossRef(folderDeckCrossRef: FolderDeckCrossRef)
 
     @Query("DELETE FROM FolderDeckCrossRef WHERE folderId=:folderId AND deckId=:deckId")
