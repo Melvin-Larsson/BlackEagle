@@ -82,4 +82,7 @@
     <string name="error_field_empty">Fältet får inte vara tomt</string>
     <string name="number_converter_dialog_title">Sifferkonverterare</string>
     <string name="save_card">Spara kort</string>
+    <string name="number_word_language">Sifferordsspråk</string>
+    <string name="english">Engelska</string>
+    <string name="swedish">Svenska</string>
 </resources>
