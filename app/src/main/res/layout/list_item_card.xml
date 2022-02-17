@@ -16,6 +16,10 @@
         <variable
             name="card"
             type="com.inglarna.blackeagle.model.Card" />
+
+        <variable
+            name="position"
+            type="int" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,11 +66,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="4dp"
-                    android:text="@{@string/card_position(card.position)}"
+                    android:text="@{@string/card_position(position)}"
                     android:textAppearance="?attr/textAppearanceListItemSecondary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="1" />
+                    tools:text="#1" />
 
                 <ImageView
                     android:id="@+id/drag_handle"

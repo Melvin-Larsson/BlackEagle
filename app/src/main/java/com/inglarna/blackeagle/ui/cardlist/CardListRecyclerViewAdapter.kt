@@ -31,6 +31,7 @@ class CardListRecyclerViewAdapter(private val viewModel: CardListViewModel, priv
     }
     override fun onBindViewHolder(holder: CardListViewHolder, position: Int) {
         holder.binding.card = cards[position]
+        holder.binding.position = position + 1
         holder.binding.viewModel = viewModel
         holder.binding.lifecycleOwner = lifecycleOwner
         holder.binding.dragHandle.setOnTouchListener(object : View.OnTouchListener{
