@@ -17,7 +17,7 @@ class TutorialNumbersPagerFragment : Fragment() {
         fun newInstance() = TutorialNumbersPagerFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = FragmentTutorialNumbesPagerBinding.inflate(inflater, container, false)
         activity?.title = ""
         val fragmentList = arrayListOf<Fragment>(
@@ -25,11 +25,7 @@ class TutorialNumbersPagerFragment : Fragment() {
             SecondScreen()
         )
 
-        val adapter = TutorialNumbersViewPagerAdapter(
-           fragmentList,
-           requireActivity().supportFragmentManager,
-           lifecycle
-        )
+        val adapter = TutorialNumbersViewPagerAdapter(fragmentList, this)
         binding.viewPager.adapter = adapter
 
         val indicator = binding.indicator
