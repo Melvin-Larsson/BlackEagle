@@ -29,6 +29,8 @@ class EditNumbersFragment: Fragment() {
     private var resetButton: MenuItem? = null
     private var selectAllButton: MenuItem? = null
     private var closeSelectButton: MenuItem? = null
+
+
     val timer = object: CountDownTimer(2000, 1) {
         override fun onTick(millisUntilFinished: Long) {}
         override fun onFinish() {
@@ -36,6 +38,7 @@ class EditNumbersFragment: Fragment() {
             binding.scrollBottom.visibility = View.GONE
         }
     }
+
     companion object {
         private const val TAG = "korvMedMos"
         fun newInstance() = EditNumbersFragment
